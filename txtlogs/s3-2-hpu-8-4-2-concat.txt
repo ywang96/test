@@ -1,0 +1,780 @@
+DistributedRunner run(): command = deepspeed --num_nodes 1 --num_gpus 2 --no_local_rank run_lora_clm_starcoder.py --model_name_or_path bigcode/starcoder --train_file /starcoder/finetune-data/roblox-train.json --validation_file /starcoder/finetune-data/roblox-validation.json --report_to tensorboard --bf16 True --output_dir ./checkpoints/starcoder-lora-deepspeed-s3-2-hpu-8-4-2-concat --num_train_epochs 10 --per_device_train_batch_size 4 --lora_rank 8 --gradient_accumulation_steps 2 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --dataset_concatenation --do_train --use_habana --use_lazy_mode --throughput_warmup_steps 3 --cache_dir /starcoder/cache/ --use_hpu_graphs_for_inference --deepspeed deepspeed_config_s3.json
+[2023-08-25 11:51:19,081] [WARNING] [runner.py:185:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+Namespace(autotuning='', elastic_training=False, exclude='', force_multi=False, hostfile='/job/hostfile', include='', launcher='pdsh', launcher_args='', master_addr='', master_port=29500, max_elastic_nodes=-1, min_elastic_nodes=-1, module=False, no_local_rank=True, no_python=False, no_ssh_check=False, num_gpus=2, num_nodes=1, save_pid=False, use_hpu=True, user_args=['--model_name_or_path', 'bigcode/starcoder', '--train_file', '/starcoder/finetune-data/roblox-train.json', '--validation_file', '/starcoder/finetune-data/roblox-validation.json', '--report_to', 'tensorboard', '--bf16', 'True', '--output_dir', './checkpoints/starcoder-lora-deepspeed-s3-2-hpu-8-4-2-concat', '--num_train_epochs', '10', '--per_device_train_batch_size', '4', '--lora_rank', '8', '--gradient_accumulation_steps', '2', '--evaluation_strategy', 'no', '--save_strategy', 'no', '--learning_rate', '1e-4', '--logging_steps', '1', '--dataset_concatenation', '--do_train', '--use_habana', '--use_lazy_mode', '--throughput_warmup_steps', '3', '--cache_dir', '/starcoder/cache/', '--use_hpu_graphs_for_inference', '--deepspeed', 'deepspeed_config_s3.json'], user_script='run_lora_clm_starcoder.py')
+[2023-08-25 11:51:20,921] [INFO] [runner.py:543:main] cmd = /usr/bin/python3 -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMCwgMV19 --master_addr=127.0.0.1 --master_port=29500 --no_local_rank run_lora_clm_starcoder.py --model_name_or_path bigcode/starcoder --train_file /starcoder/finetune-data/roblox-train.json --validation_file /starcoder/finetune-data/roblox-validation.json --report_to tensorboard --bf16 True --output_dir ./checkpoints/starcoder-lora-deepspeed-s3-2-hpu-8-4-2-concat --num_train_epochs 10 --per_device_train_batch_size 4 --lora_rank 8 --gradient_accumulation_steps 2 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --dataset_concatenation --do_train --use_habana --use_lazy_mode --throughput_warmup_steps 3 --cache_dir /starcoder/cache/ --use_hpu_graphs_for_inference --deepspeed deepspeed_config_s3.json
+[2023-08-25 11:51:22,842] [INFO] [launch.py:145:main] WORLD INFO DICT: {'localhost': [0, 1]}
+[2023-08-25 11:51:22,842] [INFO] [launch.py:151:main] nnodes=1, num_local_procs=2, node_rank=0
+[2023-08-25 11:51:22,842] [INFO] [launch.py:164:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0, 1]})
+[2023-08-25 11:51:22,842] [INFO] [launch.py:165:main] dist_world_size=2
+[2023-08-25 11:51:28,397] [INFO] [comm.py:762:init_distributed] Initializing TorchBackend in DeepSpeed with backend hccl
+08/25/2023 11:51:29 - WARNING - __main__ -   Process rank: 0, device: hpu
+distributed training: True, 16-bits training: True
+08/25/2023 11:51:29 - INFO - __main__ -   Training/evaluation parameters GaudiTrainingArguments(
+_n_gpu=1,
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-06,
+adjust_throughput=False,
+auto_find_batch_size=False,
+bf16=True,
+data_seed=None,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_pin_memory=True,
+ddp_bucket_cap_mb=230,
+ddp_find_unused_parameters=False,
+ddp_timeout=1800,
+debug=[],
+deepspeed=deepspeed_config_s3.json,
+disable_tqdm=False,
+distribution_strategy=ddp,
+do_eval=False,
+do_predict=False,
+do_train=True,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_steps=None,
+evaluation_strategy=no,
+fsdp_config=None,
+fsdp_min_num_params=0,
+fsdp_transformer_layer_cls_to_wrap=None,
+full_determinism=False,
+gaudi_config_name=None,
+gradient_accumulation_steps=2,
+gradient_checkpointing=False,
+greater_is_better=None,
+group_by_length=False,
+half_precision_backend=hpu_amp,
+hub_model_id=None,
+hub_private_repo=False,
+hub_strategy=every_save,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+include_inputs_for_metrics=False,
+jit_mode_eval=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=0.0001,
+length_column_name=length,
+load_best_model_at_end=False,
+local_rank=0,
+log_level=passive,
+log_level_replica=warning,
+log_on_each_node=True,
+logging_dir=./checkpoints/starcoder-lora-deepspeed-s3-2-hpu-8-4-2-concat/runs/Aug25_11-51-28_sysid674631,
+logging_first_step=False,
+logging_nan_inf_filter=False,
+logging_steps=1,
+logging_strategy=steps,
+lr_scheduler_type=linear,
+max_grad_norm=1.0,
+max_steps=-1,
+metric_for_best_model=None,
+no_cuda=False,
+non_blocking_data_copy=False,
+num_train_epochs=10.0,
+optim=adamw_torch,
+optim_args=None,
+output_dir=./checkpoints/starcoder-lora-deepspeed-s3-2-hpu-8-4-2-concat,
+overwrite_output_dir=False,
+past_index=-1,
+per_device_eval_batch_size=8,
+per_device_train_batch_size=4,
+pipelining_fwd_bwd=False,
+prediction_loss_only=False,
+profiling_steps=0,
+profiling_warmup_steps=0,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+ray_scope=last,
+remove_unused_columns=True,
+report_to=['tensorboard'],
+resume_from_checkpoint=None,
+run_name=./checkpoints/starcoder-lora-deepspeed-s3-2-hpu-8-4-2-concat,
+save_on_each_node=False,
+save_safetensors=False,
+save_steps=500,
+save_strategy=no,
+save_total_limit=None,
+seed=42,
+skip_memory_metrics=True,
+throughput_warmup_steps=3,
+torch_compile=False,
+torch_compile_backend=None,
+torch_compile_mode=None,
+torchdynamo=None,
+use_habana=True,
+use_hpu_graphs=False,
+use_hpu_graphs_for_inference=True,
+use_hpu_graphs_for_training=False,
+use_ipex=False,
+use_lazy_mode=True,
+use_legacy_prediction_loop=False,
+use_mps_device=False,
+warmup_ratio=0.0,
+warmup_steps=0,
+weight_decay=0.0,
+xpu_backend=None,
+)
+08/25/2023 11:51:29 - WARNING - __main__ -   Process rank: 1, device: hpu
+distributed training: True, 16-bits training: True
+[INFO|configuration_utils.py:668] 2023-08-25 11:51:29,461 >> loading configuration file config.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/config.json
+[INFO|configuration_utils.py:720] 2023-08-25 11:51:29,465 >> Model config GPTBigCodeConfig {
+  "_name_or_path": "bigcode/starcoder",
+  "activation_function": "gelu",
+  "architectures": [
+    "GPTBigCodeForCausalLM"
+  ],
+  "attention_softmax_in_fp32": true,
+  "attn_pdrop": 0.1,
+  "bos_token_id": 0,
+  "embd_pdrop": 0.1,
+  "eos_token_id": 0,
+  "inference_runner": 0,
+  "initializer_range": 0.02,
+  "layer_norm_epsilon": 1e-05,
+  "max_batch_size": null,
+  "max_sequence_length": null,
+  "model_type": "gpt_bigcode",
+  "multi_query": true,
+  "n_embd": 6144,
+  "n_head": 48,
+  "n_inner": 24576,
+  "n_layer": 40,
+  "n_positions": 8192,
+  "pad_key_length": true,
+  "pre_allocate_kv_cache": false,
+  "resid_pdrop": 0.1,
+  "scale_attention_softmax_in_fp32": true,
+  "scale_attn_weights": true,
+  "summary_activation": null,
+  "summary_first_dropout": 0.1,
+  "summary_proj_to_labels": true,
+  "summary_type": "cls_index",
+  "summary_use_proj": true,
+  "torch_dtype": "float32",
+  "transformers_version": "4.28.1",
+  "use_cache": true,
+  "validate_runner_input": true,
+  "vocab_size": 49152
+}
+
+[INFO|tokenization_utils_base.py:1809] 2023-08-25 11:51:29,584 >> loading file vocab.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/vocab.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-25 11:51:29,584 >> loading file merges.txt from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/merges.txt
+[INFO|tokenization_utils_base.py:1809] 2023-08-25 11:51:29,584 >> loading file tokenizer.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/tokenizer.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-25 11:51:29,584 >> loading file added_tokens.json from cache at None
+[INFO|tokenization_utils_base.py:1809] 2023-08-25 11:51:29,584 >> loading file special_tokens_map.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/special_tokens_map.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-25 11:51:29,584 >> loading file tokenizer_config.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/tokenizer_config.json
+/usr/local/lib/python3.8/dist-packages/datasets/load.py:2072: FutureWarning: 'use_auth_token' was deprecated in favor of 'token' in version 2.14.0 and will be removed in 3.0.0.
+You can remove this warning by passing 'token=None' instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/datasets/load.py:2072: FutureWarning: 'use_auth_token' was deprecated in favor of 'token' in version 2.14.0 and will be removed in 3.0.0.
+You can remove this warning by passing 'token=None' instead.
+  warnings.warn(
+[INFO|modeling_utils.py:2534] 2023-08-25 11:51:30,126 >> loading weights file pytorch_model.bin from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/pytorch_model.bin.index.json
+[INFO|modeling_utils.py:1176] 2023-08-25 11:51:30,127 >> Instantiating GaudiGPTBigCodeForCausalLM model under default dtype torch.bfloat16.
+[INFO|modeling_utils.py:2623] 2023-08-25 11:51:30,127 >> Detected DeepSpeed ZeRO-3: activating zero.init() for this model
+[INFO|configuration_utils.py:575] 2023-08-25 11:51:30,131 >> Generate config GaudiGenerationConfig {
+  "_from_model_config": true,
+  "bos_token_id": 0,
+  "eos_token_id": 0,
+  "ignore_eos": null,
+  "static_shapes": null,
+  "transformers_version": "4.28.1"
+}
+
+=============================HABANA PT BRIDGE CONFIGURATION =========================== 
+ PT_HPU_LAZY_MODE = 1
+ PT_HPU_LAZY_EAGER_OPTIM_CACHE = 1
+ PT_HPU_ENABLE_COMPILE_THREAD = 0
+ PT_HPU_ENABLE_EXECUTION_THREAD = 1
+ PT_HPU_ENABLE_LAZY_EAGER_EXECUTION_THREAD = 1
+ PT_ENABLE_INTER_HOST_CACHING = 0
+ PT_ENABLE_INFERENCE_MODE = 1
+ PT_ENABLE_HABANA_CACHING = 1
+ PT_HPU_MAX_RECIPE_SUBMISSION_LIMIT = 0
+ PT_HPU_MAX_COMPOUND_OP_SIZE = 9223372036854775807
+ PT_HPU_MAX_COMPOUND_OP_SIZE_SS = 10
+ PT_HPU_ENABLE_STAGE_SUBMISSION = 1
+ PT_HPU_STAGE_SUBMISSION_MODE = 2
+ PT_HPU_PGM_ENABLE_CACHE = 1
+ PT_HPU_ENABLE_LAZY_COLLECTIVES = 0
+ PT_HCCL_SLICE_SIZE_MB = 16
+ PT_HCCL_MEMORY_ALLOWANCE_MB = 0
+ PT_HPU_INITIAL_WORKSPACE_SIZE = 0
+ PT_HABANA_POOL_SIZE = 24
+ PT_HPU_POOL_STRATEGY = 5
+ PT_HPU_POOL_LOG_FRAGMENTATION_INFO = 0
+ PT_ENABLE_MEMORY_DEFRAGMENTATION = 1
+ PT_ENABLE_DEFRAGMENTATION_INFO = 0
+ PT_HPU_ENABLE_SYNAPSE_OUTPUT_PERMUTE = 1
+ PT_HPU_ENABLE_VALID_DATA_RANGE_CHECK = 1
+ PT_HPU_FORCE_USE_DEFAULT_STREAM = 0
+ PT_RECIPE_CACHE_PATH = 
+ PT_HPU_ENABLE_REFINE_DYNAMIC_SHAPES = 0
+ PT_HPU_DYNAMIC_MIN_POLICY_ORDER = 4,5,3,1
+ PT_HPU_DYNAMIC_MAX_POLICY_ORDER = 2,4,5,3,1
+ PT_HPU_LAZY_ACC_PAR_MODE = 0
+ PT_HPU_CLUSTERED_PROGRAM = 0
+ PT_HPU_CLUSTERED_PROGRAM_ENFORCE = 0
+ PT_HPU_CLUSTERED_PROGRAM_SPLIT_STR = default
+ PT_HPU_CLUSTERED_PROGRAM_SCHED_STR = default
+=============================SYSTEM CONFIGURATION ========================================= 
+Num CPU Cores = 160
+CPU RAM = 1056389528 KB 
+============================================================================================ 
+[2023-08-25 11:51:38,249] [INFO] [partition_parameters.py:481:__exit__] finished initializing model with 15.82B parameters
+Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+Loading checkpoint shards:  14%|█▍        | 1/7 [00:06<00:41,  6.99s/it]Loading checkpoint shards:  14%|█▍        | 1/7 [00:06<00:41,  6.91s/it]Loading checkpoint shards:  29%|██▊       | 2/7 [00:10<00:24,  4.84s/it]Loading checkpoint shards:  29%|██▊       | 2/7 [00:10<00:24,  4.90s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:13<00:16,  4.15s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:13<00:16,  4.18s/it]Loading checkpoint shards:  57%|█████▋    | 4/7 [00:17<00:11,  3.93s/it]Loading checkpoint shards:  57%|█████▋    | 4/7 [00:17<00:11,  3.92s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [00:20<00:07,  3.76s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [00:20<00:07,  3.78s/it]Loading checkpoint shards:  86%|████████▌ | 6/7 [00:24<00:03,  3.73s/it]Loading checkpoint shards:  86%|████████▌ | 6/7 [00:24<00:03,  3.73s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:26<00:00,  3.04s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:26<00:00,  3.72s/it]
+[INFO|modeling_utils.py:3190] 2023-08-25 11:52:04,432 >> All model checkpoint weights were used when initializing GaudiGPTBigCodeForCausalLM.
+
+[INFO|modeling_utils.py:3198] 2023-08-25 11:52:04,432 >> All the weights of GaudiGPTBigCodeForCausalLM were initialized from the model checkpoint at bigcode/starcoder.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use GaudiGPTBigCodeForCausalLM for predictions without further training.
+Loading checkpoint shards: 100%|██████████| 7/7 [00:25<00:00,  3.04s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:25<00:00,  3.71s/it]
+[INFO|configuration_utils.py:537] 2023-08-25 11:52:04,558 >> loading configuration file generation_config.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/generation_config.json
+[INFO|configuration_utils.py:575] 2023-08-25 11:52:04,559 >> Generate config GaudiGenerationConfig {
+  "_from_model_config": true,
+  "bos_token_id": 0,
+  "eos_token_id": 0,
+  "ignore_eos": null,
+  "static_shapes": null,
+  "transformers_version": "4.28.1"
+}
+
+08/25/2023 11:52:05 - INFO - __main__ -   Using data collator of type DataCollatorForSeq2Seq
+trainable params: 4,014,080 || all params: 15,521,470,464 || trainable%: 0.0258614672450663
+[INFO|trainer.py:621] 2023-08-25 11:52:26,872 >> Using hpu_amp half precision backend
+[2023-08-25 11:52:26,925] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed info: version=0.7.7+hpu.synapse.v1.10.0, git-hash=4bc77a6, git-branch=1.10.0
+trainable params: 4,014,080 || all params: 15,521,470,464 || trainable%: 0.0258614672450663
+[2023-08-25 11:52:28,758] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+[2023-08-25 11:52:28,758] [INFO] [logging.py:68:log_dist] [Rank 0] Removing param_group that has no 'params' in the client Optimizer
+[2023-08-25 11:52:28,759] [INFO] [logging.py:68:log_dist] [Rank 0] Using client Optimizer as basic optimizer
+[2023-08-25 11:52:28,772] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed Basic Optimizer = FusedAdamW
+[2023-08-25 11:52:28,772] [INFO] [utils.py:58:is_zero_supported_optimizer] Checking ZeRO support for optimizer=FusedAdamW type=<class 'habana_frameworks.torch.hpex.optimizers.FusedAdamW.FusedAdamW'>
+[2023-08-25 11:52:28,772] [INFO] [logging.py:68:log_dist] [Rank 0] Creating bf16 ZeRO stage 3 optimizer
+[2023-08-25 11:52:28,772] [INFO] [logging.py:68:log_dist] [Rank 0] Creating bf16 ZeRO stage 3 optimizer
+[2023-08-25 11:52:28,867] [INFO] [utils.py:930:see_memory_usage] Stage 3 initialize beginning
+[2023-08-25 11:52:28,877] [WARNING] [utils.py:49:not_implemented] max_memory_reserved is not implemented on HPU
+[2023-08-25 11:52:28,877] [INFO] [utils.py:931:see_memory_usage] MA 44.29 GB         Max_MA 45.95 GB         CA 44.29 GB         Max_CA 0 GB 
+[2023-08-25 11:52:28,878] [INFO] [utils.py:939:see_memory_usage] CPU Virtual Memory:  used = 71.6 GB, percent = 7.1%
+[2023-08-25 11:52:28,884] [INFO] [stage3.py:116:__init__] Reduce bucket size 500,000,000
+[2023-08-25 11:52:28,884] [INFO] [stage3.py:117:__init__] Prefetch bucket size 50,000,000
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Emitting ninja build file /root/.cache/torch_extensions/py38_cpu/utils/build.ninja...
+Building extension module utils...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+ninja: no work to do.
+Loading extension module utils...
+Time to load utils op: 0.7522897720336914 seconds
+Loading extension module utils...
+Time to load utils op: 0.7057743072509766 seconds
+[2023-08-25 11:52:31,041] [INFO] [utils.py:930:see_memory_usage] DeepSpeedZeRoOffload initialize [begin]
+[2023-08-25 11:52:31,052] [WARNING] [utils.py:49:not_implemented] max_memory_reserved is not implemented on HPU
+[2023-08-25 11:52:31,052] [INFO] [utils.py:931:see_memory_usage] MA 44.29 GB         Max_MA 0.0 GB         CA 44.29 GB         Max_CA 0 GB 
+[2023-08-25 11:52:31,052] [INFO] [utils.py:939:see_memory_usage] CPU Virtual Memory:  used = 71.62 GB, percent = 7.1%
+Parameter Offload: Total persistent parameters: 6739968 in 402 params
+[2023-08-25 11:52:31,223] [INFO] [utils.py:930:see_memory_usage] DeepSpeedZeRoOffload initialize [end]
+[2023-08-25 11:52:31,233] [WARNING] [utils.py:49:not_implemented] max_memory_reserved is not implemented on HPU
+[2023-08-25 11:52:31,234] [INFO] [utils.py:931:see_memory_usage] MA 44.28 GB         Max_MA 44.29 GB         CA 44.28 GB         Max_CA 0 GB 
+[2023-08-25 11:52:31,234] [INFO] [utils.py:939:see_memory_usage] CPU Virtual Memory:  used = 71.62 GB, percent = 7.1%
+[2023-08-25 11:52:31,416] [INFO] [stage3.py:378:_setup_for_real_optimizer] optimizer state initialized
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+No modifications detected for re-loaded extension module utils, skipping build step...
+Loading extension module utils...
+Time to load utils op: 0.0003669261932373047 seconds
+You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+[2023-08-25 11:52:31,876] [INFO] [utils.py:930:see_memory_usage] After initializing ZeRO optimizer
+[2023-08-25 11:52:31,886] [WARNING] [utils.py:49:not_implemented] max_memory_reserved is not implemented on HPU
+[2023-08-25 11:52:31,887] [INFO] [utils.py:931:see_memory_usage] MA 44.31 GB         Max_MA 44.33 GB         CA 44.31 GB         Max_CA 0 GB 
+[2023-08-25 11:52:31,887] [INFO] [utils.py:939:see_memory_usage] CPU Virtual Memory:  used = 71.66 GB, percent = 7.1%
+[2023-08-25 11:52:31,889] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed Final Optimizer = DeepSpeedZeroOptimizer_Stage3
+[2023-08-25 11:52:31,889] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed using client LR scheduler
+[2023-08-25 11:52:31,889] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed LR Scheduler = <torch.optim.lr_scheduler.LambdaLR object at 0x7f419f6edf40>
+[2023-08-25 11:52:31,889] [INFO] [logging.py:68:log_dist] [Rank 0] step=0, skipped=0, lr=[0.0001], mom=[(0.9, 0.999)]
+[2023-08-25 11:52:31,891] [INFO] [config.py:1028:print] DeepSpeedEngine configuration:
+[2023-08-25 11:52:31,891] [INFO] [config.py:1032:print]   activation_checkpointing_config  {
+    "partition_activations": false, 
+    "contiguous_memory_optimization": false, 
+    "cpu_checkpointing": false, 
+    "number_checkpoints": null, 
+    "synchronize_checkpoint_boundary": false, 
+    "profile": false
+}
+[2023-08-25 11:52:31,891] [INFO] [config.py:1032:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'thread_count': 1, 'single_submit': False, 'overlap_events': True}
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   amp_enabled .................. False
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   amp_params ................... False
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   autotuning_config ............ {
+    "enabled": false, 
+    "start_step": null, 
+    "end_step": null, 
+    "metric_path": null, 
+    "arg_mappings": null, 
+    "metric": "throughput", 
+    "model_info": null, 
+    "results_dir": "autotuning_results", 
+    "exps_dir": "autotuning_exps", 
+    "overwrite": true, 
+    "fast": true, 
+    "start_profile_step": 3, 
+    "end_profile_step": 5, 
+    "tuner_type": "gridsearch", 
+    "tuner_early_stopping": 5, 
+    "tuner_num_trials": 50, 
+    "model_info_path": null, 
+    "mp_size": 1, 
+    "max_train_batch_size": null, 
+    "min_train_batch_size": 1, 
+    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+    "min_train_micro_batch_size_per_gpu": 1, 
+    "num_tuning_micro_batch_sizes": 3
+}
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   bfloat16_enabled ............. True
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   checkpoint_parallel_write_pipeline  False
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   checkpoint_tag_validation_enabled  True
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   checkpoint_tag_validation_fail  False
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x7f3ff9d8b1c0>
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   communication_data_type ...... None
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   curriculum_enabled ........... False
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   curriculum_params ............ False
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   dataloader_drop_last ......... False
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   disable_allgather ............ False
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   dump_state ................... False
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   dynamic_loss_scale_args ...... None
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   eigenvalue_enabled ........... False
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   eigenvalue_gas_boundary_resolution  1
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   eigenvalue_layer_num ......... 0
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   eigenvalue_max_iter .......... 100
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   eigenvalue_stability ......... 1e-06
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   eigenvalue_tol ............... 0.01
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   eigenvalue_verbose ........... False
+[2023-08-25 11:52:31,892] [INFO] [config.py:1032:print]   elasticity_enabled ........... False
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   flops_profiler_config ........ {
+    "enabled": false, 
+    "profile_step": 1, 
+    "module_depth": -1, 
+    "top_modules": 1, 
+    "detailed": true, 
+    "output_file": null
+}
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   fp16_auto_cast ............... None
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   fp16_enabled ................. False
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   fp16_master_weights_and_gradients  False
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   global_rank .................. 0
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   grad_accum_dtype ............. None
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   gradient_accumulation_steps .. 2
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   gradient_clipping ............ 1
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   gradient_predivide_factor .... 1.0
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   initial_dynamic_scale ........ 1
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   load_universal_checkpoint .... False
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   loss_scale ................... 1.0
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   memory_breakdown ............. False
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   monitor_config ............... <deepspeed.monitor.config.DeepSpeedMonitorConfig object at 0x7f3ff9d8b4f0>
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   nebula_config ................ {
+    "enabled": false, 
+    "persistent_storage_path": null, 
+    "persistent_time_interval": 100, 
+    "num_of_version_in_retention": 2, 
+    "enable_nebula_load": true, 
+    "load_path": null
+}
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   optimizer_legacy_fusion ...... False
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   optimizer_name ............... None
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   optimizer_params ............. None
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0}
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   pld_enabled .................. False
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   pld_params ................... False
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   prescale_gradients ........... False
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   scheduler_name ............... None
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   scheduler_params ............. None
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   sparse_attention ............. None
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   sparse_gradients_enabled ..... False
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   steps_per_print .............. 64
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   train_batch_size ............. 16
+[2023-08-25 11:52:31,893] [INFO] [config.py:1032:print]   train_micro_batch_size_per_gpu  4
+[2023-08-25 11:52:31,894] [INFO] [config.py:1032:print]   use_node_local_storage ....... False
+[2023-08-25 11:52:31,894] [INFO] [config.py:1032:print]   wall_clock_breakdown ......... False
+[2023-08-25 11:52:31,894] [INFO] [config.py:1032:print]   world_size ................... 2
+[2023-08-25 11:52:31,894] [INFO] [config.py:1032:print]   zero_allow_comm_data_type_fp32  False
+[2023-08-25 11:52:31,894] [INFO] [config.py:1032:print]   zero_allow_untested_optimizer  True
+[2023-08-25 11:52:31,894] [INFO] [config.py:1032:print]   zero_config .................. stage=3 contiguous_gradients=False reduce_scatter=False reduce_bucket_size=500,000,000 allgather_partitions=True allgather_bucket_size=500,000,000 overlap_comm=False max_group_size=4000000000 load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=None sub_group_size=1,000,000,000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=50,000,000 param_persistence_threshold=100,000 model_persistence_threshold=sys.maxsize max_live_parameters=1,000,000,000 max_reuse_distance=1,000,000,000 gather_16bit_weights_on_model_save=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False
+[2023-08-25 11:52:31,894] [INFO] [config.py:1032:print]   zero_enabled ................. True
+[2023-08-25 11:52:31,894] [INFO] [config.py:1032:print]   zero_optimization_stage ...... 3
+[2023-08-25 11:52:31,894] [INFO] [config.py:1017:print_user_config]   json = {
+    "steps_per_print": 64, 
+    "train_batch_size": 16, 
+    "train_micro_batch_size_per_gpu": 4, 
+    "gradient_accumulation_steps": 2, 
+    "bf16": {
+        "enabled": true
+    }, 
+    "gradient_clipping": 1, 
+    "zero_optimization": {
+        "stage": 3, 
+        "overlap_comm": false, 
+        "reduce_scatter": false, 
+        "contiguous_gradients": false
+    }, 
+    "zero_allow_untested_optimizer": true
+}
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+No modifications detected for re-loaded extension module utils, skipping build step...
+Loading extension module utils...
+Time to load utils op: 0.0003712177276611328 seconds
+[INFO|trainer.py:770] 2023-08-25 11:52:31,895 >> ***** Running training *****
+[INFO|trainer.py:771] 2023-08-25 11:52:31,895 >>   Num examples = 489
+[INFO|trainer.py:772] 2023-08-25 11:52:31,895 >>   Num Epochs = 10
+[INFO|trainer.py:773] 2023-08-25 11:52:31,895 >>   Instantaneous batch size per device = 4
+[INFO|trainer.py:774] 2023-08-25 11:52:31,896 >>   Total train batch size (w. parallel, distributed & accumulation) = 16
+[INFO|trainer.py:775] 2023-08-25 11:52:31,896 >>   Gradient Accumulation steps = 2
+[INFO|trainer.py:776] 2023-08-25 11:52:31,896 >>   Total optimization steps = 310
+[INFO|trainer.py:777] 2023-08-25 11:52:31,902 >>   Number of trainable parameters = 4,014,080
+  0%|          | 0/310 [00:00<?, ?it/s][WARNING|logging.py:280] 2023-08-25 11:52:31,935 >> You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:3030: UserWarning: torch.distributed._reduce_scatter_base is a private function and will be deprecated. Please use torch.distributed.reduce_scatter_tensor instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:3030: UserWarning: torch.distributed._reduce_scatter_base is a private function and will be deprecated. Please use torch.distributed.reduce_scatter_tensor instead.
+  warnings.warn(
+  0%|          | 1/310 [01:21<7:00:53, 81.73s/it]                                                 {'loss': 1.4492, 'learning_rate': 9.967741935483872e-05, 'epoch': 0.03, 'memory_allocated (GB)': 27.83, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  0%|          | 1/310 [01:21<7:00:53, 81.73s/it]  1%|          | 2/310 [01:54<4:31:33, 52.90s/it]                                                 {'loss': 1.4551, 'learning_rate': 9.935483870967742e-05, 'epoch': 0.06, 'memory_allocated (GB)': 18.78, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  1%|          | 2/310 [01:54<4:31:33, 52.90s/it]  1%|          | 3/310 [01:56<2:32:13, 29.75s/it]                                                 {'loss': 1.373, 'learning_rate': 9.903225806451614e-05, 'epoch': 0.1, 'memory_allocated (GB)': 18.5, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  1%|          | 3/310 [01:56<2:32:13, 29.75s/it]  1%|▏         | 4/310 [01:58<1:36:15, 18.88s/it]                                                 {'loss': 1.4023, 'learning_rate': 9.870967741935484e-05, 'epoch': 0.13, 'memory_allocated (GB)': 18.5, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  1%|▏         | 4/310 [01:58<1:36:15, 18.88s/it]  2%|▏         | 5/310 [02:01<1:05:27, 12.88s/it]                                                 {'loss': 1.5664, 'learning_rate': 9.838709677419355e-05, 'epoch': 0.16, 'memory_allocated (GB)': 18.22, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  2%|▏         | 5/310 [02:01<1:05:27, 12.88s/it]  2%|▏         | 6/310 [02:03<46:51,  9.25s/it]                                                 {'loss': 1.3887, 'learning_rate': 9.806451612903226e-05, 'epoch': 0.19, 'memory_allocated (GB)': 17.94, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  2%|▏         | 6/310 [02:03<46:51,  9.25s/it]  2%|▏         | 7/310 [02:05<35:18,  6.99s/it]                                               {'loss': 1.4141, 'learning_rate': 9.774193548387098e-05, 'epoch': 0.23, 'memory_allocated (GB)': 17.94, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  2%|▏         | 7/310 [02:05<35:18,  6.99s/it]  3%|▎         | 8/310 [02:07<27:31,  5.47s/it]                                               {'loss': 1.3477, 'learning_rate': 9.741935483870968e-05, 'epoch': 0.26, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  3%|▎         | 8/310 [02:07<27:31,  5.47s/it]  3%|▎         | 9/310 [02:10<22:22,  4.46s/it]                                               {'loss': 1.3418, 'learning_rate': 9.709677419354839e-05, 'epoch': 0.29, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  3%|▎         | 9/310 [02:10<22:22,  4.46s/it]  3%|▎         | 10/310 [02:12<18:49,  3.77s/it]                                                {'loss': 1.4453, 'learning_rate': 9.677419354838711e-05, 'epoch': 0.32, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  3%|▎         | 10/310 [02:12<18:49,  3.77s/it]  4%|▎         | 11/310 [02:14<16:23,  3.29s/it]                                                {'loss': 1.4648, 'learning_rate': 9.645161290322581e-05, 'epoch': 0.35, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  4%|▎         | 11/310 [02:14<16:23,  3.29s/it]  4%|▍         | 12/310 [02:16<14:41,  2.96s/it]                                                {'loss': 1.418, 'learning_rate': 9.612903225806452e-05, 'epoch': 0.39, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  4%|▍         | 12/310 [02:16<14:41,  2.96s/it]  4%|▍         | 13/310 [02:18<13:30,  2.73s/it]                                                {'loss': 1.334, 'learning_rate': 9.580645161290323e-05, 'epoch': 0.42, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  4%|▍         | 13/310 [02:18<13:30,  2.73s/it]  5%|▍         | 14/310 [02:21<12:51,  2.61s/it]                                                {'loss': 1.4238, 'learning_rate': 9.548387096774195e-05, 'epoch': 0.45, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  5%|▍         | 14/310 [02:21<12:51,  2.61s/it]  5%|▍         | 15/310 [02:23<12:13,  2.48s/it]                                                {'loss': 1.3555, 'learning_rate': 9.516129032258065e-05, 'epoch': 0.48, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  5%|▍         | 15/310 [02:23<12:13,  2.48s/it]  5%|▌         | 16/310 [02:25<11:45,  2.40s/it]                                                {'loss': 1.2832, 'learning_rate': 9.483870967741936e-05, 'epoch': 0.52, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  5%|▌         | 16/310 [02:25<11:45,  2.40s/it]  5%|▌         | 17/310 [02:27<11:25,  2.34s/it]                                                {'loss': 1.2988, 'learning_rate': 9.451612903225808e-05, 'epoch': 0.55, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  5%|▌         | 17/310 [02:27<11:25,  2.34s/it]  6%|▌         | 18/310 [02:30<11:15,  2.31s/it]                                                {'loss': 1.2383, 'learning_rate': 9.419354838709677e-05, 'epoch': 0.58, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  6%|▌         | 18/310 [02:30<11:15,  2.31s/it]  6%|▌         | 19/310 [02:32<11:03,  2.28s/it]                                                {'loss': 1.416, 'learning_rate': 9.387096774193549e-05, 'epoch': 0.61, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  6%|▌         | 19/310 [02:32<11:03,  2.28s/it]  6%|▋         | 20/310 [02:34<10:54,  2.26s/it]                                                {'loss': 1.2402, 'learning_rate': 9.35483870967742e-05, 'epoch': 0.65, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  6%|▋         | 20/310 [02:34<10:54,  2.26s/it]  7%|▋         | 21/310 [02:36<10:57,  2.27s/it]                                                {'loss': 1.3672, 'learning_rate': 9.32258064516129e-05, 'epoch': 0.68, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  7%|▋         | 21/310 [02:36<10:57,  2.27s/it]  7%|▋         | 22/310 [02:39<10:49,  2.25s/it]                                                {'loss': 1.3359, 'learning_rate': 9.290322580645162e-05, 'epoch': 0.71, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  7%|▋         | 22/310 [02:39<10:49,  2.25s/it]  7%|▋         | 23/310 [02:41<10:46,  2.25s/it]                                                {'loss': 1.2207, 'learning_rate': 9.258064516129033e-05, 'epoch': 0.74, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  7%|▋         | 23/310 [02:41<10:46,  2.25s/it]  8%|▊         | 24/310 [02:43<10:39,  2.24s/it]                                                {'loss': 1.252, 'learning_rate': 9.225806451612904e-05, 'epoch': 0.77, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  8%|▊         | 24/310 [02:43<10:39,  2.24s/it]  8%|▊         | 25/310 [02:45<10:34,  2.23s/it]                                                {'loss': 1.2871, 'learning_rate': 9.193548387096774e-05, 'epoch': 0.81, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  8%|▊         | 25/310 [02:45<10:34,  2.23s/it]  8%|▊         | 26/310 [02:47<10:30,  2.22s/it]                                                {'loss': 1.2129, 'learning_rate': 9.161290322580646e-05, 'epoch': 0.84, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  8%|▊         | 26/310 [02:47<10:30,  2.22s/it]  9%|▊         | 27/310 [02:50<10:26,  2.21s/it]                                                {'loss': 1.2754, 'learning_rate': 9.129032258064517e-05, 'epoch': 0.87, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  9%|▊         | 27/310 [02:50<10:26,  2.21s/it]  9%|▉         | 28/310 [02:52<10:23,  2.21s/it]                                                {'loss': 1.2021, 'learning_rate': 9.096774193548387e-05, 'epoch': 0.9, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  9%|▉         | 28/310 [02:52<10:23,  2.21s/it]  9%|▉         | 29/310 [02:54<10:30,  2.24s/it]                                                {'loss': 1.2051, 'learning_rate': 9.06451612903226e-05, 'epoch': 0.94, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+  9%|▉         | 29/310 [02:54<10:30,  2.24s/it] 10%|▉         | 30/310 [02:56<10:25,  2.23s/it]                                                {'loss': 1.2793, 'learning_rate': 9.032258064516129e-05, 'epoch': 0.97, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 10%|▉         | 30/310 [02:56<10:25,  2.23s/it] 10%|█         | 31/310 [02:59<10:20,  2.22s/it]                                                {'loss': 1.25, 'learning_rate': 9e-05, 'epoch': 1.0, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 10%|█         | 31/310 [02:59<10:20,  2.22s/it][2023-08-25 11:55:33,160] [INFO] [timer.py:241:stop] 0/64, RunningAvgSamplesPerSec=5.047914688664208, CurrSamplesPerSec=6.838402083653894, MemAllocated=17.66GB, MaxMemAllocated=80.61GB
+ 10%|█         | 32/310 [03:01<10:17,  2.22s/it]                                                {'loss': 1.2695, 'learning_rate': 8.967741935483871e-05, 'epoch': 1.03, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 10%|█         | 32/310 [03:01<10:17,  2.22s/it] 11%|█         | 33/310 [03:03<10:13,  2.22s/it]                                                {'loss': 1.1973, 'learning_rate': 8.935483870967742e-05, 'epoch': 1.06, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 11%|█         | 33/310 [03:03<10:13,  2.22s/it] 11%|█         | 34/310 [03:05<10:10,  2.21s/it]                                                {'loss': 1.2246, 'learning_rate': 8.903225806451614e-05, 'epoch': 1.1, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 11%|█         | 34/310 [03:05<10:10,  2.21s/it] 11%|█▏        | 35/310 [03:07<10:06,  2.21s/it]                                                {'loss': 1.2656, 'learning_rate': 8.870967741935484e-05, 'epoch': 1.13, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 11%|█▏        | 35/310 [03:07<10:06,  2.21s/it] 12%|█▏        | 36/310 [03:10<10:15,  2.24s/it]                                                {'loss': 1.2109, 'learning_rate': 8.838709677419355e-05, 'epoch': 1.16, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 12%|█▏        | 36/310 [03:10<10:15,  2.24s/it] 12%|█▏        | 37/310 [03:12<10:09,  2.23s/it]                                                {'loss': 1.2598, 'learning_rate': 8.806451612903226e-05, 'epoch': 1.19, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 12%|█▏        | 37/310 [03:12<10:09,  2.23s/it] 12%|█▏        | 38/310 [03:14<10:05,  2.22s/it]                                                {'loss': 1.1162, 'learning_rate': 8.774193548387098e-05, 'epoch': 1.23, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 12%|█▏        | 38/310 [03:14<10:05,  2.22s/it] 13%|█▎        | 39/310 [03:16<10:01,  2.22s/it]                                                {'loss': 1.2383, 'learning_rate': 8.741935483870968e-05, 'epoch': 1.26, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 13%|█▎        | 39/310 [03:16<10:01,  2.22s/it] 13%|█▎        | 40/310 [03:18<09:57,  2.21s/it]                                                {'loss': 1.1934, 'learning_rate': 8.709677419354839e-05, 'epoch': 1.29, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 13%|█▎        | 40/310 [03:18<09:57,  2.21s/it] 13%|█▎        | 41/310 [03:21<09:55,  2.21s/it]                                                {'loss': 1.1953, 'learning_rate': 8.677419354838711e-05, 'epoch': 1.32, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 13%|█▎        | 41/310 [03:21<09:55,  2.21s/it] 14%|█▎        | 42/310 [03:23<09:52,  2.21s/it]                                                {'loss': 1.1348, 'learning_rate': 8.645161290322581e-05, 'epoch': 1.35, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 14%|█▎        | 42/310 [03:23<09:52,  2.21s/it] 14%|█▍        | 43/310 [03:25<09:49,  2.21s/it]                                                {'loss': 1.2012, 'learning_rate': 8.612903225806452e-05, 'epoch': 1.39, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 14%|█▍        | 43/310 [03:25<09:49,  2.21s/it] 14%|█▍        | 44/310 [03:27<09:56,  2.24s/it]                                                {'loss': 1.1387, 'learning_rate': 8.580645161290323e-05, 'epoch': 1.42, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 14%|█▍        | 44/310 [03:27<09:56,  2.24s/it] 15%|█▍        | 45/310 [03:30<09:51,  2.23s/it]                                                {'loss': 1.1719, 'learning_rate': 8.548387096774195e-05, 'epoch': 1.45, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 15%|█▍        | 45/310 [03:30<09:51,  2.23s/it] 15%|█▍        | 46/310 [03:32<09:46,  2.22s/it]                                                {'loss': 1.168, 'learning_rate': 8.516129032258064e-05, 'epoch': 1.48, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 15%|█▍        | 46/310 [03:32<09:46,  2.22s/it] 15%|█▌        | 47/310 [03:34<09:43,  2.22s/it]                                                {'loss': 1.1016, 'learning_rate': 8.483870967741936e-05, 'epoch': 1.52, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 15%|█▌        | 47/310 [03:34<09:43,  2.22s/it] 15%|█▌        | 48/310 [03:36<09:40,  2.21s/it]                                                {'loss': 1.0713, 'learning_rate': 8.451612903225808e-05, 'epoch': 1.55, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 15%|█▌        | 48/310 [03:36<09:40,  2.21s/it] 16%|█▌        | 49/310 [03:39<09:47,  2.25s/it]                                                {'loss': 1.1016, 'learning_rate': 8.419354838709677e-05, 'epoch': 1.58, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 16%|█▌        | 49/310 [03:39<09:47,  2.25s/it] 16%|█▌        | 50/310 [03:41<09:53,  2.28s/it]                                                {'loss': 1.1836, 'learning_rate': 8.387096774193549e-05, 'epoch': 1.61, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 16%|█▌        | 50/310 [03:41<09:53,  2.28s/it] 16%|█▋        | 51/310 [03:43<09:57,  2.31s/it]                                                {'loss': 1.1934, 'learning_rate': 8.35483870967742e-05, 'epoch': 1.65, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 16%|█▋        | 51/310 [03:43<09:57,  2.31s/it] 17%|█▋        | 52/310 [03:46<09:57,  2.32s/it]                                                {'loss': 1.1338, 'learning_rate': 8.32258064516129e-05, 'epoch': 1.68, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 17%|█▋        | 52/310 [03:46<09:57,  2.32s/it] 17%|█▋        | 53/310 [03:48<10:06,  2.36s/it]                                                {'loss': 1.127, 'learning_rate': 8.290322580645161e-05, 'epoch': 1.71, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 17%|█▋        | 53/310 [03:48<10:06,  2.36s/it] 17%|█▋        | 54/310 [03:50<10:03,  2.36s/it]                                                {'loss': 1.0938, 'learning_rate': 8.258064516129033e-05, 'epoch': 1.74, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 17%|█▋        | 54/310 [03:50<10:03,  2.36s/it] 18%|█▊        | 55/310 [03:53<09:59,  2.35s/it]                                                {'loss': 1.0225, 'learning_rate': 8.225806451612904e-05, 'epoch': 1.77, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 18%|█▊        | 55/310 [03:53<09:59,  2.35s/it] 18%|█▊        | 56/310 [03:55<09:56,  2.35s/it]                                                {'loss': 1.209, 'learning_rate': 8.193548387096774e-05, 'epoch': 1.81, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 18%|█▊        | 56/310 [03:55<09:56,  2.35s/it] 18%|█▊        | 57/310 [03:57<09:54,  2.35s/it]                                                {'loss': 1.1855, 'learning_rate': 8.161290322580646e-05, 'epoch': 1.84, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 18%|█▊        | 57/310 [03:57<09:54,  2.35s/it] 19%|█▊        | 58/310 [04:00<09:51,  2.35s/it]                                                {'loss': 1.1016, 'learning_rate': 8.129032258064517e-05, 'epoch': 1.87, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 19%|█▊        | 58/310 [04:00<09:51,  2.35s/it] 19%|█▉        | 59/310 [04:02<09:49,  2.35s/it]                                                {'loss': 1.1055, 'learning_rate': 8.096774193548387e-05, 'epoch': 1.9, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 19%|█▉        | 59/310 [04:02<09:49,  2.35s/it] 19%|█▉        | 60/310 [04:05<09:46,  2.35s/it]                                                {'loss': 1.0322, 'learning_rate': 8.064516129032258e-05, 'epoch': 1.94, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 19%|█▉        | 60/310 [04:05<09:46,  2.35s/it] 20%|█▉        | 61/310 [04:07<09:44,  2.35s/it]                                                {'loss': 1.0381, 'learning_rate': 8.03225806451613e-05, 'epoch': 1.97, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 20%|█▉        | 61/310 [04:07<09:44,  2.35s/it] 20%|██        | 62/310 [04:09<09:43,  2.35s/it]                                                {'loss': 1.1035, 'learning_rate': 8e-05, 'epoch': 2.0, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 20%|██        | 62/310 [04:09<09:43,  2.35s/it] 20%|██        | 63/310 [04:12<09:52,  2.40s/it]                                                {'loss': 1.1191, 'learning_rate': 7.967741935483871e-05, 'epoch': 2.03, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 20%|██        | 63/310 [04:12<09:52,  2.40s/it][2023-08-25 11:56:46,503] [INFO] [logging.py:68:log_dist] [Rank 0] step=64, skipped=0, lr=[7.935483870967743e-05], mom=[(0.9, 0.999)]
+[2023-08-25 11:56:46,510] [INFO] [timer.py:241:stop] 0/128, RunningAvgSamplesPerSec=5.917149345339623, CurrSamplesPerSec=6.462817608899983, MemAllocated=17.66GB, MaxMemAllocated=80.61GB
+ 21%|██        | 64/310 [04:14<09:46,  2.38s/it]                                                {'loss': 1.1445, 'learning_rate': 7.935483870967743e-05, 'epoch': 2.06, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 21%|██        | 64/310 [04:14<09:46,  2.38s/it] 21%|██        | 65/310 [04:16<09:42,  2.38s/it]                                                {'loss': 1.0566, 'learning_rate': 7.903225806451613e-05, 'epoch': 2.1, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 21%|██        | 65/310 [04:16<09:42,  2.38s/it] 21%|██▏       | 66/310 [04:19<09:39,  2.37s/it]                                                {'loss': 1.0273, 'learning_rate': 7.870967741935484e-05, 'epoch': 2.13, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 21%|██▏       | 66/310 [04:19<09:39,  2.37s/it] 22%|██▏       | 67/310 [04:21<09:35,  2.37s/it]                                                {'loss': 1.0117, 'learning_rate': 7.838709677419355e-05, 'epoch': 2.16, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 22%|██▏       | 67/310 [04:21<09:35,  2.37s/it] 22%|██▏       | 68/310 [04:24<09:32,  2.36s/it]                                                {'loss': 1.1113, 'learning_rate': 7.806451612903226e-05, 'epoch': 2.19, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 22%|██▏       | 68/310 [04:24<09:32,  2.36s/it] 22%|██▏       | 69/310 [04:26<09:30,  2.37s/it]                                                {'loss': 1.1074, 'learning_rate': 7.774193548387098e-05, 'epoch': 2.23, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 22%|██▏       | 69/310 [04:26<09:30,  2.37s/it] 23%|██▎       | 70/310 [04:28<09:26,  2.36s/it]                                                {'loss': 1.0762, 'learning_rate': 7.741935483870968e-05, 'epoch': 2.26, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 23%|██▎       | 70/310 [04:28<09:26,  2.36s/it] 23%|██▎       | 71/310 [04:31<09:32,  2.39s/it]                                                {'loss': 1.0088, 'learning_rate': 7.709677419354839e-05, 'epoch': 2.29, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 23%|██▎       | 71/310 [04:31<09:32,  2.39s/it] 23%|██▎       | 72/310 [04:33<09:25,  2.38s/it]                                                {'loss': 0.957, 'learning_rate': 7.67741935483871e-05, 'epoch': 2.32, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 23%|██▎       | 72/310 [04:33<09:25,  2.38s/it] 24%|██▎       | 73/310 [04:35<09:21,  2.37s/it]                                                {'loss': 1.0342, 'learning_rate': 7.645161290322582e-05, 'epoch': 2.35, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 24%|██▎       | 73/310 [04:35<09:21,  2.37s/it] 24%|██▍       | 74/310 [04:38<09:17,  2.36s/it]                                                {'loss': 0.998, 'learning_rate': 7.612903225806451e-05, 'epoch': 2.39, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 24%|██▍       | 74/310 [04:38<09:17,  2.36s/it] 24%|██▍       | 75/310 [04:40<09:13,  2.36s/it]                                                {'loss': 1.0391, 'learning_rate': 7.580645161290323e-05, 'epoch': 2.42, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 24%|██▍       | 75/310 [04:40<09:13,  2.36s/it] 25%|██▍       | 76/310 [04:42<09:10,  2.35s/it]                                                {'loss': 1.0205, 'learning_rate': 7.548387096774195e-05, 'epoch': 2.45, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 25%|██▍       | 76/310 [04:42<09:10,  2.35s/it] 25%|██▍       | 77/310 [04:45<09:08,  2.35s/it]                                                {'loss': 1.0205, 'learning_rate': 7.516129032258064e-05, 'epoch': 2.48, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 25%|██▍       | 77/310 [04:45<09:08,  2.35s/it] 25%|██▌       | 78/310 [04:47<09:13,  2.39s/it]                                                {'loss': 1.0791, 'learning_rate': 7.483870967741936e-05, 'epoch': 2.52, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 25%|██▌       | 78/310 [04:47<09:13,  2.39s/it] 25%|██▌       | 79/310 [04:50<09:08,  2.38s/it]                                                {'loss': 0.9473, 'learning_rate': 7.451612903225807e-05, 'epoch': 2.55, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 25%|██▌       | 79/310 [04:50<09:08,  2.38s/it] 26%|██▌       | 80/310 [04:52<09:04,  2.37s/it]                                                {'loss': 1.0391, 'learning_rate': 7.419354838709677e-05, 'epoch': 2.58, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 26%|██▌       | 80/310 [04:52<09:04,  2.37s/it] 26%|██▌       | 81/310 [04:54<09:00,  2.36s/it]                                                {'loss': 1.0586, 'learning_rate': 7.387096774193549e-05, 'epoch': 2.61, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 26%|██▌       | 81/310 [04:54<09:00,  2.36s/it] 26%|██▋       | 82/310 [04:57<08:56,  2.35s/it]                                                {'loss': 1.0361, 'learning_rate': 7.35483870967742e-05, 'epoch': 2.65, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 26%|██▋       | 82/310 [04:57<08:56,  2.35s/it] 27%|██▋       | 83/310 [04:59<08:54,  2.35s/it]                                                {'loss': 0.9268, 'learning_rate': 7.32258064516129e-05, 'epoch': 2.68, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 27%|██▋       | 83/310 [04:59<08:54,  2.35s/it] 27%|██▋       | 84/310 [05:01<08:52,  2.36s/it]                                                {'loss': 0.918, 'learning_rate': 7.290322580645161e-05, 'epoch': 2.71, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 27%|██▋       | 84/310 [05:01<08:52,  2.36s/it] 27%|██▋       | 85/310 [05:04<08:50,  2.36s/it]                                                {'loss': 1.0176, 'learning_rate': 7.258064516129033e-05, 'epoch': 2.74, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 27%|██▋       | 85/310 [05:04<08:50,  2.36s/it] 28%|██▊       | 86/310 [05:06<08:57,  2.40s/it]                                                {'loss': 1.0244, 'learning_rate': 7.225806451612904e-05, 'epoch': 2.77, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 28%|██▊       | 86/310 [05:06<08:57,  2.40s/it] 28%|██▊       | 87/310 [05:09<08:52,  2.39s/it]                                                {'loss': 0.9277, 'learning_rate': 7.193548387096774e-05, 'epoch': 2.81, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 28%|██▊       | 87/310 [05:09<08:52,  2.39s/it] 28%|██▊       | 88/310 [05:11<08:48,  2.38s/it]                                                {'loss': 0.9678, 'learning_rate': 7.161290322580646e-05, 'epoch': 2.84, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 28%|██▊       | 88/310 [05:11<08:48,  2.38s/it] 29%|██▊       | 89/310 [05:13<08:42,  2.37s/it]                                                {'loss': 1.0371, 'learning_rate': 7.129032258064517e-05, 'epoch': 2.87, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 29%|██▊       | 89/310 [05:13<08:42,  2.37s/it] 29%|██▉       | 90/310 [05:15<08:29,  2.32s/it]                                                {'loss': 0.9004, 'learning_rate': 7.096774193548388e-05, 'epoch': 2.9, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 29%|██▉       | 90/310 [05:15<08:29,  2.32s/it] 29%|██▉       | 91/310 [05:18<08:21,  2.29s/it]                                                {'loss': 1.0449, 'learning_rate': 7.064516129032258e-05, 'epoch': 2.94, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 29%|██▉       | 91/310 [05:18<08:21,  2.29s/it] 30%|██▉       | 92/310 [05:20<08:13,  2.26s/it]                                                {'loss': 1.002, 'learning_rate': 7.03225806451613e-05, 'epoch': 2.97, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 30%|██▉       | 92/310 [05:20<08:13,  2.26s/it] 30%|███       | 93/310 [05:22<08:07,  2.25s/it]                                                {'loss': 0.9502, 'learning_rate': 7e-05, 'epoch': 3.0, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 30%|███       | 93/310 [05:22<08:07,  2.25s/it] 30%|███       | 94/310 [05:24<08:02,  2.23s/it]                                                {'loss': 1.0312, 'learning_rate': 6.967741935483871e-05, 'epoch': 3.03, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 30%|███       | 94/310 [05:24<08:02,  2.23s/it] 31%|███       | 95/310 [05:27<08:05,  2.26s/it]                                                {'loss': 0.9248, 'learning_rate': 6.935483870967743e-05, 'epoch': 3.06, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 31%|███       | 95/310 [05:27<08:05,  2.26s/it][2023-08-25 11:58:01,259] [INFO] [timer.py:241:stop] 0/192, RunningAvgSamplesPerSec=6.233342785116043, CurrSamplesPerSec=6.833838081222116, MemAllocated=17.66GB, MaxMemAllocated=80.61GB
+ 31%|███       | 96/310 [05:29<08:00,  2.25s/it]                                                {'loss': 1.0215, 'learning_rate': 6.903225806451613e-05, 'epoch': 3.1, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 31%|███       | 96/310 [05:29<08:00,  2.25s/it] 31%|███▏      | 97/310 [05:31<07:55,  2.23s/it]                                                {'loss': 1.0195, 'learning_rate': 6.870967741935485e-05, 'epoch': 3.13, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 31%|███▏      | 97/310 [05:31<07:55,  2.23s/it] 32%|███▏      | 98/310 [05:33<07:51,  2.22s/it]                                                {'loss': 1.0225, 'learning_rate': 6.838709677419355e-05, 'epoch': 3.16, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 32%|███▏      | 98/310 [05:33<07:51,  2.22s/it] 32%|███▏      | 99/310 [05:35<07:47,  2.22s/it]                                                {'loss': 0.9404, 'learning_rate': 6.806451612903226e-05, 'epoch': 3.19, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 32%|███▏      | 99/310 [05:35<07:47,  2.22s/it] 32%|███▏      | 100/310 [05:38<07:44,  2.21s/it]                                                 {'loss': 0.9541, 'learning_rate': 6.774193548387096e-05, 'epoch': 3.23, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 32%|███▏      | 100/310 [05:38<07:44,  2.21s/it] 33%|███▎      | 101/310 [05:40<07:42,  2.21s/it]                                                 {'loss': 1.0059, 'learning_rate': 6.741935483870968e-05, 'epoch': 3.26, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 33%|███▎      | 101/310 [05:40<07:42,  2.21s/it] 33%|███▎      | 102/310 [05:42<07:39,  2.21s/it]                                                 {'loss': 0.9697, 'learning_rate': 6.709677419354839e-05, 'epoch': 3.29, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 33%|███▎      | 102/310 [05:42<07:39,  2.21s/it] 33%|███▎      | 103/310 [05:44<07:37,  2.21s/it]                                                 {'loss': 0.9668, 'learning_rate': 6.67741935483871e-05, 'epoch': 3.32, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 33%|███▎      | 103/310 [05:44<07:37,  2.21s/it] 34%|███▎      | 104/310 [05:46<07:34,  2.21s/it]                                                 {'loss': 1.0527, 'learning_rate': 6.645161290322582e-05, 'epoch': 3.35, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 34%|███▎      | 104/310 [05:46<07:34,  2.21s/it] 34%|███▍      | 105/310 [05:49<07:38,  2.24s/it]                                                 {'loss': 0.9385, 'learning_rate': 6.612903225806452e-05, 'epoch': 3.39, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 34%|███▍      | 105/310 [05:49<07:38,  2.24s/it] 34%|███▍      | 106/310 [05:51<07:34,  2.23s/it]                                                 {'loss': 0.9551, 'learning_rate': 6.580645161290323e-05, 'epoch': 3.42, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 34%|███▍      | 106/310 [05:51<07:34,  2.23s/it] 35%|███▍      | 107/310 [05:53<07:30,  2.22s/it]                                                 {'loss': 0.8984, 'learning_rate': 6.548387096774193e-05, 'epoch': 3.45, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 35%|███▍      | 107/310 [05:53<07:30,  2.22s/it] 35%|███▍      | 108/310 [05:55<07:26,  2.21s/it]                                                 {'loss': 0.9883, 'learning_rate': 6.516129032258065e-05, 'epoch': 3.48, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 35%|███▍      | 108/310 [05:55<07:26,  2.21s/it] 35%|███▌      | 109/310 [05:58<07:24,  2.21s/it]                                                 {'loss': 0.9453, 'learning_rate': 6.483870967741936e-05, 'epoch': 3.52, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 35%|███▌      | 109/310 [05:58<07:24,  2.21s/it] 35%|███▌      | 110/310 [06:00<07:21,  2.21s/it]                                                 {'loss': 0.9541, 'learning_rate': 6.451612903225807e-05, 'epoch': 3.55, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 35%|███▌      | 110/310 [06:00<07:21,  2.21s/it] 36%|███▌      | 111/310 [06:02<07:19,  2.21s/it]                                                 {'loss': 1.0469, 'learning_rate': 6.419354838709679e-05, 'epoch': 3.58, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 36%|███▌      | 111/310 [06:02<07:19,  2.21s/it] 36%|███▌      | 112/310 [06:04<07:17,  2.21s/it]                                                 {'loss': 0.9971, 'learning_rate': 6.387096774193548e-05, 'epoch': 3.61, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 36%|███▌      | 112/310 [06:04<07:17,  2.21s/it] 36%|███▋      | 113/310 [06:07<07:24,  2.26s/it]                                                 {'loss': 1.0039, 'learning_rate': 6.35483870967742e-05, 'epoch': 3.65, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 36%|███▋      | 113/310 [06:07<07:24,  2.26s/it] 37%|███▋      | 114/310 [06:09<07:19,  2.24s/it]                                                 {'loss': 0.9199, 'learning_rate': 6.32258064516129e-05, 'epoch': 3.68, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 37%|███▋      | 114/310 [06:09<07:19,  2.24s/it] 37%|███▋      | 115/310 [06:11<07:15,  2.23s/it]                                                 {'loss': 0.9365, 'learning_rate': 6.290322580645161e-05, 'epoch': 3.71, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 37%|███▋      | 115/310 [06:11<07:15,  2.23s/it] 37%|███▋      | 116/310 [06:13<07:11,  2.22s/it]                                                 {'loss': 1.0391, 'learning_rate': 6.258064516129033e-05, 'epoch': 3.74, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 37%|███▋      | 116/310 [06:13<07:11,  2.22s/it] 38%|███▊      | 117/310 [06:15<07:07,  2.22s/it]                                                 {'loss': 0.9971, 'learning_rate': 6.225806451612904e-05, 'epoch': 3.77, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 38%|███▊      | 117/310 [06:15<07:07,  2.22s/it] 38%|███▊      | 118/310 [06:18<07:04,  2.21s/it]                                                 {'loss': 1.0703, 'learning_rate': 6.193548387096774e-05, 'epoch': 3.81, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 38%|███▊      | 118/310 [06:18<07:04,  2.21s/it] 38%|███▊      | 119/310 [06:20<07:02,  2.21s/it]                                                 {'loss': 0.9395, 'learning_rate': 6.161290322580645e-05, 'epoch': 3.84, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 38%|███▊      | 119/310 [06:20<07:02,  2.21s/it] 39%|███▊      | 120/310 [06:22<07:06,  2.24s/it]                                                 {'loss': 0.9453, 'learning_rate': 6.129032258064517e-05, 'epoch': 3.87, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 39%|███▊      | 120/310 [06:22<07:06,  2.24s/it] 39%|███▉      | 121/310 [06:24<07:02,  2.23s/it]                                                 {'loss': 0.958, 'learning_rate': 6.096774193548387e-05, 'epoch': 3.9, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 39%|███▉      | 121/310 [06:24<07:02,  2.23s/it] 39%|███▉      | 122/310 [06:27<06:58,  2.22s/it]                                                 {'loss': 0.915, 'learning_rate': 6.064516129032258e-05, 'epoch': 3.94, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 39%|███▉      | 122/310 [06:27<06:58,  2.22s/it] 40%|███▉      | 123/310 [06:29<06:54,  2.22s/it]                                                 {'loss': 0.9717, 'learning_rate': 6.0322580645161295e-05, 'epoch': 3.97, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 40%|███▉      | 123/310 [06:29<06:54,  2.22s/it] 40%|████      | 124/310 [06:31<06:51,  2.21s/it]                                                 {'loss': 0.9844, 'learning_rate': 6e-05, 'epoch': 4.0, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 40%|████      | 124/310 [06:31<06:51,  2.21s/it] 40%|████      | 125/310 [06:33<06:48,  2.21s/it]                                                 {'loss': 0.9463, 'learning_rate': 5.9677419354838715e-05, 'epoch': 4.03, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 40%|████      | 125/310 [06:33<06:48,  2.21s/it] 41%|████      | 126/310 [06:35<06:46,  2.21s/it]                                                 {'loss': 0.9414, 'learning_rate': 5.935483870967742e-05, 'epoch': 4.06, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 41%|████      | 126/310 [06:35<06:46,  2.21s/it] 41%|████      | 127/310 [06:38<06:43,  2.21s/it]                                                 {'loss': 0.9229, 'learning_rate': 5.9032258064516134e-05, 'epoch': 4.1, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 41%|████      | 127/310 [06:38<06:43,  2.21s/it][2023-08-25 11:59:12,291] [INFO] [logging.py:68:log_dist] [Rank 0] step=128, skipped=0, lr=[5.870967741935483e-05], mom=[(0.9, 0.999)]
+[2023-08-25 11:59:12,302] [INFO] [timer.py:241:stop] 0/256, RunningAvgSamplesPerSec=6.4789560621914255, CurrSamplesPerSec=6.226374817222977, MemAllocated=17.66GB, MaxMemAllocated=80.61GB
+ 41%|████▏     | 128/310 [06:40<06:48,  2.24s/it]                                                 {'loss': 0.9688, 'learning_rate': 5.870967741935483e-05, 'epoch': 4.13, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 41%|████▏     | 128/310 [06:40<06:48,  2.24s/it] 42%|████▏     | 129/310 [06:42<06:43,  2.23s/it]                                                 {'loss': 1.0039, 'learning_rate': 5.838709677419355e-05, 'epoch': 4.16, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 42%|████▏     | 129/310 [06:42<06:43,  2.23s/it] 42%|████▏     | 130/310 [06:44<06:40,  2.22s/it]                                                 {'loss': 0.9902, 'learning_rate': 5.8064516129032266e-05, 'epoch': 4.19, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 42%|████▏     | 130/310 [06:44<06:40,  2.22s/it] 42%|████▏     | 131/310 [06:46<06:36,  2.22s/it]                                                 {'loss': 0.9531, 'learning_rate': 5.7741935483870965e-05, 'epoch': 4.23, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 42%|████▏     | 131/310 [06:46<06:36,  2.22s/it] 43%|████▎     | 132/310 [06:49<06:33,  2.21s/it]                                                 {'loss': 1.0801, 'learning_rate': 5.7419354838709685e-05, 'epoch': 4.26, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 43%|████▎     | 132/310 [06:49<06:33,  2.21s/it] 43%|████▎     | 133/310 [06:51<06:31,  2.21s/it]                                                 {'loss': 1.0186, 'learning_rate': 5.7096774193548384e-05, 'epoch': 4.29, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 43%|████▎     | 133/310 [06:51<06:31,  2.21s/it] 43%|████▎     | 134/310 [06:53<06:28,  2.21s/it]                                                 {'loss': 0.9004, 'learning_rate': 5.67741935483871e-05, 'epoch': 4.32, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 43%|████▎     | 134/310 [06:53<06:28,  2.21s/it] 44%|████▎     | 135/310 [06:55<06:25,  2.20s/it]                                                 {'loss': 0.9824, 'learning_rate': 5.645161290322582e-05, 'epoch': 4.35, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 44%|████▎     | 135/310 [06:55<06:25,  2.20s/it] 44%|████▍     | 136/310 [06:57<06:23,  2.20s/it]                                                 {'loss': 0.9033, 'learning_rate': 5.612903225806452e-05, 'epoch': 4.39, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 44%|████▍     | 136/310 [06:58<06:23,  2.20s/it] 44%|████▍     | 137/310 [07:00<06:28,  2.25s/it]                                                 {'loss': 0.9648, 'learning_rate': 5.580645161290323e-05, 'epoch': 4.42, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 44%|████▍     | 137/310 [07:00<06:28,  2.25s/it] 45%|████▍     | 138/310 [07:02<06:23,  2.23s/it]                                                 {'loss': 0.9482, 'learning_rate': 5.5483870967741936e-05, 'epoch': 4.45, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 45%|████▍     | 138/310 [07:02<06:23,  2.23s/it] 45%|████▍     | 139/310 [07:04<06:19,  2.22s/it]                                                 {'loss': 0.9307, 'learning_rate': 5.516129032258065e-05, 'epoch': 4.48, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 45%|████▍     | 139/310 [07:04<06:19,  2.22s/it] 45%|████▌     | 140/310 [07:06<06:16,  2.22s/it]                                                 {'loss': 1.0195, 'learning_rate': 5.4838709677419355e-05, 'epoch': 4.52, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 45%|████▌     | 140/310 [07:06<06:16,  2.22s/it] 45%|████▌     | 141/310 [07:09<06:13,  2.21s/it]                                                 {'loss': 0.9805, 'learning_rate': 5.451612903225807e-05, 'epoch': 4.55, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 45%|████▌     | 141/310 [07:09<06:13,  2.21s/it] 46%|████▌     | 142/310 [07:11<06:10,  2.21s/it]                                                 {'loss': 0.959, 'learning_rate': 5.419354838709678e-05, 'epoch': 4.58, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 46%|████▌     | 142/310 [07:11<06:10,  2.21s/it] 46%|████▌     | 143/310 [07:13<06:08,  2.20s/it]                                                 {'loss': 0.9727, 'learning_rate': 5.387096774193549e-05, 'epoch': 4.61, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 46%|████▌     | 143/310 [07:13<06:08,  2.20s/it] 46%|████▋     | 144/310 [07:15<06:05,  2.20s/it]                                                 {'loss': 1.0146, 'learning_rate': 5.35483870967742e-05, 'epoch': 4.65, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 46%|████▋     | 144/310 [07:15<06:05,  2.20s/it] 47%|████▋     | 145/310 [07:17<06:03,  2.20s/it]                                                 {'loss': 1.0244, 'learning_rate': 5.32258064516129e-05, 'epoch': 4.68, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 47%|████▋     | 145/310 [07:17<06:03,  2.20s/it] 47%|████▋     | 146/310 [07:20<06:00,  2.20s/it]                                                 {'loss': 0.9062, 'learning_rate': 5.290322580645162e-05, 'epoch': 4.71, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 47%|████▋     | 146/310 [07:20<06:00,  2.20s/it] 47%|████▋     | 147/310 [07:22<06:04,  2.24s/it]                                                 {'loss': 0.9404, 'learning_rate': 5.258064516129032e-05, 'epoch': 4.74, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 47%|████▋     | 147/310 [07:22<06:04,  2.24s/it] 48%|████▊     | 148/310 [07:24<06:00,  2.23s/it]                                                 {'loss': 0.9639, 'learning_rate': 5.225806451612903e-05, 'epoch': 4.77, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 48%|████▊     | 148/310 [07:24<06:00,  2.23s/it] 48%|████▊     | 149/310 [07:26<05:57,  2.22s/it]                                                 {'loss': 1.3818, 'learning_rate': 5.193548387096775e-05, 'epoch': 4.81, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 48%|████▊     | 149/310 [07:26<05:57,  2.22s/it] 48%|████▊     | 150/310 [07:29<05:53,  2.21s/it]                                                 {'loss': 0.9961, 'learning_rate': 5.161290322580645e-05, 'epoch': 4.84, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 48%|████▊     | 150/310 [07:29<05:53,  2.21s/it] 49%|████▊     | 151/310 [07:31<05:51,  2.21s/it]                                                 {'loss': 0.9082, 'learning_rate': 5.1290322580645164e-05, 'epoch': 4.87, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 49%|████▊     | 151/310 [07:31<05:51,  2.21s/it] 49%|████▉     | 152/310 [07:33<05:48,  2.21s/it]                                                 {'loss': 0.9189, 'learning_rate': 5.096774193548387e-05, 'epoch': 4.9, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 49%|████▉     | 152/310 [07:33<05:48,  2.21s/it] 49%|████▉     | 153/310 [07:35<05:46,  2.20s/it]                                                 {'loss': 0.8955, 'learning_rate': 5.064516129032258e-05, 'epoch': 4.94, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 49%|████▉     | 153/310 [07:35<05:46,  2.20s/it] 50%|████▉     | 154/310 [07:37<05:43,  2.20s/it]                                                 {'loss': 1.0127, 'learning_rate': 5.032258064516129e-05, 'epoch': 4.97, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 50%|████▉     | 154/310 [07:37<05:43,  2.20s/it] 50%|█████     | 155/310 [07:40<05:47,  2.24s/it]                                                 {'loss': 0.9863, 'learning_rate': 5e-05, 'epoch': 5.0, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 50%|█████     | 155/310 [07:40<05:47,  2.24s/it] 50%|█████     | 156/310 [07:42<05:47,  2.25s/it]                                                 {'loss': 1.0352, 'learning_rate': 4.967741935483871e-05, 'epoch': 5.03, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 50%|█████     | 156/310 [07:42<05:47,  2.25s/it] 51%|█████     | 157/310 [07:44<05:45,  2.26s/it]                                                 {'loss': 0.96, 'learning_rate': 4.935483870967742e-05, 'epoch': 5.06, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 51%|█████     | 157/310 [07:44<05:45,  2.26s/it] 51%|█████     | 158/310 [07:46<05:43,  2.26s/it]                                                 {'loss': 1.0205, 'learning_rate': 4.903225806451613e-05, 'epoch': 5.1, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 51%|█████     | 158/310 [07:46<05:43,  2.26s/it] 51%|█████▏    | 159/310 [07:49<05:41,  2.26s/it]                                                 {'loss': 1.0, 'learning_rate': 4.870967741935484e-05, 'epoch': 5.13, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 51%|█████▏    | 159/310 [07:49<05:41,  2.26s/it][2023-08-25 12:00:23,462] [INFO] [timer.py:241:stop] 0/320, RunningAvgSamplesPerSec=6.632987996588009, CurrSamplesPerSec=6.603573054997841, MemAllocated=17.66GB, MaxMemAllocated=80.61GB
+ 52%|█████▏    | 160/310 [07:51<05:40,  2.27s/it]                                                 {'loss': 0.8496, 'learning_rate': 4.8387096774193554e-05, 'epoch': 5.16, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 52%|█████▏    | 160/310 [07:51<05:40,  2.27s/it] 52%|█████▏    | 161/310 [07:53<05:37,  2.27s/it]                                                 {'loss': 0.9697, 'learning_rate': 4.806451612903226e-05, 'epoch': 5.19, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 52%|█████▏    | 161/310 [07:53<05:37,  2.27s/it] 52%|█████▏    | 162/310 [07:56<05:40,  2.30s/it]                                                 {'loss': 0.9053, 'learning_rate': 4.774193548387097e-05, 'epoch': 5.23, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 52%|█████▏    | 162/310 [07:56<05:40,  2.30s/it] 53%|█████▎    | 163/310 [07:58<05:36,  2.29s/it]                                                 {'loss': 0.9521, 'learning_rate': 4.741935483870968e-05, 'epoch': 5.26, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 53%|█████▎    | 163/310 [07:58<05:36,  2.29s/it] 53%|█████▎    | 164/310 [08:00<05:33,  2.28s/it]                                                 {'loss': 1.0078, 'learning_rate': 4.7096774193548385e-05, 'epoch': 5.29, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 53%|█████▎    | 164/310 [08:00<05:33,  2.28s/it] 53%|█████▎    | 165/310 [08:02<05:30,  2.28s/it]                                                 {'loss': 0.9453, 'learning_rate': 4.67741935483871e-05, 'epoch': 5.32, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 53%|█████▎    | 165/310 [08:02<05:30,  2.28s/it] 54%|█████▎    | 166/310 [08:05<05:27,  2.28s/it]                                                 {'loss': 0.9189, 'learning_rate': 4.645161290322581e-05, 'epoch': 5.35, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 54%|█████▎    | 166/310 [08:05<05:27,  2.28s/it] 54%|█████▍    | 167/310 [08:07<05:25,  2.27s/it]                                                 {'loss': 0.8643, 'learning_rate': 4.612903225806452e-05, 'epoch': 5.39, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 54%|█████▍    | 167/310 [08:07<05:25,  2.27s/it] 54%|█████▍    | 168/310 [08:09<05:22,  2.27s/it]                                                 {'loss': 1.0107, 'learning_rate': 4.580645161290323e-05, 'epoch': 5.42, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 54%|█████▍    | 168/310 [08:09<05:22,  2.27s/it] 55%|█████▍    | 169/310 [08:12<05:19,  2.27s/it]                                                 {'loss': 0.9238, 'learning_rate': 4.548387096774194e-05, 'epoch': 5.45, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 55%|█████▍    | 169/310 [08:12<05:19,  2.27s/it] 55%|█████▍    | 170/310 [08:14<05:22,  2.30s/it]                                                 {'loss': 0.9492, 'learning_rate': 4.516129032258064e-05, 'epoch': 5.48, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 55%|█████▍    | 170/310 [08:14<05:22,  2.30s/it] 55%|█████▌    | 171/310 [08:16<05:18,  2.29s/it]                                                 {'loss': 0.9453, 'learning_rate': 4.4838709677419356e-05, 'epoch': 5.52, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 55%|█████▌    | 171/310 [08:16<05:18,  2.29s/it] 55%|█████▌    | 172/310 [08:18<05:14,  2.28s/it]                                                 {'loss': 0.958, 'learning_rate': 4.451612903225807e-05, 'epoch': 5.55, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 55%|█████▌    | 172/310 [08:18<05:14,  2.28s/it] 56%|█████▌    | 173/310 [08:21<05:12,  2.28s/it]                                                 {'loss': 1.0176, 'learning_rate': 4.4193548387096775e-05, 'epoch': 5.58, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 56%|█████▌    | 173/310 [08:21<05:12,  2.28s/it] 56%|█████▌    | 174/310 [08:23<05:09,  2.28s/it]                                                 {'loss': 0.9365, 'learning_rate': 4.387096774193549e-05, 'epoch': 5.61, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 56%|█████▌    | 174/310 [08:23<05:09,  2.28s/it] 56%|█████▋    | 175/310 [08:25<05:07,  2.27s/it]                                                 {'loss': 0.9775, 'learning_rate': 4.3548387096774194e-05, 'epoch': 5.65, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 56%|█████▋    | 175/310 [08:25<05:07,  2.27s/it] 57%|█████▋    | 176/310 [08:28<05:04,  2.27s/it]                                                 {'loss': 1.042, 'learning_rate': 4.322580645161291e-05, 'epoch': 5.68, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 57%|█████▋    | 176/310 [08:28<05:04,  2.27s/it] 57%|█████▋    | 177/310 [08:30<05:02,  2.27s/it]                                                 {'loss': 0.9609, 'learning_rate': 4.2903225806451614e-05, 'epoch': 5.71, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 57%|█████▋    | 177/310 [08:30<05:02,  2.27s/it] 57%|█████▋    | 178/310 [08:32<04:59,  2.27s/it]                                                 {'loss': 0.9404, 'learning_rate': 4.258064516129032e-05, 'epoch': 5.74, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 57%|█████▋    | 178/310 [08:32<04:59,  2.27s/it] 58%|█████▊    | 179/310 [08:34<05:01,  2.30s/it]                                                 {'loss': 0.9395, 'learning_rate': 4.225806451612904e-05, 'epoch': 5.77, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 58%|█████▊    | 179/310 [08:34<05:01,  2.30s/it] 58%|█████▊    | 180/310 [08:37<04:57,  2.29s/it]                                                 {'loss': 0.9316, 'learning_rate': 4.1935483870967746e-05, 'epoch': 5.81, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 58%|█████▊    | 180/310 [08:37<04:57,  2.29s/it] 58%|█████▊    | 181/310 [08:39<04:54,  2.28s/it]                                                 {'loss': 0.9102, 'learning_rate': 4.161290322580645e-05, 'epoch': 5.84, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 58%|█████▊    | 181/310 [08:39<04:54,  2.28s/it] 59%|█████▊    | 182/310 [08:41<04:51,  2.28s/it]                                                 {'loss': 0.9287, 'learning_rate': 4.1290322580645165e-05, 'epoch': 5.87, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 59%|█████▊    | 182/310 [08:41<04:51,  2.28s/it] 59%|█████▉    | 183/310 [08:44<04:48,  2.27s/it]                                                 {'loss': 0.9482, 'learning_rate': 4.096774193548387e-05, 'epoch': 5.9, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 59%|█████▉    | 183/310 [08:44<04:48,  2.27s/it] 59%|█████▉    | 184/310 [08:46<04:46,  2.27s/it]                                                 {'loss': 0.8867, 'learning_rate': 4.0645161290322584e-05, 'epoch': 5.94, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 59%|█████▉    | 184/310 [08:46<04:46,  2.27s/it] 60%|█████▉    | 185/310 [08:48<04:41,  2.25s/it]                                                 {'loss': 0.9346, 'learning_rate': 4.032258064516129e-05, 'epoch': 5.97, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 60%|█████▉    | 185/310 [08:48<04:41,  2.25s/it] 60%|██████    | 186/310 [08:50<04:37,  2.23s/it]                                                 {'loss': 0.8955, 'learning_rate': 4e-05, 'epoch': 6.0, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 60%|██████    | 186/310 [08:50<04:37,  2.23s/it] 60%|██████    | 187/310 [08:52<04:34,  2.23s/it]                                                 {'loss': 0.8516, 'learning_rate': 3.9677419354838716e-05, 'epoch': 6.03, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 60%|██████    | 187/310 [08:52<04:34,  2.23s/it] 61%|██████    | 188/310 [08:55<04:30,  2.22s/it]                                                 {'loss': 1.0117, 'learning_rate': 3.935483870967742e-05, 'epoch': 6.06, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 61%|██████    | 188/310 [08:55<04:30,  2.22s/it] 61%|██████    | 189/310 [08:57<04:31,  2.25s/it]                                                 {'loss': 0.9424, 'learning_rate': 3.903225806451613e-05, 'epoch': 6.1, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 61%|██████    | 189/310 [08:57<04:31,  2.25s/it] 61%|██████▏   | 190/310 [08:59<04:27,  2.23s/it]                                                 {'loss': 0.958, 'learning_rate': 3.870967741935484e-05, 'epoch': 6.13, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 61%|██████▏   | 190/310 [08:59<04:27,  2.23s/it] 62%|██████▏   | 191/310 [09:01<04:24,  2.22s/it]                                                 {'loss': 0.9902, 'learning_rate': 3.838709677419355e-05, 'epoch': 6.16, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 62%|██████▏   | 191/310 [09:01<04:24,  2.22s/it][2023-08-25 12:01:35,897] [INFO] [logging.py:68:log_dist] [Rank 0] step=192, skipped=0, lr=[3.8064516129032254e-05], mom=[(0.9, 0.999)]
+[2023-08-25 12:01:35,904] [INFO] [timer.py:241:stop] 0/384, RunningAvgSamplesPerSec=6.720508747014975, CurrSamplesPerSec=6.857914602751306, MemAllocated=17.66GB, MaxMemAllocated=80.61GB
+ 62%|██████▏   | 192/310 [09:03<04:21,  2.22s/it]                                                 {'loss': 0.9277, 'learning_rate': 3.8064516129032254e-05, 'epoch': 6.19, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 62%|██████▏   | 192/310 [09:03<04:21,  2.22s/it] 62%|██████▏   | 193/310 [09:06<04:18,  2.21s/it]                                                 {'loss': 0.9111, 'learning_rate': 3.7741935483870974e-05, 'epoch': 6.23, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 62%|██████▏   | 193/310 [09:06<04:18,  2.21s/it] 63%|██████▎   | 194/310 [09:08<04:15,  2.21s/it]                                                 {'loss': 0.8838, 'learning_rate': 3.741935483870968e-05, 'epoch': 6.26, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 63%|██████▎   | 194/310 [09:08<04:15,  2.21s/it] 63%|██████▎   | 195/310 [09:10<04:13,  2.20s/it]                                                 {'loss': 0.8633, 'learning_rate': 3.7096774193548386e-05, 'epoch': 6.29, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 63%|██████▎   | 195/310 [09:10<04:13,  2.20s/it] 63%|██████▎   | 196/310 [09:12<04:11,  2.20s/it]                                                 {'loss': 0.96, 'learning_rate': 3.67741935483871e-05, 'epoch': 6.32, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 63%|██████▎   | 196/310 [09:12<04:11,  2.20s/it] 64%|██████▎   | 197/310 [09:15<04:12,  2.23s/it]                                                 {'loss': 0.9463, 'learning_rate': 3.6451612903225805e-05, 'epoch': 6.35, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 64%|██████▎   | 197/310 [09:15<04:12,  2.23s/it] 64%|██████▍   | 198/310 [09:17<04:09,  2.22s/it]                                                 {'loss': 1.001, 'learning_rate': 3.612903225806452e-05, 'epoch': 6.39, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 64%|██████▍   | 198/310 [09:17<04:09,  2.22s/it] 64%|██████▍   | 199/310 [09:19<04:06,  2.22s/it]                                                 {'loss': 0.9355, 'learning_rate': 3.580645161290323e-05, 'epoch': 6.42, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 64%|██████▍   | 199/310 [09:19<04:06,  2.22s/it] 65%|██████▍   | 200/310 [09:21<04:03,  2.21s/it]                                                 {'loss': 0.8662, 'learning_rate': 3.548387096774194e-05, 'epoch': 6.45, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 65%|██████▍   | 200/310 [09:21<04:03,  2.21s/it] 65%|██████▍   | 201/310 [09:23<04:00,  2.21s/it]                                                 {'loss': 1.0312, 'learning_rate': 3.516129032258065e-05, 'epoch': 6.48, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 65%|██████▍   | 201/310 [09:23<04:00,  2.21s/it] 65%|██████▌   | 202/310 [09:26<03:58,  2.21s/it]                                                 {'loss': 0.9209, 'learning_rate': 3.483870967741936e-05, 'epoch': 6.52, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 65%|██████▌   | 202/310 [09:26<03:58,  2.21s/it] 65%|██████▌   | 203/310 [09:28<03:55,  2.20s/it]                                                 {'loss': 0.9375, 'learning_rate': 3.451612903225806e-05, 'epoch': 6.55, 'memory_allocated (GB)': 17.66, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 65%|██████▌   | 203/310 [09:28<03:55,  2.20s/it] 66%|██████▌   | 204/310 [09:30<03:56,  2.23s/it]                                                 {'loss': 0.9453, 'learning_rate': 3.4193548387096776e-05, 'epoch': 6.58, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 66%|██████▌   | 204/310 [09:30<03:56,  2.23s/it] 66%|██████▌   | 205/310 [09:32<03:53,  2.22s/it]                                                 {'loss': 0.9727, 'learning_rate': 3.387096774193548e-05, 'epoch': 6.61, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 66%|██████▌   | 205/310 [09:32<03:53,  2.22s/it] 66%|██████▋   | 206/310 [09:34<03:50,  2.22s/it]                                                 {'loss': 0.9092, 'learning_rate': 3.3548387096774195e-05, 'epoch': 6.65, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 66%|██████▋   | 206/310 [09:35<03:50,  2.22s/it] 67%|██████▋   | 207/310 [09:37<03:47,  2.21s/it]                                                 {'loss': 1.0078, 'learning_rate': 3.322580645161291e-05, 'epoch': 6.68, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 67%|██████▋   | 207/310 [09:37<03:47,  2.21s/it] 67%|██████▋   | 208/310 [09:39<03:45,  2.21s/it]                                                 {'loss': 0.9443, 'learning_rate': 3.2903225806451614e-05, 'epoch': 6.71, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 67%|██████▋   | 208/310 [09:39<03:45,  2.21s/it] 67%|██████▋   | 209/310 [09:41<03:42,  2.20s/it]                                                 {'loss': 0.8652, 'learning_rate': 3.258064516129033e-05, 'epoch': 6.74, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 67%|██████▋   | 209/310 [09:41<03:42,  2.20s/it] 68%|██████▊   | 210/310 [09:43<03:40,  2.20s/it]                                                 {'loss': 0.9014, 'learning_rate': 3.2258064516129034e-05, 'epoch': 6.77, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 68%|██████▊   | 210/310 [09:43<03:40,  2.20s/it] 68%|██████▊   | 211/310 [09:45<03:37,  2.20s/it]                                                 {'loss': 0.9678, 'learning_rate': 3.193548387096774e-05, 'epoch': 6.81, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 68%|██████▊   | 211/310 [09:45<03:37,  2.20s/it] 68%|██████▊   | 212/310 [09:48<03:39,  2.24s/it]                                                 {'loss': 0.958, 'learning_rate': 3.161290322580645e-05, 'epoch': 6.84, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 68%|██████▊   | 212/310 [09:48<03:39,  2.24s/it] 69%|██████▊   | 213/310 [09:50<03:36,  2.23s/it]                                                 {'loss': 0.9531, 'learning_rate': 3.1290322580645166e-05, 'epoch': 6.87, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 69%|██████▊   | 213/310 [09:50<03:36,  2.23s/it] 69%|██████▉   | 214/310 [09:52<03:33,  2.22s/it]                                                 {'loss': 0.9424, 'learning_rate': 3.096774193548387e-05, 'epoch': 6.9, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 69%|██████▉   | 214/310 [09:52<03:33,  2.22s/it] 69%|██████▉   | 215/310 [09:54<03:30,  2.21s/it]                                                 {'loss': 0.9736, 'learning_rate': 3.0645161290322585e-05, 'epoch': 6.94, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 69%|██████▉   | 215/310 [09:54<03:30,  2.21s/it] 70%|██████▉   | 216/310 [09:57<03:27,  2.21s/it]                                                 {'loss': 0.9814, 'learning_rate': 3.032258064516129e-05, 'epoch': 6.97, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 70%|██████▉   | 216/310 [09:57<03:27,  2.21s/it] 70%|███████   | 217/310 [09:59<03:25,  2.21s/it]                                                 {'loss': 0.9375, 'learning_rate': 3e-05, 'epoch': 7.0, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 70%|███████   | 217/310 [09:59<03:25,  2.21s/it] 70%|███████   | 218/310 [10:01<03:22,  2.21s/it]                                                 {'loss': 1.0039, 'learning_rate': 2.967741935483871e-05, 'epoch': 7.03, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 70%|███████   | 218/310 [10:01<03:22,  2.21s/it] 71%|███████   | 219/310 [10:03<03:20,  2.20s/it]                                                 {'loss': 0.877, 'learning_rate': 2.9354838709677417e-05, 'epoch': 7.06, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 71%|███████   | 219/310 [10:03<03:20,  2.20s/it] 71%|███████   | 220/310 [10:05<03:18,  2.20s/it]                                                 {'loss': 0.9492, 'learning_rate': 2.9032258064516133e-05, 'epoch': 7.1, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 71%|███████   | 220/310 [10:05<03:18,  2.20s/it] 71%|███████▏  | 221/310 [10:08<03:18,  2.23s/it]                                                 {'loss': 0.9707, 'learning_rate': 2.8709677419354843e-05, 'epoch': 7.13, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 71%|███████▏  | 221/310 [10:08<03:18,  2.23s/it] 72%|███████▏  | 222/310 [10:10<03:15,  2.22s/it]                                                 {'loss': 0.9336, 'learning_rate': 2.838709677419355e-05, 'epoch': 7.16, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 72%|███████▏  | 222/310 [10:10<03:15,  2.22s/it] 72%|███████▏  | 223/310 [10:12<03:12,  2.22s/it]                                                 {'loss': 0.8965, 'learning_rate': 2.806451612903226e-05, 'epoch': 7.19, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 72%|███████▏  | 223/310 [10:12<03:12,  2.22s/it][2023-08-25 12:02:46,765] [INFO] [timer.py:241:stop] 0/448, RunningAvgSamplesPerSec=6.804721028258267, CurrSamplesPerSec=6.7510945690342545, MemAllocated=17.37GB, MaxMemAllocated=80.61GB
+ 72%|███████▏  | 224/310 [10:14<03:10,  2.22s/it]                                                 {'loss': 0.9424, 'learning_rate': 2.7741935483870968e-05, 'epoch': 7.23, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 72%|███████▏  | 224/310 [10:14<03:10,  2.22s/it] 73%|███████▎  | 225/310 [10:17<03:07,  2.21s/it]                                                 {'loss': 0.8564, 'learning_rate': 2.7419354838709678e-05, 'epoch': 7.26, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 73%|███████▎  | 225/310 [10:17<03:07,  2.21s/it] 73%|███████▎  | 226/310 [10:19<03:05,  2.21s/it]                                                 {'loss': 0.875, 'learning_rate': 2.709677419354839e-05, 'epoch': 7.29, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 73%|███████▎  | 226/310 [10:19<03:05,  2.21s/it] 73%|███████▎  | 227/310 [10:21<03:03,  2.21s/it]                                                 {'loss': 0.9404, 'learning_rate': 2.67741935483871e-05, 'epoch': 7.32, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 73%|███████▎  | 227/310 [10:21<03:03,  2.21s/it] 74%|███████▎  | 228/310 [10:23<03:00,  2.20s/it]                                                 {'loss': 0.9414, 'learning_rate': 2.645161290322581e-05, 'epoch': 7.35, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 74%|███████▎  | 228/310 [10:23<03:00,  2.20s/it] 74%|███████▍  | 229/310 [10:25<02:58,  2.20s/it]                                                 {'loss': 0.9258, 'learning_rate': 2.6129032258064516e-05, 'epoch': 7.39, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 74%|███████▍  | 229/310 [10:25<02:58,  2.20s/it] 74%|███████▍  | 230/310 [10:28<02:56,  2.20s/it]                                                 {'loss': 0.9463, 'learning_rate': 2.5806451612903226e-05, 'epoch': 7.42, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 74%|███████▍  | 230/310 [10:28<02:56,  2.20s/it] 75%|███████▍  | 231/310 [10:30<02:56,  2.23s/it]                                                 {'loss': 0.9727, 'learning_rate': 2.5483870967741935e-05, 'epoch': 7.45, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 75%|███████▍  | 231/310 [10:30<02:56,  2.23s/it] 75%|███████▍  | 232/310 [10:32<02:53,  2.22s/it]                                                 {'loss': 0.9824, 'learning_rate': 2.5161290322580645e-05, 'epoch': 7.48, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 75%|███████▍  | 232/310 [10:32<02:53,  2.22s/it] 75%|███████▌  | 233/310 [10:34<02:50,  2.22s/it]                                                 {'loss': 0.9639, 'learning_rate': 2.4838709677419354e-05, 'epoch': 7.52, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 75%|███████▌  | 233/310 [10:34<02:50,  2.22s/it] 75%|███████▌  | 234/310 [10:36<02:47,  2.21s/it]                                                 {'loss': 0.96, 'learning_rate': 2.4516129032258064e-05, 'epoch': 7.55, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 75%|███████▌  | 234/310 [10:36<02:47,  2.21s/it] 76%|███████▌  | 235/310 [10:39<02:45,  2.21s/it]                                                 {'loss': 0.9307, 'learning_rate': 2.4193548387096777e-05, 'epoch': 7.58, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 76%|███████▌  | 235/310 [10:39<02:45,  2.21s/it] 76%|███████▌  | 236/310 [10:41<02:43,  2.20s/it]                                                 {'loss': 0.9258, 'learning_rate': 2.3870967741935486e-05, 'epoch': 7.61, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 76%|███████▌  | 236/310 [10:41<02:43,  2.20s/it] 76%|███████▋  | 237/310 [10:43<02:40,  2.21s/it]                                                 {'loss': 0.9385, 'learning_rate': 2.3548387096774193e-05, 'epoch': 7.65, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 76%|███████▋  | 237/310 [10:43<02:40,  2.21s/it] 77%|███████▋  | 238/310 [10:45<02:38,  2.20s/it]                                                 {'loss': 0.9121, 'learning_rate': 2.3225806451612906e-05, 'epoch': 7.68, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 77%|███████▋  | 238/310 [10:45<02:38,  2.20s/it] 77%|███████▋  | 239/310 [10:48<02:38,  2.24s/it]                                                 {'loss': 0.9678, 'learning_rate': 2.2903225806451615e-05, 'epoch': 7.71, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 77%|███████▋  | 239/310 [10:48<02:38,  2.24s/it] 77%|███████▋  | 240/310 [10:50<02:35,  2.22s/it]                                                 {'loss': 0.9121, 'learning_rate': 2.258064516129032e-05, 'epoch': 7.74, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 77%|███████▋  | 240/310 [10:50<02:35,  2.22s/it] 78%|███████▊  | 241/310 [10:52<02:33,  2.22s/it]                                                 {'loss': 0.9375, 'learning_rate': 2.2258064516129034e-05, 'epoch': 7.77, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 78%|███████▊  | 241/310 [10:52<02:33,  2.22s/it] 78%|███████▊  | 242/310 [10:54<02:30,  2.21s/it]                                                 {'loss': 0.9336, 'learning_rate': 2.1935483870967744e-05, 'epoch': 7.81, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 78%|███████▊  | 242/310 [10:54<02:30,  2.21s/it] 78%|███████▊  | 243/310 [10:56<02:27,  2.21s/it]                                                 {'loss': 0.8164, 'learning_rate': 2.1612903225806454e-05, 'epoch': 7.84, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 78%|███████▊  | 243/310 [10:56<02:27,  2.21s/it] 79%|███████▊  | 244/310 [10:59<02:25,  2.20s/it]                                                 {'loss': 0.8867, 'learning_rate': 2.129032258064516e-05, 'epoch': 7.87, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 79%|███████▊  | 244/310 [10:59<02:25,  2.20s/it] 79%|███████▉  | 245/310 [11:01<02:23,  2.20s/it]                                                 {'loss': 0.9707, 'learning_rate': 2.0967741935483873e-05, 'epoch': 7.9, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 79%|███████▉  | 245/310 [11:01<02:23,  2.20s/it] 79%|███████▉  | 246/310 [11:03<02:23,  2.24s/it]                                                 {'loss': 0.9395, 'learning_rate': 2.0645161290322582e-05, 'epoch': 7.94, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 79%|███████▉  | 246/310 [11:03<02:23,  2.24s/it] 80%|███████▉  | 247/310 [11:05<02:20,  2.23s/it]                                                 {'loss': 0.9385, 'learning_rate': 2.0322580645161292e-05, 'epoch': 7.97, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 80%|███████▉  | 247/310 [11:05<02:20,  2.23s/it] 80%|████████  | 248/310 [11:07<02:17,  2.22s/it]                                                 {'loss': 1.0957, 'learning_rate': 2e-05, 'epoch': 8.0, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 80%|████████  | 248/310 [11:07<02:17,  2.22s/it] 80%|████████  | 249/310 [11:10<02:14,  2.21s/it]                                                 {'loss': 0.9717, 'learning_rate': 1.967741935483871e-05, 'epoch': 8.03, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 80%|████████  | 249/310 [11:10<02:14,  2.21s/it] 81%|████████  | 250/310 [11:12<02:12,  2.21s/it]                                                 {'loss': 0.9346, 'learning_rate': 1.935483870967742e-05, 'epoch': 8.06, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 81%|████████  | 250/310 [11:12<02:12,  2.21s/it] 81%|████████  | 251/310 [11:14<02:10,  2.20s/it]                                                 {'loss': 0.9141, 'learning_rate': 1.9032258064516127e-05, 'epoch': 8.1, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 81%|████████  | 251/310 [11:14<02:10,  2.20s/it] 81%|████████▏ | 252/310 [11:16<02:07,  2.20s/it]                                                 {'loss': 1.0273, 'learning_rate': 1.870967741935484e-05, 'epoch': 8.13, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 81%|████████▏ | 252/310 [11:16<02:07,  2.20s/it] 82%|████████▏ | 253/310 [11:18<02:05,  2.20s/it]                                                 {'loss': 0.9375, 'learning_rate': 1.838709677419355e-05, 'epoch': 8.16, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 82%|████████▏ | 253/310 [11:18<02:05,  2.20s/it] 82%|████████▏ | 254/310 [11:21<02:05,  2.23s/it]                                                 {'loss': 0.8965, 'learning_rate': 1.806451612903226e-05, 'epoch': 8.19, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 82%|████████▏ | 254/310 [11:21<02:05,  2.23s/it] 82%|████████▏ | 255/310 [11:23<02:02,  2.22s/it]                                                 {'loss': 0.873, 'learning_rate': 1.774193548387097e-05, 'epoch': 8.23, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 82%|████████▏ | 255/310 [11:23<02:02,  2.22s/it][2023-08-25 12:03:57,576] [INFO] [logging.py:68:log_dist] [Rank 0] step=256, skipped=0, lr=[1.741935483870968e-05], mom=[(0.9, 0.999)]
+[2023-08-25 12:03:57,583] [INFO] [timer.py:241:stop] 0/512, RunningAvgSamplesPerSec=6.869711575003779, CurrSamplesPerSec=6.846057701685153, MemAllocated=17.37GB, MaxMemAllocated=80.61GB
+ 83%|████████▎ | 256/310 [11:25<01:59,  2.22s/it]                                                 {'loss': 0.8838, 'learning_rate': 1.741935483870968e-05, 'epoch': 8.26, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 83%|████████▎ | 256/310 [11:25<01:59,  2.22s/it] 83%|████████▎ | 257/310 [11:27<01:57,  2.21s/it]                                                 {'loss': 0.9072, 'learning_rate': 1.7096774193548388e-05, 'epoch': 8.29, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 83%|████████▎ | 257/310 [11:27<01:57,  2.21s/it] 83%|████████▎ | 258/310 [11:30<01:54,  2.21s/it]                                                 {'loss': 0.874, 'learning_rate': 1.6774193548387098e-05, 'epoch': 8.32, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 83%|████████▎ | 258/310 [11:30<01:54,  2.21s/it] 84%|████████▎ | 259/310 [11:32<01:52,  2.20s/it]                                                 {'loss': 0.8516, 'learning_rate': 1.6451612903225807e-05, 'epoch': 8.35, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 84%|████████▎ | 259/310 [11:32<01:52,  2.20s/it] 84%|████████▍ | 260/310 [11:34<01:50,  2.20s/it]                                                 {'loss': 0.96, 'learning_rate': 1.6129032258064517e-05, 'epoch': 8.39, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 84%|████████▍ | 260/310 [11:34<01:50,  2.20s/it] 84%|████████▍ | 261/310 [11:36<01:47,  2.20s/it]                                                 {'loss': 0.8828, 'learning_rate': 1.5806451612903226e-05, 'epoch': 8.42, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 84%|████████▍ | 261/310 [11:36<01:47,  2.20s/it] 85%|████████▍ | 262/310 [11:38<01:45,  2.20s/it]                                                 {'loss': 0.9541, 'learning_rate': 1.5483870967741936e-05, 'epoch': 8.45, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 85%|████████▍ | 262/310 [11:38<01:45,  2.20s/it] 85%|████████▍ | 263/310 [11:41<01:44,  2.23s/it]                                                 {'loss': 1.042, 'learning_rate': 1.5161290322580646e-05, 'epoch': 8.48, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 85%|████████▍ | 263/310 [11:41<01:44,  2.23s/it] 85%|████████▌ | 264/310 [11:43<01:42,  2.22s/it]                                                 {'loss': 0.9883, 'learning_rate': 1.4838709677419355e-05, 'epoch': 8.52, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 85%|████████▌ | 264/310 [11:43<01:42,  2.22s/it] 85%|████████▌ | 265/310 [11:45<01:39,  2.22s/it]                                                 {'loss': 0.9707, 'learning_rate': 1.4516129032258066e-05, 'epoch': 8.55, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 85%|████████▌ | 265/310 [11:45<01:39,  2.22s/it] 86%|████████▌ | 266/310 [11:47<01:37,  2.21s/it]                                                 {'loss': 0.8799, 'learning_rate': 1.4193548387096774e-05, 'epoch': 8.58, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 86%|████████▌ | 266/310 [11:47<01:37,  2.21s/it] 86%|████████▌ | 267/310 [11:49<01:34,  2.21s/it]                                                 {'loss': 0.918, 'learning_rate': 1.3870967741935484e-05, 'epoch': 8.61, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 86%|████████▌ | 267/310 [11:49<01:34,  2.21s/it] 86%|████████▋ | 268/310 [11:52<01:32,  2.21s/it]                                                 {'loss': 0.9629, 'learning_rate': 1.3548387096774195e-05, 'epoch': 8.65, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 86%|████████▋ | 268/310 [11:52<01:32,  2.21s/it] 87%|████████▋ | 269/310 [11:54<01:30,  2.20s/it]                                                 {'loss': 0.9648, 'learning_rate': 1.3225806451612905e-05, 'epoch': 8.68, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 87%|████████▋ | 269/310 [11:54<01:30,  2.20s/it] 87%|████████▋ | 270/310 [11:56<01:28,  2.20s/it]                                                 {'loss': 0.8848, 'learning_rate': 1.2903225806451613e-05, 'epoch': 8.71, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 87%|████████▋ | 270/310 [11:56<01:28,  2.20s/it] 87%|████████▋ | 271/310 [11:58<01:25,  2.20s/it]                                                 {'loss': 0.9658, 'learning_rate': 1.2580645161290322e-05, 'epoch': 8.74, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 87%|████████▋ | 271/310 [11:58<01:25,  2.20s/it] 88%|████████▊ | 272/310 [12:00<01:23,  2.20s/it]                                                 {'loss': 0.9785, 'learning_rate': 1.2258064516129032e-05, 'epoch': 8.77, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 88%|████████▊ | 272/310 [12:00<01:23,  2.20s/it] 88%|████████▊ | 273/310 [12:03<01:22,  2.23s/it]                                                 {'loss': 0.8857, 'learning_rate': 1.1935483870967743e-05, 'epoch': 8.81, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 88%|████████▊ | 273/310 [12:03<01:22,  2.23s/it] 88%|████████▊ | 274/310 [12:05<01:19,  2.22s/it]                                                 {'loss': 0.8916, 'learning_rate': 1.1612903225806453e-05, 'epoch': 8.84, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 88%|████████▊ | 274/310 [12:05<01:19,  2.22s/it] 89%|████████▊ | 275/310 [12:07<01:17,  2.21s/it]                                                 {'loss': 0.9287, 'learning_rate': 1.129032258064516e-05, 'epoch': 8.87, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 89%|████████▊ | 275/310 [12:07<01:17,  2.21s/it] 89%|████████▉ | 276/310 [12:09<01:15,  2.21s/it]                                                 {'loss': 0.9365, 'learning_rate': 1.0967741935483872e-05, 'epoch': 8.9, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 89%|████████▉ | 276/310 [12:09<01:15,  2.21s/it] 89%|████████▉ | 277/310 [12:12<01:12,  2.20s/it]                                                 {'loss': 0.8672, 'learning_rate': 1.064516129032258e-05, 'epoch': 8.94, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 89%|████████▉ | 277/310 [12:12<01:12,  2.20s/it] 90%|████████▉ | 278/310 [12:14<01:10,  2.20s/it]                                                 {'loss': 0.9229, 'learning_rate': 1.0322580645161291e-05, 'epoch': 8.97, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 90%|████████▉ | 278/310 [12:14<01:10,  2.20s/it] 90%|█████████ | 279/310 [12:16<01:08,  2.20s/it]                                                 {'loss': 1.0566, 'learning_rate': 1e-05, 'epoch': 9.0, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 90%|█████████ | 279/310 [12:16<01:08,  2.20s/it] 90%|█████████ | 280/310 [12:18<01:05,  2.20s/it]                                                 {'loss': 0.9375, 'learning_rate': 9.67741935483871e-06, 'epoch': 9.03, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 90%|█████████ | 280/310 [12:18<01:05,  2.20s/it] 91%|█████████ | 281/310 [12:20<01:04,  2.23s/it]                                                 {'loss': 0.9238, 'learning_rate': 9.35483870967742e-06, 'epoch': 9.06, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 91%|█████████ | 281/310 [12:20<01:04,  2.23s/it] 91%|█████████ | 282/310 [12:23<01:02,  2.22s/it]                                                 {'loss': 0.9355, 'learning_rate': 9.03225806451613e-06, 'epoch': 9.1, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 91%|█████████ | 282/310 [12:23<01:02,  2.22s/it] 91%|█████████▏| 283/310 [12:25<00:59,  2.21s/it]                                                 {'loss': 0.9209, 'learning_rate': 8.70967741935484e-06, 'epoch': 9.13, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 91%|█████████▏| 283/310 [12:25<00:59,  2.21s/it] 92%|█████████▏| 284/310 [12:27<00:57,  2.21s/it]                                                 {'loss': 0.9062, 'learning_rate': 8.387096774193549e-06, 'epoch': 9.16, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 92%|█████████▏| 284/310 [12:27<00:57,  2.21s/it] 92%|█████████▏| 285/310 [12:29<00:55,  2.20s/it]                                                 {'loss': 0.9209, 'learning_rate': 8.064516129032258e-06, 'epoch': 9.19, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 92%|█████████▏| 285/310 [12:29<00:55,  2.20s/it] 92%|█████████▏| 286/310 [12:31<00:52,  2.20s/it]                                                 {'loss': 0.9531, 'learning_rate': 7.741935483870968e-06, 'epoch': 9.23, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 92%|█████████▏| 286/310 [12:31<00:52,  2.20s/it] 93%|█████████▎| 287/310 [12:34<00:50,  2.20s/it]                                                 {'loss': 0.9453, 'learning_rate': 7.419354838709678e-06, 'epoch': 9.26, 'memory_allocated (GB)': 17.37, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 93%|█████████▎| 287/310 [12:34<00:50,  2.20s/it][2023-08-25 12:05:08,327] [INFO] [timer.py:241:stop] 0/576, RunningAvgSamplesPerSec=6.921815861883986, CurrSamplesPerSec=6.282548524170575, MemAllocated=17.28GB, MaxMemAllocated=80.61GB
+ 93%|█████████▎| 288/310 [12:36<00:49,  2.24s/it]                                                 {'loss': 0.9043, 'learning_rate': 7.096774193548387e-06, 'epoch': 9.29, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 93%|█████████▎| 288/310 [12:36<00:49,  2.24s/it] 93%|█████████▎| 289/310 [12:38<00:46,  2.22s/it]                                                 {'loss': 0.8682, 'learning_rate': 6.774193548387098e-06, 'epoch': 9.32, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 93%|█████████▎| 289/310 [12:38<00:46,  2.22s/it] 94%|█████████▎| 290/310 [12:40<00:44,  2.22s/it]                                                 {'loss': 0.9854, 'learning_rate': 6.451612903225806e-06, 'epoch': 9.35, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 94%|█████████▎| 290/310 [12:40<00:44,  2.22s/it] 94%|█████████▍| 291/310 [12:42<00:41,  2.21s/it]                                                 {'loss': 0.9521, 'learning_rate': 6.129032258064516e-06, 'epoch': 9.39, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 94%|█████████▍| 291/310 [12:43<00:41,  2.21s/it] 94%|█████████▍| 292/310 [12:45<00:39,  2.20s/it]                                                 {'loss': 0.876, 'learning_rate': 5.806451612903226e-06, 'epoch': 9.42, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 94%|█████████▍| 292/310 [12:45<00:39,  2.20s/it] 95%|█████████▍| 293/310 [12:47<00:37,  2.20s/it]                                                 {'loss': 0.876, 'learning_rate': 5.483870967741936e-06, 'epoch': 9.45, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 95%|█████████▍| 293/310 [12:47<00:37,  2.20s/it] 95%|█████████▍| 294/310 [12:49<00:35,  2.20s/it]                                                 {'loss': 1.0352, 'learning_rate': 5.161290322580646e-06, 'epoch': 9.48, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 95%|█████████▍| 294/310 [12:49<00:35,  2.20s/it] 95%|█████████▌| 295/310 [12:51<00:33,  2.20s/it]                                                 {'loss': 0.9561, 'learning_rate': 4.838709677419355e-06, 'epoch': 9.52, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 95%|█████████▌| 295/310 [12:51<00:33,  2.20s/it] 95%|█████████▌| 296/310 [12:54<00:31,  2.23s/it]                                                 {'loss': 0.9326, 'learning_rate': 4.516129032258065e-06, 'epoch': 9.55, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 95%|█████████▌| 296/310 [12:54<00:31,  2.23s/it] 96%|█████████▌| 297/310 [12:56<00:28,  2.23s/it]                                                 {'loss': 0.9473, 'learning_rate': 4.193548387096774e-06, 'epoch': 9.58, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 96%|█████████▌| 297/310 [12:56<00:28,  2.23s/it] 96%|█████████▌| 298/310 [12:58<00:26,  2.22s/it]                                                 {'loss': 0.877, 'learning_rate': 3.870967741935484e-06, 'epoch': 9.61, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 96%|█████████▌| 298/310 [12:58<00:26,  2.22s/it] 96%|█████████▋| 299/310 [13:00<00:24,  2.21s/it]                                                 {'loss': 0.9453, 'learning_rate': 3.5483870967741936e-06, 'epoch': 9.65, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 96%|█████████▋| 299/310 [13:00<00:24,  2.21s/it] 97%|█████████▋| 300/310 [13:02<00:22,  2.21s/it]                                                 {'loss': 1.0625, 'learning_rate': 3.225806451612903e-06, 'epoch': 9.68, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 97%|█████████▋| 300/310 [13:02<00:22,  2.21s/it] 97%|█████████▋| 301/310 [13:05<00:19,  2.21s/it]                                                 {'loss': 0.8379, 'learning_rate': 2.903225806451613e-06, 'epoch': 9.71, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 97%|█████████▋| 301/310 [13:05<00:19,  2.21s/it] 97%|█████████▋| 302/310 [13:07<00:17,  2.21s/it]                                                 {'loss': 0.7861, 'learning_rate': 2.580645161290323e-06, 'epoch': 9.74, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 97%|█████████▋| 302/310 [13:07<00:17,  2.21s/it] 98%|█████████▊| 303/310 [13:09<00:15,  2.20s/it]                                                 {'loss': 0.959, 'learning_rate': 2.2580645161290324e-06, 'epoch': 9.77, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 98%|█████████▊| 303/310 [13:09<00:15,  2.20s/it] 98%|█████████▊| 304/310 [13:11<00:13,  2.20s/it]                                                 {'loss': 0.9492, 'learning_rate': 1.935483870967742e-06, 'epoch': 9.81, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 98%|█████████▊| 304/310 [13:11<00:13,  2.20s/it] 98%|█████████▊| 305/310 [13:14<00:11,  2.24s/it]                                                 {'loss': 0.9561, 'learning_rate': 1.6129032258064516e-06, 'epoch': 9.84, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 98%|█████████▊| 305/310 [13:14<00:11,  2.24s/it] 99%|█████████▊| 306/310 [13:16<00:08,  2.23s/it]                                                 {'loss': 0.9092, 'learning_rate': 1.2903225806451614e-06, 'epoch': 9.87, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 99%|█████████▊| 306/310 [13:16<00:08,  2.23s/it] 99%|█████████▉| 307/310 [13:18<00:06,  2.22s/it]                                                 {'loss': 0.958, 'learning_rate': 9.67741935483871e-07, 'epoch': 9.9, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 99%|█████████▉| 307/310 [13:18<00:06,  2.22s/it] 99%|█████████▉| 308/310 [13:20<00:04,  2.21s/it]                                                 {'loss': 0.9375, 'learning_rate': 6.451612903225807e-07, 'epoch': 9.94, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+ 99%|█████████▉| 308/310 [13:20<00:04,  2.21s/it]100%|█████████▉| 309/310 [13:22<00:02,  2.21s/it]                                                 {'loss': 0.9131, 'learning_rate': 3.2258064516129035e-07, 'epoch': 9.97, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+100%|█████████▉| 309/310 [13:22<00:02,  2.21s/it]100%|██████████| 310/310 [13:25<00:00,  2.21s/it]                                                 {'loss': 1.0234, 'learning_rate': 0.0, 'epoch': 10.0, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+100%|██████████| 310/310 [13:25<00:00,  2.21s/it][INFO|trainer.py:1041] 2023-08-25 12:05:56,984 >> 
+
+Training completed. Do not forget to share your model on huggingface.co/models =)
+
+
+                                                 {'train_runtime': 805.0832, 'train_samples_per_second': 7.034, 'train_steps_per_second': 0.446, 'train_loss': 1.0164598034274193, 'epoch': 10.0, 'memory_allocated (GB)': 17.28, 'max_memory_allocated (GB)': 80.61, 'total_memory_available (GB)': 93.74}
+100%|██████████| 310/310 [13:25<00:00,  2.21s/it]100%|██████████| 310/310 [13:25<00:00,  2.60s/it]
+[2023-08-25 12:06:00,837] [INFO] [launch.py:354:main] Process 4135129 exits successfully.
+[2023-08-25 12:06:01,839] [INFO] [launch.py:354:main] Process 4135128 exits successfully.
