@@ -1,0 +1,395 @@
+DistributedRunner run(): command = deepspeed --num_nodes 1 --num_gpus 8 --no_local_rank run_clm_llama.py --model_name_or_path EleutherAI/gpt-j-6b --dataset_name wikitext --dataset_config_name wikitext-2-raw-v1 --report_to tensorboard --bf16 True --output_dir ./checkpoints/llama-8-hpu-2-1-concat --num_train_epochs 10 --per_device_train_batch_size 2 --gradient_accumulation_steps 1 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --do_train --use_habana --use_auth_token --use_lazy_mode --throughput_warmup_steps 3 --use_hpu_graphs_for_inference --deepspeed deepspeed_config.json
+[2023-08-20 08:00:43,948] [WARNING] [runner.py:185:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+Namespace(autotuning='', elastic_training=False, exclude='', force_multi=False, hostfile='/job/hostfile', include='', launcher='pdsh', launcher_args='', master_addr='', master_port=29500, max_elastic_nodes=-1, min_elastic_nodes=-1, module=False, no_local_rank=True, no_python=False, no_ssh_check=False, num_gpus=8, num_nodes=1, save_pid=False, use_hpu=True, user_args=['--model_name_or_path', 'EleutherAI/gpt-j-6b', '--dataset_name', 'wikitext', '--dataset_config_name', 'wikitext-2-raw-v1', '--report_to', 'tensorboard', '--bf16', 'True', '--output_dir', './checkpoints/llama-8-hpu-2-1-concat', '--num_train_epochs', '10', '--per_device_train_batch_size', '2', '--gradient_accumulation_steps', '1', '--evaluation_strategy', 'no', '--save_strategy', 'no', '--learning_rate', '1e-4', '--logging_steps', '1', '--do_train', '--use_habana', '--use_auth_token', '--use_lazy_mode', '--throughput_warmup_steps', '3', '--use_hpu_graphs_for_inference', '--deepspeed', 'deepspeed_config.json'], user_script='run_clm_llama.py')
+[2023-08-20 08:00:45,635] [INFO] [runner.py:543:main] cmd = /usr/bin/python3 -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMCwgMSwgMiwgMywgNCwgNSwgNiwgN119 --master_addr=127.0.0.1 --master_port=29500 --no_local_rank run_clm_llama.py --model_name_or_path EleutherAI/gpt-j-6b --dataset_name wikitext --dataset_config_name wikitext-2-raw-v1 --report_to tensorboard --bf16 True --output_dir ./checkpoints/llama-8-hpu-2-1-concat --num_train_epochs 10 --per_device_train_batch_size 2 --gradient_accumulation_steps 1 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --do_train --use_habana --use_auth_token --use_lazy_mode --throughput_warmup_steps 3 --use_hpu_graphs_for_inference --deepspeed deepspeed_config.json
+[2023-08-20 08:00:47,539] [INFO] [launch.py:145:main] WORLD INFO DICT: {'localhost': [0, 1, 2, 3, 4, 5, 6, 7]}
+[2023-08-20 08:00:47,539] [INFO] [launch.py:151:main] nnodes=1, num_local_procs=8, node_rank=0
+[2023-08-20 08:00:47,539] [INFO] [launch.py:164:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0, 1, 2, 3, 4, 5, 6, 7]})
+[2023-08-20 08:00:47,539] [INFO] [launch.py:165:main] dist_world_size=8
+[2023-08-20 08:00:53,820] [INFO] [comm.py:762:init_distributed] Initializing TorchBackend in DeepSpeed with backend hccl
+run_clm_llama.py:267: FutureWarning: The `use_auth_token` argument is deprecated and will be removed in Transformers v4.34.
+  warnings.warn(
+run_clm_llama.py:267: FutureWarning: The `use_auth_token` argument is deprecated and will be removed in Transformers v4.34.
+  warnings.warn(
+run_clm_llama.py:267: FutureWarning: The `use_auth_token` argument is deprecated and will be removed in Transformers v4.34.
+  warnings.warn(
+run_clm_llama.py:267: FutureWarning: The `use_auth_token` argument is deprecated and will be removed in Transformers v4.34.
+  warnings.warn(
+run_clm_llama.py:267: FutureWarning: The `use_auth_token` argument is deprecated and will be removed in Transformers v4.34.
+  warnings.warn(
+run_clm_llama.py:267: FutureWarning: The `use_auth_token` argument is deprecated and will be removed in Transformers v4.34.
+  warnings.warn(
+run_clm_llama.py:267: FutureWarning: The `use_auth_token` argument is deprecated and will be removed in Transformers v4.34.
+  warnings.warn(
+run_clm_llama.py:267: FutureWarning: The `use_auth_token` argument is deprecated and will be removed in Transformers v4.34.
+  warnings.warn(
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 261, in hf_raise_for_status
+    response.raise_for_status()
+  File "/usr/local/lib/python3.8/dist-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 409, in cached_file
+    resolved_file = hf_hub_download(
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1195, in hf_hub_download
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 261, in hf_raise_for_status
+        metadata = get_hf_file_metadata(response.raise_for_status()
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+
+  File "/usr/local/lib/python3.8/dist-packages/requests/models.py", line 1021, in raise_for_status
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1541, in get_hf_file_metadata
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 409, in cached_file
+    resolved_file = hf_hub_download(
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    hf_raise_for_status(r)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 293, in hf_raise_for_status
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1195, in hf_hub_download
+    raise RepositoryNotFoundError(message, response) from e
+huggingface_hub.utils._errors.RepositoryNotFoundError: 404 Client Error. (Request ID: Root=1-64e1c837-7877aa385d78cac32ebcd225;b2867251-69f0-45fd-b6fa-9b5e6f8a1ede)
+
+Repository Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_llama.py", line 674, in <module>
+    main()
+  File "run_clm_llama.py", line 296, in main
+    gaudi_config = GaudiConfig.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/configuration_utils.py", line 546, in from_pretrained
+    metadata = get_hf_file_metadata(
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1541, in get_hf_file_metadata
+    config_dict, kwargs = cls.get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 177, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 263, in _get_config_dict
+    resolved_config_file = cached_file(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 424, in cached_file
+    raise EnvironmentError(
+OSError: None is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo with `use_auth_token` or log in with `huggingface-cli login` and pass `use_auth_token=True`.
+    hf_raise_for_status(r)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 293, in hf_raise_for_status
+    raise RepositoryNotFoundError(message, response) from e
+huggingface_hub.utils._errors.RepositoryNotFoundError: 404 Client Error. (Request ID: Root=1-64e1c837-3f5295753fb637e17c83c67f;097e558d-4bd9-4f47-ada9-7d75f0435ea0)
+
+Repository Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_llama.py", line 674, in <module>
+    main()
+  File "run_clm_llama.py", line 296, in main
+    gaudi_config = GaudiConfig.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/configuration_utils.py", line 546, in from_pretrained
+    config_dict, kwargs = cls.get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 177, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 263, in _get_config_dict
+    resolved_config_file = cached_file(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 424, in cached_file
+    raise EnvironmentError(
+OSError: None is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo with `use_auth_token` or log in with `huggingface-cli login` and pass `use_auth_token=True`.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 261, in hf_raise_for_status
+    response.raise_for_status()
+  File "/usr/local/lib/python3.8/dist-packages/requests/models.py", line 1021, in raise_for_status
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 261, in hf_raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 409, in cached_file
+    resolved_file = hf_hub_download(
+      File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+response.raise_for_status()
+  File "/usr/local/lib/python3.8/dist-packages/requests/models.py", line 1021, in raise_for_status
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1195, in hf_hub_download
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 409, in cached_file
+    resolved_file = hf_hub_download(
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    metadata = get_hf_file_metadata(
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1195, in hf_hub_download
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1541, in get_hf_file_metadata
+    metadata = get_hf_file_metadata(
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+      File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1541, in get_hf_file_metadata
+hf_raise_for_status(r)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 293, in hf_raise_for_status
+    raise RepositoryNotFoundError(message, response) from e
+huggingface_hub.utils._errors.RepositoryNotFoundError: 404 Client Error. (Request ID: Root=1-64e1c837-205cd2706b448c2e07d1c17a;fedeb6e6-eee0-43f2-a90c-5e6e198d4947)
+
+Repository Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_llama.py", line 674, in <module>
+    main()
+  File "run_clm_llama.py", line 296, in main
+    gaudi_config = GaudiConfig.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/configuration_utils.py", line 546, in from_pretrained
+    hf_raise_for_status(r)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 293, in hf_raise_for_status
+    raise RepositoryNotFoundError(message, response) from e
+huggingface_hub.utils._errors.RepositoryNotFoundError: 404 Client Error. (Request ID: Root=1-64e1c837-47169d3227c0f4b043e34b09;30ab9bdd-6059-4f83-a252-6a058927ddf9)
+
+Repository Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_llama.py", line 674, in <module>
+    config_dict, kwargs = cls.get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 177, in get_config_dict
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 261, in hf_raise_for_status
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 263, in _get_config_dict
+    main()
+  File "run_clm_llama.py", line 296, in main
+    resolved_config_file = cached_file(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 424, in cached_file
+    response.raise_for_status()    gaudi_config = GaudiConfig.from_pretrained(
+
+  File "/usr/local/lib/python3.8/dist-packages/transformers/configuration_utils.py", line 546, in from_pretrained
+  File "/usr/local/lib/python3.8/dist-packages/requests/models.py", line 1021, in raise_for_status
+    raise EnvironmentError(
+OSError: None is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo with `use_auth_token` or log in with `huggingface-cli login` and pass `use_auth_token=True`.
+    config_dict, kwargs = cls.get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 177, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 263, in _get_config_dict
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 409, in cached_file
+    resolved_config_file = cached_file(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 424, in cached_file
+    resolved_file = hf_hub_download(
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    raise EnvironmentError(
+OSError: None is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo with `use_auth_token` or log in with `huggingface-cli login` and pass `use_auth_token=True`.
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1195, in hf_hub_download
+    metadata = get_hf_file_metadata(
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1541, in get_hf_file_metadata
+    hf_raise_for_status(r)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 293, in hf_raise_for_status
+    raise RepositoryNotFoundError(message, response) from e
+huggingface_hub.utils._errors.RepositoryNotFoundError: 404 Client Error. (Request ID: Root=1-64e1c837-16fddec85efbe21a76d4c78e;97710df3-0ed2-4955-94d6-c25a960372a2)
+
+Repository Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_llama.py", line 674, in <module>
+    main()
+  File "run_clm_llama.py", line 296, in main
+    gaudi_config = GaudiConfig.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/configuration_utils.py", line 546, in from_pretrained
+    config_dict, kwargs = cls.get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 177, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 263, in _get_config_dict
+    resolved_config_file = cached_file(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 424, in cached_file
+    raise EnvironmentError(
+OSError: None is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo with `use_auth_token` or log in with `huggingface-cli login` and pass `use_auth_token=True`.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 261, in hf_raise_for_status
+    response.raise_for_status()
+  File "/usr/local/lib/python3.8/dist-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 409, in cached_file
+    resolved_file = hf_hub_download(
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1195, in hf_hub_download
+    metadata = get_hf_file_metadata(
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1541, in get_hf_file_metadata
+    hf_raise_for_status(r)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 293, in hf_raise_for_status
+    raise RepositoryNotFoundError(message, response) from e
+huggingface_hub.utils._errors.RepositoryNotFoundError: 404 Client Error. (Request ID: Root=1-64e1c837-5b29d77a15a97cbf1529c61c;f148e1c6-5c15-4bd5-b778-2ab3a9cc288d)
+
+Repository Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_llama.py", line 674, in <module>
+    main()
+  File "run_clm_llama.py", line 296, in main
+    gaudi_config = GaudiConfig.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/configuration_utils.py", line 546, in from_pretrained
+    config_dict, kwargs = cls.get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 177, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 263, in _get_config_dict
+    resolved_config_file = cached_file(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 424, in cached_file
+    raise EnvironmentError(
+OSError: None is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo with `use_auth_token` or log in with `huggingface-cli login` and pass `use_auth_token=True`.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 261, in hf_raise_for_status
+    response.raise_for_status()
+  File "/usr/local/lib/python3.8/dist-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 409, in cached_file
+    resolved_file = hf_hub_download(
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1195, in hf_hub_download
+    metadata = get_hf_file_metadata(
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1541, in get_hf_file_metadata
+    hf_raise_for_status(r)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 293, in hf_raise_for_status
+    raise RepositoryNotFoundError(message, response) from e
+huggingface_hub.utils._errors.RepositoryNotFoundError: 404 Client Error. (Request ID: Root=1-64e1c837-088448cc02918f9330a5be5b;16df38d7-1b25-4f8f-95b4-ad952a2c80af)
+
+Repository Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_llama.py", line 674, in <module>
+    main()
+  File "run_clm_llama.py", line 296, in main
+    gaudi_config = GaudiConfig.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/configuration_utils.py", line 546, in from_pretrained
+    config_dict, kwargs = cls.get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 177, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 263, in _get_config_dict
+    resolved_config_file = cached_file(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 424, in cached_file
+    raise EnvironmentError(
+OSError: None is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo with `use_auth_token` or log in with `huggingface-cli login` and pass `use_auth_token=True`.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 261, in hf_raise_for_status
+    response.raise_for_status()
+  File "/usr/local/lib/python3.8/dist-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 409, in cached_file
+    resolved_file = hf_hub_download(
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1195, in hf_hub_download
+    metadata = get_hf_file_metadata(
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/file_download.py", line 1541, in get_hf_file_metadata
+    hf_raise_for_status(r)
+  File "/usr/local/lib/python3.8/dist-packages/huggingface_hub/utils/_errors.py", line 293, in hf_raise_for_status
+    raise RepositoryNotFoundError(message, response) from e
+huggingface_hub.utils._errors.RepositoryNotFoundError: 404 Client Error. (Request ID: Root=1-64e1c837-32567e59574f59b00b21a508;e4f31e85-ef7f-46fd-a520-c5f956af9316)
+
+Repository Not Found for url: https://huggingface.co/None/resolve/main/gaudi_config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_llama.py", line 674, in <module>
+    main()
+  File "run_clm_llama.py", line 296, in main
+    gaudi_config = GaudiConfig.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/configuration_utils.py", line 546, in from_pretrained
+    config_dict, kwargs = cls.get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 177, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/configuration_utils.py", line 263, in _get_config_dict
+    resolved_config_file = cached_file(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/hub.py", line 424, in cached_file
+    raise EnvironmentError(
+OSError: None is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo with `use_auth_token` or log in with `huggingface-cli login` and pass `use_auth_token=True`.
+[2023-08-20 08:00:55,668] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2216901
+[2023-08-20 08:00:55,669] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2216902
+[2023-08-20 08:00:55,727] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2216903
+[2023-08-20 08:00:55,784] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2216904
+[2023-08-20 08:00:55,788] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2216905
+[2023-08-20 08:00:55,791] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2216906
+[2023-08-20 08:00:55,793] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2216907
+[2023-08-20 08:00:55,796] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2216908
+[2023-08-20 08:00:55,799] [ERROR] [launch.py:328:sigkill_handler] ['/usr/bin/python3', '-u', 'run_clm_llama.py', '--model_name_or_path', 'EleutherAI/gpt-j-6b', '--dataset_name', 'wikitext', '--dataset_config_name', 'wikitext-2-raw-v1', '--report_to', 'tensorboard', '--bf16', 'True', '--output_dir', './checkpoints/llama-8-hpu-2-1-concat', '--num_train_epochs', '10', '--per_device_train_batch_size', '2', '--gradient_accumulation_steps', '1', '--evaluation_strategy', 'no', '--save_strategy', 'no', '--learning_rate', '1e-4', '--logging_steps', '1', '--do_train', '--use_habana', '--use_auth_token', '--use_lazy_mode', '--throughput_warmup_steps', '3', '--use_hpu_graphs_for_inference', '--deepspeed', 'deepspeed_config.json'] exits with return code = 1
+[ERROR|distributed_runner.py:218] 2023-08-20 08:00:56,487 >> deepspeed --num_nodes 1 --num_gpus 8 --no_local_rank run_clm_llama.py --model_name_or_path EleutherAI/gpt-j-6b --dataset_name wikitext --dataset_config_name wikitext-2-raw-v1 --report_to tensorboard --bf16 True --output_dir ./checkpoints/llama-8-hpu-2-1-concat --num_train_epochs 10 --per_device_train_batch_size 2 --gradient_accumulation_steps 1 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --do_train --use_habana --use_auth_token --use_lazy_mode --throughput_warmup_steps 3 --use_hpu_graphs_for_inference --deepspeed deepspeed_config.json  exited with status = 1

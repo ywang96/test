@@ -1,0 +1,49 @@
+DistributedRunner run(): command = deepspeed --num_nodes 1 --num_gpus 4 --no_local_rank run_clm_starcoder.py --model_name_or_path bigcode/starcoder --train_file /starcoder/finetune-data/roblox-train.json --validation_file /starcoder/finetune-data/roblox-validation.json --report_to tensorboard --bf16 True --output_dir ./checkpoints/starcoder-full-deepspeed-offload-4-hpu-8-2-concat --num_train_epochs 10 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --dataset_concatenation --do_train --use_habana --use_lazy_mode --throughput_warmup_steps 3 --cache_dir /starcoder/cache/ --use_hpu_graphs_for_inference --deepspeed deepspeed_config_s3_offload.json
+[2023-08-20 10:01:33,574] [WARNING] [runner.py:185:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+Namespace(autotuning='', elastic_training=False, exclude='', force_multi=False, hostfile='/job/hostfile', include='', launcher='pdsh', launcher_args='', master_addr='', master_port=29500, max_elastic_nodes=-1, min_elastic_nodes=-1, module=False, no_local_rank=True, no_python=False, no_ssh_check=False, num_gpus=4, num_nodes=1, save_pid=False, use_hpu=True, user_args=['--model_name_or_path', 'bigcode/starcoder', '--train_file', '/starcoder/finetune-data/roblox-train.json', '--validation_file', '/starcoder/finetune-data/roblox-validation.json', '--report_to', 'tensorboard', '--bf16', 'True', '--output_dir', './checkpoints/starcoder-full-deepspeed-offload-4-hpu-8-2-concat', '--num_train_epochs', '10', '--per_device_train_batch_size', '8', '--gradient_accumulation_steps', '2', '--evaluation_strategy', 'no', '--save_strategy', 'no', '--learning_rate', '1e-4', '--logging_steps', '1', '--dataset_concatenation', '--do_train', '--use_habana', '--use_lazy_mode', '--throughput_warmup_steps', '3', '--cache_dir', '/starcoder/cache/', '--use_hpu_graphs_for_inference', '--deepspeed', 'deepspeed_config_s3_offload.json'], user_script='run_clm_starcoder.py')
+[2023-08-20 10:01:35,289] [INFO] [runner.py:543:main] cmd = /usr/bin/python3 -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMCwgMSwgMiwgM119 --master_addr=127.0.0.1 --master_port=29500 --no_local_rank run_clm_starcoder.py --model_name_or_path bigcode/starcoder --train_file /starcoder/finetune-data/roblox-train.json --validation_file /starcoder/finetune-data/roblox-validation.json --report_to tensorboard --bf16 True --output_dir ./checkpoints/starcoder-full-deepspeed-offload-4-hpu-8-2-concat --num_train_epochs 10 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --dataset_concatenation --do_train --use_habana --use_lazy_mode --throughput_warmup_steps 3 --cache_dir /starcoder/cache/ --use_hpu_graphs_for_inference --deepspeed deepspeed_config_s3_offload.json
+[2023-08-20 10:01:37,147] [INFO] [launch.py:145:main] WORLD INFO DICT: {'localhost': [0, 1, 2, 3]}
+[2023-08-20 10:01:37,147] [INFO] [launch.py:151:main] nnodes=1, num_local_procs=4, node_rank=0
+[2023-08-20 10:01:37,148] [INFO] [launch.py:164:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0, 1, 2, 3]})
+[2023-08-20 10:01:37,148] [INFO] [launch.py:165:main] dist_world_size=4
+[2023-08-20 10:01:43,254] [INFO] [comm.py:762:init_distributed] Initializing TorchBackend in DeepSpeed with backend hccl
+[W socket.cpp:426] [c10d] The server socket has failed to bind to [::]:29500 (errno: 98 - Address already in use).
+[W socket.cpp:426] [c10d] The server socket has failed to bind to ?UNKNOWN? (errno: 98 - Address already in use).
+[E socket.cpp:462] [c10d] The server socket has failed to listen on any local network address.
+Traceback (most recent call last):
+  File "run_clm_starcoder.py", line 568, in <module>
+    main()
+  File "run_clm_starcoder.py", line 277, in main
+    ) = parser.parse_args_into_dataclasses()
+  File "/usr/local/lib/python3.8/dist-packages/transformers/hf_argparser.py", line 332, in parse_args_into_dataclasses
+    obj = dtype(**inputs)
+  File "<string>", line 123, in __init__
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/training_args.py", line 433, in __post_init__
+    device_is_hpu = self.device.type == "hpu"
+  File "/usr/local/lib/python3.8/dist-packages/transformers/training_args.py", line 1694, in device
+    return self._setup_devices
+  File "/usr/local/lib/python3.8/dist-packages/transformers/utils/generic.py", line 54, in __get__
+    cached = self.fget(obj)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/training_args.py", line 622, in _setup_devices
+    deepspeed.init_distributed(dist_backend="hccl", timeout=timedelta(seconds=self.ddp_timeout))
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 766, in init_distributed
+    cdb = TorchBackend(dist_backend, timeout, init_method)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/torch.py", line 29, in __init__
+    self.init_process_group(backend, timeout, init_method)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/torch.py", line 35, in init_process_group
+    torch.distributed.init_process_group(backend,
+  File "/usr/local/lib/python3.8/dist-packages/habana_frameworks/torch/core/torch_overwrites.py", line 154, in wrap_init_process_group
+    return init_process_group_orig(backend, init_method, timeout, world_size, rank, store, group_name, pg_options)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 900, in init_process_group
+    store, rank, world_size = next(rendezvous_iterator)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/rendezvous.py", line 245, in _env_rendezvous_handler
+    store = _create_c10d_store(master_addr, master_port, rank, world_size, timeout)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/rendezvous.py", line 176, in _create_c10d_store
+    return TCPStore(
+RuntimeError: The server socket has failed to listen on any local network address. The server socket has failed to bind to [::]:29500 (errno: 98 - Address already in use). The server socket has failed to bind to ?UNKNOWN? (errno: 98 - Address already in use).
+[2023-08-20 10:01:44,197] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2268010
+[2023-08-20 10:01:44,198] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2268011
+[2023-08-20 10:01:44,258] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2268012
+[2023-08-20 10:01:44,316] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2268013
+[2023-08-20 10:01:44,374] [ERROR] [launch.py:328:sigkill_handler] ['/usr/bin/python3', '-u', 'run_clm_starcoder.py', '--model_name_or_path', 'bigcode/starcoder', '--train_file', '/starcoder/finetune-data/roblox-train.json', '--validation_file', '/starcoder/finetune-data/roblox-validation.json', '--report_to', 'tensorboard', '--bf16', 'True', '--output_dir', './checkpoints/starcoder-full-deepspeed-offload-4-hpu-8-2-concat', '--num_train_epochs', '10', '--per_device_train_batch_size', '8', '--gradient_accumulation_steps', '2', '--evaluation_strategy', 'no', '--save_strategy', 'no', '--learning_rate', '1e-4', '--logging_steps', '1', '--dataset_concatenation', '--do_train', '--use_habana', '--use_lazy_mode', '--throughput_warmup_steps', '3', '--cache_dir', '/starcoder/cache/', '--use_hpu_graphs_for_inference', '--deepspeed', 'deepspeed_config_s3_offload.json'] exits with return code = 1
+[ERROR|distributed_runner.py:218] 2023-08-20 10:01:45,054 >> deepspeed --num_nodes 1 --num_gpus 4 --no_local_rank run_clm_starcoder.py --model_name_or_path bigcode/starcoder --train_file /starcoder/finetune-data/roblox-train.json --validation_file /starcoder/finetune-data/roblox-validation.json --report_to tensorboard --bf16 True --output_dir ./checkpoints/starcoder-full-deepspeed-offload-4-hpu-8-2-concat --num_train_epochs 10 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --dataset_concatenation --do_train --use_habana --use_lazy_mode --throughput_warmup_steps 3 --cache_dir /starcoder/cache/ --use_hpu_graphs_for_inference --deepspeed deepspeed_config_s3_offload.json  exited with status = 1

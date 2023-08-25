@@ -1,0 +1,486 @@
+08/17/2023 16:59:23 - WARNING - __main__ -   Process rank: -1, device: hpu
+distributed training: False, 16-bits training: True
+08/17/2023 16:59:23 - INFO - __main__ -   Training/evaluation parameters GaudiTrainingArguments(
+_n_gpu=1,
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-06,
+adjust_throughput=False,
+auto_find_batch_size=False,
+bf16=True,
+data_seed=None,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_pin_memory=True,
+ddp_bucket_cap_mb=230,
+ddp_find_unused_parameters=False,
+ddp_timeout=1800,
+debug=[],
+deepspeed=None,
+disable_tqdm=False,
+distribution_strategy=ddp,
+do_eval=False,
+do_predict=False,
+do_train=True,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_steps=None,
+evaluation_strategy=no,
+fsdp_config=None,
+fsdp_min_num_params=0,
+fsdp_transformer_layer_cls_to_wrap=None,
+full_determinism=False,
+gaudi_config_name=None,
+gradient_accumulation_steps=2,
+gradient_checkpointing=False,
+greater_is_better=None,
+group_by_length=False,
+half_precision_backend=hpu_amp,
+hub_model_id=None,
+hub_private_repo=False,
+hub_strategy=every_save,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+include_inputs_for_metrics=False,
+jit_mode_eval=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=0.0001,
+length_column_name=length,
+load_best_model_at_end=False,
+local_rank=-1,
+log_level=passive,
+log_level_replica=warning,
+log_on_each_node=True,
+logging_dir=./checkpoints/starcoder-lora-8-10-2-concat/runs/Aug17_16-59-23_sysid674631,
+logging_first_step=False,
+logging_nan_inf_filter=False,
+logging_steps=1,
+logging_strategy=steps,
+lr_scheduler_type=linear,
+max_grad_norm=1.0,
+max_steps=-1,
+metric_for_best_model=None,
+no_cuda=False,
+non_blocking_data_copy=False,
+num_train_epochs=10.0,
+optim=adamw_torch,
+optim_args=None,
+output_dir=./checkpoints/starcoder-lora-8-10-2-concat,
+overwrite_output_dir=False,
+past_index=-1,
+per_device_eval_batch_size=8,
+per_device_train_batch_size=10,
+pipelining_fwd_bwd=False,
+prediction_loss_only=False,
+profiling_steps=0,
+profiling_warmup_steps=0,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+ray_scope=last,
+remove_unused_columns=True,
+report_to=['tensorboard'],
+resume_from_checkpoint=None,
+run_name=./checkpoints/starcoder-lora-8-10-2-concat,
+save_on_each_node=False,
+save_safetensors=False,
+save_steps=500,
+save_strategy=no,
+save_total_limit=None,
+seed=42,
+skip_memory_metrics=True,
+throughput_warmup_steps=3,
+torch_compile=False,
+torch_compile_backend=None,
+torch_compile_mode=None,
+torchdynamo=None,
+use_habana=True,
+use_hpu_graphs=False,
+use_hpu_graphs_for_inference=False,
+use_hpu_graphs_for_training=False,
+use_ipex=False,
+use_lazy_mode=True,
+use_legacy_prediction_loop=False,
+use_mps_device=False,
+warmup_ratio=0.0,
+warmup_steps=0,
+weight_decay=0.0,
+xpu_backend=None,
+)
+[INFO|configuration_utils.py:668] 2023-08-17 16:59:23,399 >> loading configuration file config.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/config.json
+[INFO|configuration_utils.py:720] 2023-08-17 16:59:23,402 >> Model config GPTBigCodeConfig {
+  "_name_or_path": "bigcode/starcoder",
+  "activation_function": "gelu",
+  "architectures": [
+    "GPTBigCodeForCausalLM"
+  ],
+  "attention_softmax_in_fp32": true,
+  "attn_pdrop": 0.1,
+  "bos_token_id": 0,
+  "embd_pdrop": 0.1,
+  "eos_token_id": 0,
+  "inference_runner": 0,
+  "initializer_range": 0.02,
+  "layer_norm_epsilon": 1e-05,
+  "max_batch_size": null,
+  "max_sequence_length": null,
+  "model_type": "gpt_bigcode",
+  "multi_query": true,
+  "n_embd": 6144,
+  "n_head": 48,
+  "n_inner": 24576,
+  "n_layer": 40,
+  "n_positions": 8192,
+  "pad_key_length": true,
+  "pre_allocate_kv_cache": false,
+  "resid_pdrop": 0.1,
+  "scale_attention_softmax_in_fp32": true,
+  "scale_attn_weights": true,
+  "summary_activation": null,
+  "summary_first_dropout": 0.1,
+  "summary_proj_to_labels": true,
+  "summary_type": "cls_index",
+  "summary_use_proj": true,
+  "torch_dtype": "float32",
+  "transformers_version": "4.28.1",
+  "use_cache": true,
+  "validate_runner_input": true,
+  "vocab_size": 49152
+}
+
+[INFO|tokenization_utils_base.py:1809] 2023-08-17 16:59:23,522 >> loading file vocab.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/vocab.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-17 16:59:23,522 >> loading file merges.txt from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/merges.txt
+[INFO|tokenization_utils_base.py:1809] 2023-08-17 16:59:23,522 >> loading file tokenizer.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/tokenizer.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-17 16:59:23,522 >> loading file added_tokens.json from cache at None
+[INFO|tokenization_utils_base.py:1809] 2023-08-17 16:59:23,522 >> loading file special_tokens_map.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/special_tokens_map.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-17 16:59:23,522 >> loading file tokenizer_config.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/tokenizer_config.json
+/usr/local/lib/python3.8/dist-packages/datasets/load.py:2072: FutureWarning: 'use_auth_token' was deprecated in favor of 'token' in version 2.14.0 and will be removed in 3.0.0.
+You can remove this warning by passing 'token=None' instead.
+  warnings.warn(
+[INFO|modeling_utils.py:2534] 2023-08-17 16:59:24,133 >> loading weights file pytorch_model.bin from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/pytorch_model.bin.index.json
+[INFO|modeling_utils.py:1176] 2023-08-17 16:59:24,135 >> Instantiating GaudiGPTBigCodeForCausalLM model under default dtype torch.bfloat16.
+[INFO|configuration_utils.py:575] 2023-08-17 16:59:24,135 >> Generate config GaudiGenerationConfig {
+  "_from_model_config": true,
+  "bos_token_id": 0,
+  "eos_token_id": 0,
+  "ignore_eos": null,
+  "static_shapes": null,
+  "transformers_version": "4.28.1"
+}
+
+Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]Loading checkpoint shards:  14%|█▍        | 1/7 [00:04<00:28,  4.78s/it]Loading checkpoint shards:  29%|██▊       | 2/7 [00:08<00:19,  3.94s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:10<00:13,  3.36s/it]Loading checkpoint shards:  57%|█████▋    | 4/7 [00:13<00:09,  3.08s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [00:15<00:05,  2.86s/it]Loading checkpoint shards:  86%|████████▌ | 6/7 [00:18<00:02,  2.62s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:19<00:00,  2.08s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:19<00:00,  2.72s/it]
+[INFO|modeling_utils.py:3190] 2023-08-17 17:01:49,925 >> All model checkpoint weights were used when initializing GaudiGPTBigCodeForCausalLM.
+
+[INFO|modeling_utils.py:3198] 2023-08-17 17:01:49,925 >> All the weights of GaudiGPTBigCodeForCausalLM were initialized from the model checkpoint at bigcode/starcoder.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use GaudiGPTBigCodeForCausalLM for predictions without further training.
+[INFO|configuration_utils.py:537] 2023-08-17 17:01:50,338 >> loading configuration file generation_config.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/generation_config.json
+[INFO|configuration_utils.py:575] 2023-08-17 17:01:50,339 >> Generate config GaudiGenerationConfig {
+  "_from_model_config": true,
+  "bos_token_id": 0,
+  "eos_token_id": 0,
+  "ignore_eos": null,
+  "static_shapes": null,
+  "transformers_version": "4.28.1"
+}
+
+08/17/2023 17:01:50 - INFO - __main__ -   Using data collator of type DataCollatorForSeq2Seq
+=============================HABANA PT BRIDGE CONFIGURATION =========================== 
+ PT_HPU_LAZY_MODE = 1
+ PT_HPU_LAZY_EAGER_OPTIM_CACHE = 1
+ PT_HPU_ENABLE_COMPILE_THREAD = 0
+ PT_HPU_ENABLE_EXECUTION_THREAD = 1
+ PT_HPU_ENABLE_LAZY_EAGER_EXECUTION_THREAD = 1
+ PT_ENABLE_INTER_HOST_CACHING = 0
+ PT_ENABLE_INFERENCE_MODE = 1
+ PT_ENABLE_HABANA_CACHING = 1
+ PT_HPU_MAX_RECIPE_SUBMISSION_LIMIT = 0
+ PT_HPU_MAX_COMPOUND_OP_SIZE = 9223372036854775807
+ PT_HPU_MAX_COMPOUND_OP_SIZE_SS = 10
+ PT_HPU_ENABLE_STAGE_SUBMISSION = 1
+ PT_HPU_STAGE_SUBMISSION_MODE = 2
+ PT_HPU_PGM_ENABLE_CACHE = 1
+ PT_HPU_ENABLE_LAZY_COLLECTIVES = 0
+ PT_HCCL_SLICE_SIZE_MB = 16
+ PT_HCCL_MEMORY_ALLOWANCE_MB = 0
+ PT_HPU_INITIAL_WORKSPACE_SIZE = 0
+ PT_HABANA_POOL_SIZE = 24
+ PT_HPU_POOL_STRATEGY = 5
+ PT_HPU_POOL_LOG_FRAGMENTATION_INFO = 0
+ PT_ENABLE_MEMORY_DEFRAGMENTATION = 1
+ PT_ENABLE_DEFRAGMENTATION_INFO = 0
+ PT_HPU_ENABLE_SYNAPSE_OUTPUT_PERMUTE = 1
+ PT_HPU_ENABLE_VALID_DATA_RANGE_CHECK = 1
+ PT_HPU_FORCE_USE_DEFAULT_STREAM = 0
+ PT_RECIPE_CACHE_PATH = 
+ PT_HPU_ENABLE_REFINE_DYNAMIC_SHAPES = 0
+ PT_HPU_DYNAMIC_MIN_POLICY_ORDER = 4,5,3,1
+ PT_HPU_DYNAMIC_MAX_POLICY_ORDER = 2,4,5,3,1
+ PT_HPU_LAZY_ACC_PAR_MODE = 1
+ PT_HPU_CLUSTERED_PROGRAM = 0
+ PT_HPU_CLUSTERED_PROGRAM_ENFORCE = 0
+ PT_HPU_CLUSTERED_PROGRAM_SPLIT_STR = default
+ PT_HPU_CLUSTERED_PROGRAM_SCHED_STR = default
+=============================SYSTEM CONFIGURATION ========================================= 
+Num CPU Cores = 160
+CPU RAM = 1056389528 KB 
+============================================================================================ 
+[INFO|trainer.py:770] 2023-08-17 17:02:21,093 >> ***** Running training *****
+[INFO|trainer.py:771] 2023-08-17 17:02:21,093 >>   Num examples = 489
+[INFO|trainer.py:772] 2023-08-17 17:02:21,093 >>   Num Epochs = 10
+[INFO|trainer.py:773] 2023-08-17 17:02:21,093 >>   Instantaneous batch size per device = 10
+[INFO|trainer.py:774] 2023-08-17 17:02:21,093 >>   Total train batch size (w. parallel, distributed & accumulation) = 20
+[INFO|trainer.py:775] 2023-08-17 17:02:21,093 >>   Gradient Accumulation steps = 2
+[INFO|trainer.py:776] 2023-08-17 17:02:21,093 >>   Total optimization steps = 240
+[INFO|trainer.py:777] 2023-08-17 17:02:21,095 >>   Number of trainable parameters = 4,014,080
+trainable params: 4,014,080 || all params: 15,521,470,464 || trainable%: 0.0258614672450663
+  0%|          | 0/240 [00:00<?, ?it/s][WARNING|logging.py:280] 2023-08-17 17:02:21,122 >> You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+  0%|          | 1/240 [01:16<5:05:28, 76.69s/it]                                                   0%|          | 1/240 [01:17<5:05:28, 76.69s/it]  1%|          | 2/240 [02:05<3:59:01, 60.26s/it]                                                   1%|          | 2/240 [02:06<3:59:01, 60.26s/it]  1%|▏         | 3/240 [02:06<2:11:50, 33.38s/it]                                                   1%|▏         | 3/240 [02:08<2:11:50, 33.38s/it]  2%|▏         | 4/240 [02:09<1:23:07, 21.13s/it]                                                   2%|▏         | 4/240 [02:11<1:23:07, 21.13s/it]  2%|▏         | 5/240 [02:11<56:15, 14.36s/it]                                                   2%|▏         | 5/240 [02:13<56:15, 14.36s/it]  2%|▎         | 6/240 [02:13<40:07, 10.29s/it]                                                 2%|▎         | 6/240 [02:15<40:07, 10.29s/it]  3%|▎         | 7/240 [02:16<29:54,  7.70s/it]                                                 3%|▎         | 7/240 [02:18<29:54,  7.70s/it]  3%|▎         | 8/240 [02:18<23:12,  6.00s/it]                                                 3%|▎         | 8/240 [02:20<23:12,  6.00s/it]  4%|▍         | 9/240 [02:21<18:43,  4.86s/it]                                                 4%|▍         | 9/240 [02:23<18:43,  4.86s/it]  4%|▍         | 10/240 [02:23<15:41,  4.10s/it]                                                  4%|▍         | 10/240 [02:25<15:41,  4.10s/it]  5%|▍         | 11/240 [02:25<13:36,  3.56s/it]                                                  5%|▍         | 11/240 [02:27<13:36,  3.56s/it]  5%|▌         | 12/240 [02:28<12:09,  3.20s/it]                                                  5%|▌         | 12/240 [02:30<12:09,  3.20s/it]  5%|▌         | 13/240 [02:30<11:09,  2.95s/it]                                                  5%|▌         | 13/240 [02:32<11:09,  2.95s/it]  6%|▌         | 14/240 [02:32<10:28,  2.78s/it]                                                  6%|▌         | 14/240 [02:34<10:28,  2.78s/it]  6%|▋         | 15/240 [02:35<09:58,  2.66s/it]                                                  6%|▋         | 15/240 [02:37<09:58,  2.66s/it]  7%|▋         | 16/240 [02:37<09:36,  2.57s/it]                                                  7%|▋         | 16/240 [02:39<09:36,  2.57s/it]  7%|▋         | 17/240 [02:40<09:19,  2.51s/it]                                                  7%|▋         | 17/240 [02:42<09:19,  2.51s/it]  8%|▊         | 18/240 [02:42<09:07,  2.47s/it]                                                  8%|▊         | 18/240 [02:44<09:07,  2.47s/it]  8%|▊         | 19/240 [02:44<08:58,  2.44s/it]                                                  8%|▊         | 19/240 [02:46<08:58,  2.44s/it]  8%|▊         | 20/240 [02:47<08:51,  2.42s/it]                                                  8%|▊         | 20/240 [02:49<08:51,  2.42s/it]  9%|▉         | 21/240 [02:49<08:45,  2.40s/it]                                                  9%|▉         | 21/240 [02:51<08:45,  2.40s/it]  9%|▉         | 22/240 [02:51<08:48,  2.43s/it]                                                  9%|▉         | 22/240 [02:54<08:48,  2.43s/it] 10%|▉         | 23/240 [02:54<08:42,  2.41s/it]                                                 10%|▉         | 23/240 [02:56<08:42,  2.41s/it] 10%|█         | 24/240 [02:56<08:38,  2.40s/it]                                                 10%|█         | 24/240 [02:58<08:38,  2.40s/it] 10%|█         | 25/240 [03:00<09:37,  2.69s/it]                                                 10%|█         | 25/240 [03:02<09:37,  2.69s/it] 11%|█         | 26/240 [03:02<09:21,  2.63s/it]                                                 11%|█         | 26/240 [03:04<09:21,  2.63s/it] 11%|█▏        | 27/240 [03:04<09:02,  2.55s/it]                                                 11%|█▏        | 27/240 [03:06<09:02,  2.55s/it] 12%|█▏        | 28/240 [03:07<08:48,  2.49s/it]                                                 12%|█▏        | 28/240 [03:09<08:48,  2.49s/it] 12%|█▏        | 29/240 [03:09<08:37,  2.45s/it]                                                 12%|█▏        | 29/240 [03:11<08:37,  2.45s/it] 12%|█▎        | 30/240 [03:12<08:29,  2.43s/it]                                                 12%|█▎        | 30/240 [03:14<08:29,  2.43s/it] 13%|█▎        | 31/240 [03:14<08:22,  2.41s/it]                                                 13%|█▎        | 31/240 [03:16<08:22,  2.41s/it] 13%|█▎        | 32/240 [03:16<08:18,  2.40s/it]                                                 13%|█▎        | 32/240 [03:18<08:18,  2.40s/it] 14%|█▍        | 33/240 [03:19<08:14,  2.39s/it]                                                 14%|█▍        | 33/240 [03:21<08:14,  2.39s/it] 14%|█▍        | 34/240 [03:21<08:11,  2.38s/it]                                                 14%|█▍        | 34/240 [03:23<08:11,  2.38s/it] 15%|█▍        | 35/240 [03:23<08:08,  2.38s/it]                                                 15%|█▍        | 35/240 [03:25<08:08,  2.38s/it] 15%|█▌        | 36/240 [03:26<08:03,  2.37s/it]                                                 15%|█▌        | 36/240 [03:28<08:03,  2.37s/it] 15%|█▌        | 37/240 [03:28<08:00,  2.37s/it]                                                 15%|█▌        | 37/240 [03:30<08:00,  2.37s/it] 16%|█▌        | 38/240 [03:30<07:58,  2.37s/it]                                                 16%|█▌        | 38/240 [03:32<07:58,  2.37s/it] 16%|█▋        | 39/240 [03:33<07:55,  2.37s/it]                                                 16%|█▋        | 39/240 [03:35<07:55,  2.37s/it] 17%|█▋        | 40/240 [03:35<07:53,  2.37s/it]                                                 17%|█▋        | 40/240 [03:37<07:53,  2.37s/it] 17%|█▋        | 41/240 [03:38<07:51,  2.37s/it]                                                 17%|█▋        | 41/240 [03:40<07:51,  2.37s/it] 18%|█▊        | 42/240 [03:40<07:49,  2.37s/it]                                                 18%|█▊        | 42/240 [03:42<07:49,  2.37s/it] 18%|█▊        | 43/240 [03:42<07:48,  2.38s/it]                                                 18%|█▊        | 43/240 [03:44<07:48,  2.38s/it] 18%|█▊        | 44/240 [03:45<07:51,  2.40s/it]                                                 18%|█▊        | 44/240 [03:47<07:51,  2.40s/it] 19%|█▉        | 45/240 [03:47<07:41,  2.37s/it]                                                 19%|█▉        | 45/240 [03:49<07:41,  2.37s/it] 19%|█▉        | 46/240 [03:49<07:39,  2.37s/it]                                                 19%|█▉        | 46/240 [03:51<07:39,  2.37s/it] 20%|█▉        | 47/240 [03:52<07:36,  2.37s/it]                                                {'loss': 1.3925, 'learning_rate': 9.958333333333335e-05, 'epoch': 0.04, 'memory_allocated (GB)': 78.01, 'max_memory_allocated (GB)': 83.92, 'total_memory_available (GB)': 93.74}
+{'loss': 1.4542, 'learning_rate': 9.916666666666667e-05, 'epoch': 0.08, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 84.12, 'total_memory_available (GB)': 93.74}
+{'loss': 1.4477, 'learning_rate': 9.875000000000002e-05, 'epoch': 0.12, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.5158, 'learning_rate': 9.833333333333333e-05, 'epoch': 0.16, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.3824, 'learning_rate': 9.791666666666667e-05, 'epoch': 0.2, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.3653, 'learning_rate': 9.75e-05, 'epoch': 0.24, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.4461, 'learning_rate': 9.708333333333334e-05, 'epoch': 0.29, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.3308, 'learning_rate': 9.666666666666667e-05, 'epoch': 0.33, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.4272, 'learning_rate': 9.625000000000001e-05, 'epoch': 0.37, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.4017, 'learning_rate': 9.583333333333334e-05, 'epoch': 0.41, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.352, 'learning_rate': 9.541666666666668e-05, 'epoch': 0.45, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.4018, 'learning_rate': 9.5e-05, 'epoch': 0.49, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.3098, 'learning_rate': 9.458333333333333e-05, 'epoch': 0.53, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.3687, 'learning_rate': 9.416666666666667e-05, 'epoch': 0.57, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.2586, 'learning_rate': 9.375e-05, 'epoch': 0.61, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.3976, 'learning_rate': 9.333333333333334e-05, 'epoch': 0.65, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.3074, 'learning_rate': 9.291666666666667e-05, 'epoch': 0.69, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.3246, 'learning_rate': 9.250000000000001e-05, 'epoch': 0.73, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.3344, 'learning_rate': 9.208333333333333e-05, 'epoch': 0.78, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.3311, 'learning_rate': 9.166666666666667e-05, 'epoch': 0.82, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.3303, 'learning_rate': 9.125e-05, 'epoch': 0.86, 'memory_allocated (GB)': 78.19, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.2197, 'learning_rate': 9.083333333333334e-05, 'epoch': 0.9, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.3583, 'learning_rate': 9.041666666666668e-05, 'epoch': 0.94, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.2297, 'learning_rate': 9e-05, 'epoch': 0.98, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.9105, 'learning_rate': 8.958333333333335e-05, 'epoch': 1.04, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.2149, 'learning_rate': 8.916666666666667e-05, 'epoch': 1.08, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.2573, 'learning_rate': 8.875e-05, 'epoch': 1.12, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.2989, 'learning_rate': 8.833333333333333e-05, 'epoch': 1.16, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.291, 'learning_rate': 8.791666666666667e-05, 'epoch': 1.2, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.3223, 'learning_rate': 8.75e-05, 'epoch': 1.24, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.2086, 'learning_rate': 8.708333333333334e-05, 'epoch': 1.29, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.2868, 'learning_rate': 8.666666666666667e-05, 'epoch': 1.33, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.266, 'learning_rate': 8.625000000000001e-05, 'epoch': 1.37, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.2176, 'learning_rate': 8.583333333333334e-05, 'epoch': 1.41, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.1856, 'learning_rate': 8.541666666666666e-05, 'epoch': 1.45, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.145, 'learning_rate': 8.5e-05, 'epoch': 1.49, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.1806, 'learning_rate': 8.458333333333333e-05, 'epoch': 1.53, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.1981, 'learning_rate': 8.416666666666668e-05, 'epoch': 1.57, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.1558, 'learning_rate': 8.375e-05, 'epoch': 1.61, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.2111, 'learning_rate': 8.333333333333334e-05, 'epoch': 1.65, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.1806, 'learning_rate': 8.291666666666667e-05, 'epoch': 1.69, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.1071, 'learning_rate': 8.25e-05, 'epoch': 1.73, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.1671, 'learning_rate': 8.208333333333334e-05, 'epoch': 1.78, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.1399, 'learning_rate': 8.166666666666667e-05, 'epoch': 1.82, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.2126, 'learning_rate': 8.125000000000001e-05, 'epoch': 1.86, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.2184, 'learning_rate': 8.083333333333334e-05, 'epoch': 1.9, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+ 20%|█▉        | 47/240 [03:54<07:36,  2.37s/it] 20%|██        | 48/240 [03:54<07:33,  2.36s/it]                                                 20%|██        | 48/240 [03:56<07:33,  2.36s/it] 20%|██        | 49/240 [03:58<08:28,  2.66s/it]                                                 20%|██        | 49/240 [04:00<08:28,  2.66s/it] 21%|██        | 50/240 [04:00<08:15,  2.61s/it]                                                 21%|██        | 50/240 [04:02<08:15,  2.61s/it] 21%|██▏       | 51/240 [04:02<07:59,  2.54s/it]                                                 21%|██▏       | 51/240 [04:04<07:59,  2.54s/it] 22%|██▏       | 52/240 [04:05<07:47,  2.48s/it]                                                 22%|██▏       | 52/240 [04:07<07:47,  2.48s/it] 22%|██▏       | 53/240 [04:07<07:38,  2.45s/it]                                                 22%|██▏       | 53/240 [04:09<07:38,  2.45s/it] 22%|██▎       | 54/240 [04:09<07:30,  2.42s/it]                                                 22%|██▎       | 54/240 [04:12<07:30,  2.42s/it] 23%|██▎       | 55/240 [04:12<07:25,  2.41s/it]                                                 23%|██▎       | 55/240 [04:14<07:25,  2.41s/it] 23%|██▎       | 56/240 [04:14<07:20,  2.39s/it]                                                 23%|██▎       | 56/240 [04:16<07:20,  2.39s/it] 24%|██▍       | 57/240 [04:17<07:17,  2.39s/it]                                                 24%|██▍       | 57/240 [04:19<07:17,  2.39s/it] 24%|██▍       | 58/240 [04:19<07:13,  2.38s/it]                                                 24%|██▍       | 58/240 [04:21<07:13,  2.38s/it] 25%|██▍       | 59/240 [04:21<07:09,  2.38s/it]                                                 25%|██▍       | 59/240 [04:23<07:09,  2.38s/it] 25%|██▌       | 60/240 [04:24<07:07,  2.37s/it]                                                 25%|██▌       | 60/240 [04:26<07:07,  2.37s/it] 25%|██▌       | 61/240 [04:26<07:03,  2.37s/it]                                                 25%|██▌       | 61/240 [04:28<07:03,  2.37s/it] 26%|██▌       | 62/240 [04:28<07:01,  2.37s/it]                                                 26%|██▌       | 62/240 [04:30<07:01,  2.37s/it] 26%|██▋       | 63/240 [04:31<06:59,  2.37s/it]                                                 26%|██▋       | 63/240 [04:33<06:59,  2.37s/it] 27%|██▋       | 64/240 [04:33<06:57,  2.37s/it]                                                 27%|██▋       | 64/240 [04:35<06:57,  2.37s/it] 27%|██▋       | 65/240 [04:35<06:54,  2.37s/it]                                                 27%|██▋       | 65/240 [04:38<06:54,  2.37s/it] 28%|██▊       | 66/240 [04:38<06:53,  2.37s/it]                                                 28%|██▊       | 66/240 [04:40<06:53,  2.37s/it] 28%|██▊       | 67/240 [04:40<06:50,  2.37s/it]                                                 28%|██▊       | 67/240 [04:42<06:50,  2.37s/it] 28%|██▊       | 68/240 [04:43<06:47,  2.37s/it]                                                 28%|██▊       | 68/240 [04:45<06:47,  2.37s/it] 29%|██▉       | 69/240 [04:45<06:45,  2.37s/it]                                                 29%|██▉       | 69/240 [04:47<06:45,  2.37s/it] 29%|██▉       | 70/240 [04:47<06:48,  2.40s/it]                                                 29%|██▉       | 70/240 [04:49<06:48,  2.40s/it] 30%|██▉       | 71/240 [04:50<06:38,  2.36s/it]                                                 30%|██▉       | 71/240 [04:52<06:38,  2.36s/it] 30%|███       | 72/240 [04:52<06:36,  2.36s/it]                                                 30%|███       | 72/240 [04:54<06:36,  2.36s/it] 30%|███       | 73/240 [04:55<07:24,  2.66s/it]                                                 30%|███       | 73/240 [04:58<07:24,  2.66s/it] 31%|███       | 74/240 [04:58<07:13,  2.61s/it]                                                 31%|███       | 74/240 [05:00<07:13,  2.61s/it] 31%|███▏      | 75/240 [05:00<06:58,  2.53s/it]                                                 31%|███▏      | 75/240 [05:02<06:58,  2.53s/it] 32%|███▏      | 76/240 [05:03<06:47,  2.48s/it]                                                 32%|███▏      | 76/240 [05:05<06:47,  2.48s/it] 32%|███▏      | 77/240 [05:05<06:38,  2.45s/it]                                                 32%|███▏      | 77/240 [05:07<06:38,  2.45s/it] 32%|███▎      | 78/240 [05:07<06:32,  2.42s/it]                                                 32%|███▎      | 78/240 [05:09<06:32,  2.42s/it] 33%|███▎      | 79/240 [05:10<06:27,  2.40s/it]                                                 33%|███▎      | 79/240 [05:12<06:27,  2.40s/it] 33%|███▎      | 80/240 [05:12<06:22,  2.39s/it]                                                 33%|███▎      | 80/240 [05:14<06:22,  2.39s/it] 34%|███▍      | 81/240 [05:14<06:18,  2.38s/it]                                                 34%|███▍      | 81/240 [05:17<06:18,  2.38s/it] 34%|███▍      | 82/240 [05:17<06:15,  2.38s/it]                                                 34%|███▍      | 82/240 [05:19<06:15,  2.38s/it] 35%|███▍      | 83/240 [05:19<06:12,  2.37s/it]                                                 35%|███▍      | 83/240 [05:21<06:12,  2.37s/it] 35%|███▌      | 84/240 [05:22<06:09,  2.37s/it]                                                 35%|███▌      | 84/240 [05:24<06:09,  2.37s/it] 35%|███▌      | 85/240 [05:24<06:07,  2.37s/it]                                                 35%|███▌      | 85/240 [05:26<06:07,  2.37s/it] 36%|███▌      | 86/240 [05:26<06:04,  2.36s/it]                                                 36%|███▌      | 86/240 [05:28<06:04,  2.36s/it] 36%|███▋      | 87/240 [05:29<06:02,  2.37s/it]                                                 36%|███▋      | 87/240 [05:31<06:02,  2.37s/it] 37%|███▋      | 88/240 [05:31<05:59,  2.37s/it]                                                 37%|███▋      | 88/240 [05:33<05:59,  2.37s/it] 37%|███▋      | 89/240 [05:33<05:57,  2.37s/it]                                                 37%|███▋      | 89/240 [05:35<05:57,  2.37s/it] 38%|███▊      | 90/240 [05:36<05:55,  2.37s/it]                                                 38%|███▊      | 90/240 [05:38<05:55,  2.37s/it] 38%|███▊      | 91/240 [05:38<05:52,  2.37s/it]                                                 38%|███▊      | 91/240 [05:40<05:52,  2.37s/it] 38%|███▊      | 92/240 [05:41<05:55,  2.40s/it]                                                 38%|███▊      | 92/240 [05:43<05:55,  2.40s/it] 39%|███▉      | 93/240 [05:43<05:47,  2.36s/it]                                                {'loss': 1.0457, 'learning_rate': 8.041666666666668e-05, 'epoch': 1.94, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.2209, 'learning_rate': 8e-05, 'epoch': 1.98, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.833, 'learning_rate': 7.958333333333333e-05, 'epoch': 2.04, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.122, 'learning_rate': 7.916666666666666e-05, 'epoch': 2.08, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.1556, 'learning_rate': 7.875e-05, 'epoch': 2.12, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0536, 'learning_rate': 7.833333333333333e-05, 'epoch': 2.16, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.2136, 'learning_rate': 7.791666666666667e-05, 'epoch': 2.2, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.1233, 'learning_rate': 7.75e-05, 'epoch': 2.24, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0696, 'learning_rate': 7.708333333333334e-05, 'epoch': 2.29, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0763, 'learning_rate': 7.666666666666667e-05, 'epoch': 2.33, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0907, 'learning_rate': 7.625e-05, 'epoch': 2.37, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.064, 'learning_rate': 7.583333333333334e-05, 'epoch': 2.41, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.071, 'learning_rate': 7.541666666666667e-05, 'epoch': 2.45, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.1211, 'learning_rate': 7.500000000000001e-05, 'epoch': 2.49, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.1033, 'learning_rate': 7.458333333333333e-05, 'epoch': 2.53, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0956, 'learning_rate': 7.416666666666668e-05, 'epoch': 2.57, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.1185, 'learning_rate': 7.375e-05, 'epoch': 2.61, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.1612, 'learning_rate': 7.333333333333333e-05, 'epoch': 2.65, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0793, 'learning_rate': 7.291666666666667e-05, 'epoch': 2.69, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0893, 'learning_rate': 7.25e-05, 'epoch': 2.73, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0756, 'learning_rate': 7.208333333333334e-05, 'epoch': 2.78, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.004, 'learning_rate': 7.166666666666667e-05, 'epoch': 2.82, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9711, 'learning_rate': 7.125000000000001e-05, 'epoch': 2.86, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0218, 'learning_rate': 7.083333333333334e-05, 'epoch': 2.9, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0506, 'learning_rate': 7.041666666666668e-05, 'epoch': 2.94, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.997, 'learning_rate': 7e-05, 'epoch': 2.98, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.5303, 'learning_rate': 6.958333333333334e-05, 'epoch': 3.04, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0181, 'learning_rate': 6.916666666666666e-05, 'epoch': 3.08, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9904, 'learning_rate': 6.875e-05, 'epoch': 3.12, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0309, 'learning_rate': 6.833333333333333e-05, 'epoch': 3.16, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.115, 'learning_rate': 6.791666666666667e-05, 'epoch': 3.2, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0765, 'learning_rate': 6.750000000000001e-05, 'epoch': 3.24, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0272, 'learning_rate': 6.708333333333333e-05, 'epoch': 3.29, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9885, 'learning_rate': 6.666666666666667e-05, 'epoch': 3.33, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9526, 'learning_rate': 6.625e-05, 'epoch': 3.37, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0665, 'learning_rate': 6.583333333333334e-05, 'epoch': 3.41, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9719, 'learning_rate': 6.541666666666667e-05, 'epoch': 3.45, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9849, 'learning_rate': 6.500000000000001e-05, 'epoch': 3.49, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0, 'learning_rate': 6.458333333333334e-05, 'epoch': 3.53, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0124, 'learning_rate': 6.416666666666668e-05, 'epoch': 3.57, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9452, 'learning_rate': 6.375e-05, 'epoch': 3.61, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0312, 'learning_rate': 6.333333333333333e-05, 'epoch': 3.65, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.005, 'learning_rate': 6.291666666666667e-05, 'epoch': 3.69, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0088, 'learning_rate': 6.25e-05, 'epoch': 3.73, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.951, 'learning_rate': 6.208333333333334e-05, 'epoch': 3.78, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9739, 'learning_rate': 6.166666666666667e-05, 'epoch': 3.82, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+ 39%|███▉      | 93/240 [05:45<05:47,  2.36s/it] 39%|███▉      | 94/240 [05:45<05:45,  2.36s/it]                                                 39%|███▉      | 94/240 [05:47<05:45,  2.36s/it] 40%|███▉      | 95/240 [05:48<05:42,  2.36s/it]                                                 40%|███▉      | 95/240 [05:50<05:42,  2.36s/it] 40%|████      | 96/240 [05:50<05:40,  2.36s/it]                                                 40%|████      | 96/240 [05:52<05:40,  2.36s/it] 40%|████      | 97/240 [05:53<06:20,  2.66s/it]                                                 40%|████      | 97/240 [05:56<06:20,  2.66s/it] 41%|████      | 98/240 [05:56<06:09,  2.61s/it]                                                 41%|████      | 98/240 [05:58<06:09,  2.61s/it] 41%|████▏     | 99/240 [05:58<05:56,  2.53s/it]                                                 41%|████▏     | 99/240 [06:00<05:56,  2.53s/it] 42%|████▏     | 100/240 [06:01<05:47,  2.48s/it]                                                  42%|████▏     | 100/240 [06:03<05:47,  2.48s/it] 42%|████▏     | 101/240 [06:03<05:39,  2.44s/it]                                                  42%|████▏     | 101/240 [06:05<05:39,  2.44s/it] 42%|████▎     | 102/240 [06:05<05:34,  2.42s/it]                                                  42%|████▎     | 102/240 [06:07<05:34,  2.42s/it] 43%|████▎     | 103/240 [06:08<05:29,  2.40s/it]                                                  43%|████▎     | 103/240 [06:10<05:29,  2.40s/it] 43%|████▎     | 104/240 [06:10<05:25,  2.39s/it]                                                  43%|████▎     | 104/240 [06:12<05:25,  2.39s/it] 44%|████▍     | 105/240 [06:12<05:21,  2.38s/it]                                                  44%|████▍     | 105/240 [06:14<05:21,  2.38s/it] 44%|████▍     | 106/240 [06:15<05:20,  2.39s/it]                                                  44%|████▍     | 106/240 [06:17<05:20,  2.39s/it] 45%|████▍     | 107/240 [06:17<05:17,  2.39s/it]                                                  45%|████▍     | 107/240 [06:19<05:17,  2.39s/it] 45%|████▌     | 108/240 [06:19<05:14,  2.38s/it]                                                  45%|████▌     | 108/240 [06:22<05:14,  2.38s/it] 45%|████▌     | 109/240 [06:22<05:12,  2.38s/it]                                                  45%|████▌     | 109/240 [06:24<05:12,  2.38s/it] 46%|████▌     | 110/240 [06:24<05:09,  2.38s/it]                                                  46%|████▌     | 110/240 [06:26<05:09,  2.38s/it] 46%|████▋     | 111/240 [06:27<05:07,  2.38s/it]                                                  46%|████▋     | 111/240 [06:29<05:07,  2.38s/it] 47%|████▋     | 112/240 [06:29<05:04,  2.38s/it]                                                  47%|████▋     | 112/240 [06:31<05:04,  2.38s/it] 47%|████▋     | 113/240 [06:31<05:02,  2.38s/it]                                                  47%|████▋     | 113/240 [06:33<05:02,  2.38s/it] 48%|████▊     | 114/240 [06:34<05:00,  2.38s/it]                                                  48%|████▊     | 114/240 [06:36<05:00,  2.38s/it] 48%|████▊     | 115/240 [06:36<04:57,  2.38s/it]                                                  48%|████▊     | 115/240 [06:38<04:57,  2.38s/it] 48%|████▊     | 116/240 [06:39<04:55,  2.38s/it]                                                  48%|████▊     | 116/240 [06:41<04:55,  2.38s/it] 49%|████▉     | 117/240 [06:41<04:57,  2.42s/it]                                                  49%|████▉     | 117/240 [06:43<04:57,  2.42s/it] 49%|████▉     | 118/240 [06:43<04:49,  2.37s/it]                                                  49%|████▉     | 118/240 [06:45<04:49,  2.37s/it] 50%|████▉     | 119/240 [06:46<04:47,  2.38s/it]                                                  50%|████▉     | 119/240 [06:48<04:47,  2.38s/it] 50%|█████     | 120/240 [06:48<04:45,  2.38s/it]                                                  50%|█████     | 120/240 [06:50<04:45,  2.38s/it] 50%|█████     | 121/240 [06:51<05:17,  2.67s/it]                                                  50%|█████     | 121/240 [06:54<05:17,  2.67s/it] 51%|█████     | 122/240 [06:54<05:09,  2.63s/it]                                                  51%|█████     | 122/240 [06:56<05:09,  2.63s/it] 51%|█████▏    | 123/240 [06:56<04:58,  2.55s/it]                                                  51%|█████▏    | 123/240 [06:58<04:58,  2.55s/it] 52%|█████▏    | 124/240 [06:59<04:50,  2.50s/it]                                                  52%|█████▏    | 124/240 [07:01<04:50,  2.50s/it] 52%|█████▏    | 125/240 [07:01<04:43,  2.46s/it]                                                  52%|█████▏    | 125/240 [07:03<04:43,  2.46s/it] 52%|█████▎    | 126/240 [07:03<04:38,  2.44s/it]                                                  52%|█████▎    | 126/240 [07:06<04:38,  2.44s/it] 53%|█████▎    | 127/240 [07:06<04:33,  2.42s/it]                                                  53%|█████▎    | 127/240 [07:08<04:33,  2.42s/it] 53%|█████▎    | 128/240 [07:08<04:30,  2.41s/it]                                                  53%|█████▎    | 128/240 [07:10<04:30,  2.41s/it] 54%|█████▍    | 129/240 [07:11<04:26,  2.40s/it]                                                  54%|█████▍    | 129/240 [07:13<04:26,  2.40s/it] 54%|█████▍    | 130/240 [07:13<04:23,  2.40s/it]                                                  54%|█████▍    | 130/240 [07:15<04:23,  2.40s/it] 55%|█████▍    | 131/240 [07:15<04:20,  2.39s/it]                                                  55%|█████▍    | 131/240 [07:17<04:20,  2.39s/it] 55%|█████▌    | 132/240 [07:18<04:17,  2.39s/it]                                                  55%|█████▌    | 132/240 [07:20<04:17,  2.39s/it] 55%|█████▌    | 133/240 [07:20<04:15,  2.39s/it]                                                  55%|█████▌    | 133/240 [07:22<04:15,  2.39s/it] 56%|█████▌    | 134/240 [07:23<04:12,  2.39s/it]                                                  56%|█████▌    | 134/240 [07:25<04:12,  2.39s/it] 56%|█████▋    | 135/240 [07:25<04:10,  2.38s/it]                                                  56%|█████▋    | 135/240 [07:27<04:10,  2.38s/it] 57%|█████▋    | 136/240 [07:27<04:07,  2.38s/it]                                                  57%|█████▋    | 136/240 [07:29<04:07,  2.38s/it] 57%|█████▋    | 137/240 [07:30<04:05,  2.38s/it]                                                  57%|█████▋    | 137/240 [07:32<04:05,  2.38s/it] 57%|█████▊    | 138/240 [07:32<04:03,  2.39s/it]                                                  57%|█████▊    | 138/240 [07:34<04:03,  2.39s/it] 58%|█████▊    | 139/240 [07:34<04:00,  2.38s/it]                                                 {'loss': 0.9555, 'learning_rate': 6.125000000000001e-05, 'epoch': 3.86, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0172, 'learning_rate': 6.083333333333333e-05, 'epoch': 3.9, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0169, 'learning_rate': 6.041666666666667e-05, 'epoch': 3.94, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0284, 'learning_rate': 6e-05, 'epoch': 3.98, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.5448, 'learning_rate': 5.9583333333333336e-05, 'epoch': 4.04, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.983, 'learning_rate': 5.916666666666667e-05, 'epoch': 4.08, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.032, 'learning_rate': 5.8750000000000005e-05, 'epoch': 4.12, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9945, 'learning_rate': 5.833333333333334e-05, 'epoch': 4.16, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.002, 'learning_rate': 5.7916666666666674e-05, 'epoch': 4.2, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9189, 'learning_rate': 5.7499999999999995e-05, 'epoch': 4.24, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9701, 'learning_rate': 5.7083333333333336e-05, 'epoch': 4.29, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9811, 'learning_rate': 5.666666666666667e-05, 'epoch': 4.33, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9403, 'learning_rate': 5.6250000000000005e-05, 'epoch': 4.37, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9944, 'learning_rate': 5.583333333333334e-05, 'epoch': 4.41, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9763, 'learning_rate': 5.5416666666666674e-05, 'epoch': 4.45, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9722, 'learning_rate': 5.500000000000001e-05, 'epoch': 4.49, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9387, 'learning_rate': 5.458333333333333e-05, 'epoch': 4.53, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9746, 'learning_rate': 5.4166666666666664e-05, 'epoch': 4.57, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.942, 'learning_rate': 5.375e-05, 'epoch': 4.61, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9893, 'learning_rate': 5.333333333333333e-05, 'epoch': 4.65, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9545, 'learning_rate': 5.291666666666667e-05, 'epoch': 4.69, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0092, 'learning_rate': 5.25e-05, 'epoch': 4.73, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0411, 'learning_rate': 5.208333333333334e-05, 'epoch': 4.78, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0464, 'learning_rate': 5.166666666666667e-05, 'epoch': 4.82, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9571, 'learning_rate': 5.125e-05, 'epoch': 4.86, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0146, 'learning_rate': 5.0833333333333333e-05, 'epoch': 4.9, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9633, 'learning_rate': 5.041666666666667e-05, 'epoch': 4.94, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0026, 'learning_rate': 5e-05, 'epoch': 4.98, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.5551, 'learning_rate': 4.958333333333334e-05, 'epoch': 5.04, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9504, 'learning_rate': 4.9166666666666665e-05, 'epoch': 5.08, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0154, 'learning_rate': 4.875e-05, 'epoch': 5.12, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9694, 'learning_rate': 4.8333333333333334e-05, 'epoch': 5.16, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0156, 'learning_rate': 4.791666666666667e-05, 'epoch': 5.2, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9132, 'learning_rate': 4.75e-05, 'epoch': 5.24, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0114, 'learning_rate': 4.708333333333334e-05, 'epoch': 5.29, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9064, 'learning_rate': 4.666666666666667e-05, 'epoch': 5.33, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9601, 'learning_rate': 4.6250000000000006e-05, 'epoch': 5.37, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9613, 'learning_rate': 4.5833333333333334e-05, 'epoch': 5.41, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9796, 'learning_rate': 4.541666666666667e-05, 'epoch': 5.45, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9887, 'learning_rate': 4.5e-05, 'epoch': 5.49, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0456, 'learning_rate': 4.458333333333334e-05, 'epoch': 5.53, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0154, 'learning_rate': 4.4166666666666665e-05, 'epoch': 5.57, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0324, 'learning_rate': 4.375e-05, 'epoch': 5.61, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9616, 'learning_rate': 4.3333333333333334e-05, 'epoch': 5.65, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0091, 'learning_rate': 4.291666666666667e-05, 'epoch': 5.69, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.911, 'learning_rate': 4.25e-05, 'epoch': 5.73, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+ 58%|█████▊    | 139/240 [07:37<04:00,  2.38s/it] 58%|█████▊    | 140/240 [07:37<03:58,  2.38s/it]                                                  58%|█████▊    | 140/240 [07:39<03:58,  2.38s/it] 59%|█████▉    | 141/240 [07:39<03:55,  2.38s/it]                                                  59%|█████▉    | 141/240 [07:41<03:55,  2.38s/it] 59%|█████▉    | 142/240 [07:42<03:53,  2.39s/it]                                                  59%|█████▉    | 142/240 [07:44<03:53,  2.39s/it] 60%|█████▉    | 143/240 [07:44<03:54,  2.42s/it]                                                  60%|█████▉    | 143/240 [07:46<03:54,  2.42s/it] 60%|██████    | 144/240 [07:46<03:47,  2.37s/it]                                                  60%|██████    | 144/240 [07:48<03:47,  2.37s/it] 60%|██████    | 145/240 [07:50<04:13,  2.67s/it]                                                  60%|██████    | 145/240 [07:52<04:13,  2.67s/it] 61%|██████    | 146/240 [07:52<04:06,  2.62s/it]                                                  61%|██████    | 146/240 [07:54<04:06,  2.62s/it] 61%|██████▏   | 147/240 [07:55<03:57,  2.55s/it]                                                  61%|██████▏   | 147/240 [07:57<03:57,  2.55s/it] 62%|██████▏   | 148/240 [07:57<03:50,  2.50s/it]                                                  62%|██████▏   | 148/240 [07:59<03:50,  2.50s/it] 62%|██████▏   | 149/240 [07:59<03:44,  2.47s/it]                                                  62%|██████▏   | 149/240 [08:01<03:44,  2.47s/it] 62%|██████▎   | 150/240 [08:02<03:39,  2.44s/it]                                                  62%|██████▎   | 150/240 [08:04<03:39,  2.44s/it] 63%|██████▎   | 151/240 [08:04<03:35,  2.42s/it]                                                  63%|██████▎   | 151/240 [08:06<03:35,  2.42s/it] 63%|██████▎   | 152/240 [08:07<03:32,  2.41s/it]                                                  63%|██████▎   | 152/240 [08:09<03:32,  2.41s/it] 64%|██████▍   | 153/240 [08:09<03:29,  2.40s/it]                                                  64%|██████▍   | 153/240 [08:11<03:29,  2.40s/it] 64%|██████▍   | 154/240 [08:11<03:26,  2.40s/it]                                                  64%|██████▍   | 154/240 [08:13<03:26,  2.40s/it] 65%|██████▍   | 155/240 [08:14<03:23,  2.39s/it]                                                  65%|██████▍   | 155/240 [08:16<03:23,  2.39s/it] 65%|██████▌   | 156/240 [08:16<03:20,  2.39s/it]                                                  65%|██████▌   | 156/240 [08:18<03:20,  2.39s/it] 65%|██████▌   | 157/240 [08:18<03:18,  2.39s/it]                                                  65%|██████▌   | 157/240 [08:21<03:18,  2.39s/it] 66%|██████▌   | 158/240 [08:21<03:15,  2.38s/it]                                                  66%|██████▌   | 158/240 [08:23<03:15,  2.38s/it] 66%|██████▋   | 159/240 [08:23<03:13,  2.38s/it]                                                  66%|██████▋   | 159/240 [08:25<03:13,  2.38s/it] 67%|██████▋   | 160/240 [08:26<03:10,  2.38s/it]                                                  67%|██████▋   | 160/240 [08:28<03:10,  2.38s/it] 67%|██████▋   | 161/240 [08:28<03:08,  2.38s/it]                                                  67%|██████▋   | 161/240 [08:30<03:08,  2.38s/it] 68%|██████▊   | 162/240 [08:30<03:05,  2.38s/it]                                                  68%|██████▊   | 162/240 [08:32<03:05,  2.38s/it] 68%|██████▊   | 163/240 [08:33<03:03,  2.38s/it]                                                  68%|██████▊   | 163/240 [08:35<03:03,  2.38s/it] 68%|██████▊   | 164/240 [08:35<03:01,  2.38s/it]                                                  68%|██████▊   | 164/240 [08:37<03:01,  2.38s/it] 69%|██████▉   | 165/240 [08:38<03:01,  2.42s/it]                                                  69%|██████▉   | 165/240 [08:40<03:01,  2.42s/it] 69%|██████▉   | 166/240 [08:40<02:55,  2.37s/it]                                                  69%|██████▉   | 166/240 [08:42<02:55,  2.37s/it] 70%|██████▉   | 167/240 [08:42<02:53,  2.37s/it]                                                  70%|██████▉   | 167/240 [08:44<02:53,  2.37s/it] 70%|███████   | 168/240 [08:45<02:51,  2.38s/it]                                                  70%|███████   | 168/240 [08:47<02:51,  2.38s/it] 70%|███████   | 169/240 [08:48<03:09,  2.67s/it]                                                  70%|███████   | 169/240 [08:50<03:09,  2.67s/it] 71%|███████   | 170/240 [08:51<03:03,  2.63s/it]                                                  71%|███████   | 170/240 [08:53<03:03,  2.63s/it] 71%|███████▏  | 171/240 [08:53<02:56,  2.56s/it]                                                  71%|███████▏  | 171/240 [08:55<02:56,  2.56s/it] 72%|███████▏  | 172/240 [08:55<02:50,  2.50s/it]                                                  72%|███████▏  | 172/240 [08:57<02:50,  2.50s/it] 72%|███████▏  | 173/240 [08:58<02:45,  2.47s/it]                                                  72%|███████▏  | 173/240 [09:00<02:45,  2.47s/it] 72%|███████▎  | 174/240 [09:00<02:41,  2.44s/it]                                                  72%|███████▎  | 174/240 [09:02<02:41,  2.44s/it] 73%|███████▎  | 175/240 [09:02<02:37,  2.43s/it]                                                  73%|███████▎  | 175/240 [09:05<02:37,  2.43s/it] 73%|███████▎  | 176/240 [09:05<02:34,  2.41s/it]                                                  73%|███████▎  | 176/240 [09:07<02:34,  2.41s/it] 74%|███████▍  | 177/240 [09:07<02:31,  2.41s/it]                                                  74%|███████▍  | 177/240 [09:09<02:31,  2.41s/it] 74%|███████▍  | 178/240 [09:10<02:28,  2.40s/it]                                                  74%|███████▍  | 178/240 [09:12<02:28,  2.40s/it] 75%|███████▍  | 179/240 [09:12<02:25,  2.39s/it]                                                  75%|███████▍  | 179/240 [09:14<02:25,  2.39s/it] 75%|███████▌  | 180/240 [09:14<02:23,  2.39s/it]                                                  75%|███████▌  | 180/240 [09:16<02:23,  2.39s/it] 75%|███████▌  | 181/240 [09:17<02:20,  2.39s/it]                                                  75%|███████▌  | 181/240 [09:19<02:20,  2.39s/it] 76%|███████▌  | 182/240 [09:19<02:18,  2.38s/it]                                                  76%|███████▌  | 182/240 [09:21<02:18,  2.38s/it] 76%|███████▋  | 183/240 [09:22<02:15,  2.38s/it]                                                  76%|███████▋  | 183/240 [09:24<02:15,  2.38s/it] 77%|███████▋  | 184/240 [09:24<02:13,  2.38s/it]                                                  77%|███████▋  | 184/240 [09:26<02:13,  2.38s/it] 77%|███████▋  | 185/240 [09:26<02:10,  2.38s/it]                                                 {'loss': 0.8746, 'learning_rate': 4.208333333333334e-05, 'epoch': 5.78, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9275, 'learning_rate': 4.166666666666667e-05, 'epoch': 5.82, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9401, 'learning_rate': 4.125e-05, 'epoch': 5.86, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0142, 'learning_rate': 4.0833333333333334e-05, 'epoch': 5.9, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9643, 'learning_rate': 4.041666666666667e-05, 'epoch': 5.94, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9659, 'learning_rate': 4e-05, 'epoch': 5.98, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.4766, 'learning_rate': 3.958333333333333e-05, 'epoch': 6.04, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0116, 'learning_rate': 3.9166666666666665e-05, 'epoch': 6.08, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9346, 'learning_rate': 3.875e-05, 'epoch': 6.12, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9486, 'learning_rate': 3.8333333333333334e-05, 'epoch': 6.16, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0264, 'learning_rate': 3.791666666666667e-05, 'epoch': 6.2, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9355, 'learning_rate': 3.7500000000000003e-05, 'epoch': 6.24, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.987, 'learning_rate': 3.708333333333334e-05, 'epoch': 6.29, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9633, 'learning_rate': 3.6666666666666666e-05, 'epoch': 6.33, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9569, 'learning_rate': 3.625e-05, 'epoch': 6.37, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9786, 'learning_rate': 3.5833333333333335e-05, 'epoch': 6.41, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9435, 'learning_rate': 3.541666666666667e-05, 'epoch': 6.45, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9215, 'learning_rate': 3.5e-05, 'epoch': 6.49, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.998, 'learning_rate': 3.458333333333333e-05, 'epoch': 6.53, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9485, 'learning_rate': 3.4166666666666666e-05, 'epoch': 6.57, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9501, 'learning_rate': 3.375000000000001e-05, 'epoch': 6.61, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9683, 'learning_rate': 3.3333333333333335e-05, 'epoch': 6.65, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0241, 'learning_rate': 3.291666666666667e-05, 'epoch': 6.69, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9681, 'learning_rate': 3.2500000000000004e-05, 'epoch': 6.73, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9422, 'learning_rate': 3.208333333333334e-05, 'epoch': 6.78, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9317, 'learning_rate': 3.1666666666666666e-05, 'epoch': 6.82, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9454, 'learning_rate': 3.125e-05, 'epoch': 6.86, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0222, 'learning_rate': 3.0833333333333335e-05, 'epoch': 6.9, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9879, 'learning_rate': 3.0416666666666666e-05, 'epoch': 6.94, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9565, 'learning_rate': 3e-05, 'epoch': 6.98, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.4534, 'learning_rate': 2.9583333333333335e-05, 'epoch': 7.04, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9478, 'learning_rate': 2.916666666666667e-05, 'epoch': 7.08, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9638, 'learning_rate': 2.8749999999999997e-05, 'epoch': 7.12, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9425, 'learning_rate': 2.8333333333333335e-05, 'epoch': 7.16, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.8344, 'learning_rate': 2.791666666666667e-05, 'epoch': 7.2, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.8836, 'learning_rate': 2.7500000000000004e-05, 'epoch': 7.24, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9969, 'learning_rate': 2.7083333333333332e-05, 'epoch': 7.29, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9513, 'learning_rate': 2.6666666666666667e-05, 'epoch': 7.33, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9748, 'learning_rate': 2.625e-05, 'epoch': 7.37, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9314, 'learning_rate': 2.5833333333333336e-05, 'epoch': 7.41, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0189, 'learning_rate': 2.5416666666666667e-05, 'epoch': 7.45, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9908, 'learning_rate': 2.5e-05, 'epoch': 7.49, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.005, 'learning_rate': 2.4583333333333332e-05, 'epoch': 7.53, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9429, 'learning_rate': 2.4166666666666667e-05, 'epoch': 7.57, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9768, 'learning_rate': 2.375e-05, 'epoch': 7.61, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9833, 'learning_rate': 2.3333333333333336e-05, 'epoch': 7.65, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+ 77%|███████▋  | 185/240 [09:28<02:10,  2.38s/it] 78%|███████▊  | 186/240 [09:29<02:08,  2.38s/it]                                                  78%|███████▊  | 186/240 [09:31<02:08,  2.38s/it] 78%|███████▊  | 187/240 [09:31<02:06,  2.38s/it]                                                  78%|███████▊  | 187/240 [09:33<02:06,  2.38s/it] 78%|███████▊  | 188/240 [09:33<02:03,  2.38s/it]                                                  78%|███████▊  | 188/240 [09:35<02:03,  2.38s/it] 79%|███████▉  | 189/240 [09:36<02:01,  2.38s/it]                                                  79%|███████▉  | 189/240 [09:38<02:01,  2.38s/it] 79%|███████▉  | 190/240 [09:38<01:59,  2.38s/it]                                                  79%|███████▉  | 190/240 [09:40<01:59,  2.38s/it] 80%|███████▉  | 191/240 [09:41<01:57,  2.41s/it]                                                  80%|███████▉  | 191/240 [09:43<01:57,  2.41s/it] 80%|████████  | 192/240 [09:43<01:53,  2.37s/it]                                                  80%|████████  | 192/240 [09:45<01:53,  2.37s/it] 80%|████████  | 193/240 [09:46<02:05,  2.66s/it]                                                  80%|████████  | 193/240 [09:48<02:05,  2.66s/it] 81%|████████  | 194/240 [09:49<02:00,  2.61s/it]                                                  81%|████████  | 194/240 [09:51<02:00,  2.61s/it] 81%|████████▏ | 195/240 [09:51<01:54,  2.54s/it]                                                  81%|████████▏ | 195/240 [09:53<01:54,  2.54s/it] 82%|████████▏ | 196/240 [09:54<01:49,  2.49s/it]                                                  82%|████████▏ | 196/240 [09:56<01:49,  2.49s/it] 82%|████████▏ | 197/240 [09:56<01:45,  2.46s/it]                                                  82%|████████▏ | 197/240 [09:58<01:45,  2.46s/it] 82%|████████▎ | 198/240 [09:58<01:42,  2.43s/it]                                                  82%|████████▎ | 198/240 [10:00<01:42,  2.43s/it] 83%|████████▎ | 199/240 [10:01<01:39,  2.42s/it]                                                  83%|████████▎ | 199/240 [10:03<01:39,  2.42s/it] 83%|████████▎ | 200/240 [10:03<01:36,  2.40s/it]                                                  83%|████████▎ | 200/240 [10:05<01:36,  2.40s/it] 84%|████████▍ | 201/240 [10:05<01:33,  2.39s/it]                                                  84%|████████▍ | 201/240 [10:07<01:33,  2.39s/it] 84%|████████▍ | 202/240 [10:08<01:30,  2.38s/it]                                                  84%|████████▍ | 202/240 [10:10<01:30,  2.38s/it] 85%|████████▍ | 203/240 [10:10<01:27,  2.38s/it]                                                  85%|████████▍ | 203/240 [10:12<01:27,  2.38s/it] 85%|████████▌ | 204/240 [10:13<01:25,  2.38s/it]                                                  85%|████████▌ | 204/240 [10:15<01:25,  2.38s/it] 85%|████████▌ | 205/240 [10:15<01:22,  2.37s/it]                                                  85%|████████▌ | 205/240 [10:17<01:22,  2.37s/it] 86%|████████▌ | 206/240 [10:17<01:20,  2.37s/it]                                                  86%|████████▌ | 206/240 [10:19<01:20,  2.37s/it] 86%|████████▋ | 207/240 [10:20<01:18,  2.37s/it]                                                  86%|████████▋ | 207/240 [10:22<01:18,  2.37s/it] 87%|████████▋ | 208/240 [10:22<01:15,  2.37s/it]                                                  87%|████████▋ | 208/240 [10:24<01:15,  2.37s/it] 87%|████████▋ | 209/240 [10:24<01:13,  2.37s/it]                                                  87%|████████▋ | 209/240 [10:26<01:13,  2.37s/it] 88%|████████▊ | 210/240 [10:27<01:11,  2.37s/it]                                                  88%|████████▊ | 210/240 [10:29<01:11,  2.37s/it] 88%|████████▊ | 211/240 [10:29<01:08,  2.37s/it]                                                  88%|████████▊ | 211/240 [10:31<01:08,  2.37s/it] 88%|████████▊ | 212/240 [10:31<01:06,  2.37s/it]                                                  88%|████████▊ | 212/240 [10:34<01:06,  2.37s/it] 89%|████████▉ | 213/240 [10:34<01:03,  2.37s/it]                                                  89%|████████▉ | 213/240 [10:36<01:03,  2.37s/it] 89%|████████▉ | 214/240 [10:36<01:01,  2.37s/it]                                                  89%|████████▉ | 214/240 [10:38<01:01,  2.37s/it] 90%|████████▉ | 215/240 [10:39<01:00,  2.41s/it]                                                  90%|████████▉ | 215/240 [10:41<01:00,  2.41s/it] 90%|█████████ | 216/240 [10:41<00:57,  2.40s/it]                                                  90%|█████████ | 216/240 [10:43<00:57,  2.40s/it] 90%|█████████ | 217/240 [10:44<01:01,  2.68s/it]                                                  90%|█████████ | 217/240 [10:47<01:01,  2.68s/it] 91%|█████████ | 218/240 [10:47<00:57,  2.62s/it]                                                  91%|█████████ | 218/240 [10:49<00:57,  2.62s/it] 91%|█████████▏| 219/240 [10:49<00:53,  2.55s/it]                                                  91%|█████████▏| 219/240 [10:51<00:53,  2.55s/it] 92%|█████████▏| 220/240 [10:52<00:49,  2.49s/it]                                                  92%|█████████▏| 220/240 [10:54<00:49,  2.49s/it] 92%|█████████▏| 221/240 [10:54<00:46,  2.45s/it]                                                  92%|█████████▏| 221/240 [10:56<00:46,  2.45s/it] 92%|█████████▎| 222/240 [10:56<00:43,  2.43s/it]                                                  92%|█████████▎| 222/240 [10:58<00:43,  2.43s/it] 93%|█████████▎| 223/240 [10:59<00:40,  2.41s/it]                                                  93%|█████████▎| 223/240 [11:01<00:40,  2.41s/it] 93%|█████████▎| 224/240 [11:01<00:38,  2.40s/it]                                                  93%|█████████▎| 224/240 [11:03<00:38,  2.40s/it] 94%|█████████▍| 225/240 [11:03<00:35,  2.39s/it]                                                  94%|█████████▍| 225/240 [11:06<00:35,  2.39s/it] 94%|█████████▍| 226/240 [11:06<00:33,  2.38s/it]                                                  94%|█████████▍| 226/240 [11:08<00:33,  2.38s/it] 95%|█████████▍| 227/240 [11:08<00:30,  2.37s/it]                                                  95%|█████████▍| 227/240 [11:10<00:30,  2.37s/it] 95%|█████████▌| 228/240 [11:11<00:28,  2.37s/it]                                                  95%|█████████▌| 228/240 [11:13<00:28,  2.37s/it] 95%|█████████▌| 229/240 [11:13<00:26,  2.37s/it]                                                  95%|█████████▌| 229/240 [11:15<00:26,  2.37s/it] 96%|█████████▌| 230/240 [11:15<00:23,  2.37s/it]                                                  96%|█████████▌| 230/240 [11:17<00:23,  2.37s/it] 96%|█████████▋| 231/240 [11:18<00:21,  2.37s/it]                                                 {'loss': 0.9834, 'learning_rate': 2.2916666666666667e-05, 'epoch': 7.69, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9105, 'learning_rate': 2.25e-05, 'epoch': 7.73, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9398, 'learning_rate': 2.2083333333333333e-05, 'epoch': 7.78, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.891, 'learning_rate': 2.1666666666666667e-05, 'epoch': 7.82, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0138, 'learning_rate': 2.125e-05, 'epoch': 7.86, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0323, 'learning_rate': 2.0833333333333336e-05, 'epoch': 7.9, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0086, 'learning_rate': 2.0416666666666667e-05, 'epoch': 7.94, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9368, 'learning_rate': 2e-05, 'epoch': 7.98, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.4766, 'learning_rate': 1.9583333333333333e-05, 'epoch': 8.04, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9421, 'learning_rate': 1.9166666666666667e-05, 'epoch': 8.08, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9803, 'learning_rate': 1.8750000000000002e-05, 'epoch': 8.12, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9206, 'learning_rate': 1.8333333333333333e-05, 'epoch': 8.16, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9778, 'learning_rate': 1.7916666666666667e-05, 'epoch': 8.2, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9584, 'learning_rate': 1.75e-05, 'epoch': 8.24, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9763, 'learning_rate': 1.7083333333333333e-05, 'epoch': 8.29, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9966, 'learning_rate': 1.6666666666666667e-05, 'epoch': 8.33, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9363, 'learning_rate': 1.6250000000000002e-05, 'epoch': 8.37, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9939, 'learning_rate': 1.5833333333333333e-05, 'epoch': 8.41, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9449, 'learning_rate': 1.5416666666666668e-05, 'epoch': 8.45, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9439, 'learning_rate': 1.5e-05, 'epoch': 8.49, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9505, 'learning_rate': 1.4583333333333335e-05, 'epoch': 8.53, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9078, 'learning_rate': 1.4166666666666668e-05, 'epoch': 8.57, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9874, 'learning_rate': 1.3750000000000002e-05, 'epoch': 8.61, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.933, 'learning_rate': 1.3333333333333333e-05, 'epoch': 8.65, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0158, 'learning_rate': 1.2916666666666668e-05, 'epoch': 8.69, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.8737, 'learning_rate': 1.25e-05, 'epoch': 8.73, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0107, 'learning_rate': 1.2083333333333333e-05, 'epoch': 8.78, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9408, 'learning_rate': 1.1666666666666668e-05, 'epoch': 8.82, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9568, 'learning_rate': 1.125e-05, 'epoch': 8.86, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9307, 'learning_rate': 1.0833333333333334e-05, 'epoch': 8.9, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0113, 'learning_rate': 1.0416666666666668e-05, 'epoch': 8.94, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9615, 'learning_rate': 1e-05, 'epoch': 8.98, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.3808, 'learning_rate': 9.583333333333334e-06, 'epoch': 9.04, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0103, 'learning_rate': 9.166666666666666e-06, 'epoch': 9.08, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9538, 'learning_rate': 8.75e-06, 'epoch': 9.12, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9976, 'learning_rate': 8.333333333333334e-06, 'epoch': 9.16, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9354, 'learning_rate': 7.916666666666667e-06, 'epoch': 9.2, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9792, 'learning_rate': 7.5e-06, 'epoch': 9.24, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.0045, 'learning_rate': 7.083333333333334e-06, 'epoch': 9.29, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9784, 'learning_rate': 6.666666666666667e-06, 'epoch': 9.33, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9713, 'learning_rate': 6.25e-06, 'epoch': 9.37, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9398, 'learning_rate': 5.833333333333334e-06, 'epoch': 9.41, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.974, 'learning_rate': 5.416666666666667e-06, 'epoch': 9.45, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9607, 'learning_rate': 5e-06, 'epoch': 9.49, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9843, 'learning_rate': 4.583333333333333e-06, 'epoch': 9.53, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9662, 'learning_rate': 4.166666666666667e-06, 'epoch': 9.57, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+ 96%|█████████▋| 231/240 [11:20<00:21,  2.37s/it] 97%|█████████▋| 232/240 [11:20<00:18,  2.36s/it]                                                  97%|█████████▋| 232/240 [11:22<00:18,  2.36s/it] 97%|█████████▋| 233/240 [11:22<00:16,  2.37s/it]                                                  97%|█████████▋| 233/240 [11:24<00:16,  2.37s/it] 98%|█████████▊| 234/240 [11:25<00:14,  2.37s/it]                                                  98%|█████████▊| 234/240 [11:27<00:14,  2.37s/it] 98%|█████████▊| 235/240 [11:27<00:11,  2.37s/it]                                                  98%|█████████▊| 235/240 [11:29<00:11,  2.37s/it] 98%|█████████▊| 236/240 [11:29<00:09,  2.36s/it]                                                  98%|█████████▊| 236/240 [11:32<00:09,  2.36s/it] 99%|█████████▉| 237/240 [11:32<00:07,  2.37s/it]                                                  99%|█████████▉| 237/240 [11:34<00:07,  2.37s/it] 99%|█████████▉| 238/240 [11:34<00:04,  2.37s/it]                                                  99%|█████████▉| 238/240 [11:36<00:04,  2.37s/it]100%|█████████▉| 239/240 [11:37<00:02,  2.37s/it]                                                 100%|█████████▉| 239/240 [11:39<00:02,  2.37s/it]100%|██████████| 240/240 [11:39<00:00,  2.36s/it]                                                 100%|██████████| 240/240 [11:41<00:00,  2.36s/it][INFO|trainer.py:1041] 2023-08-17 17:14:02,597 >> 
+
+Training completed. Do not forget to share your model on huggingface.co/models =)
+
+
+                                                 100%|██████████| 240/240 [11:41<00:00,  2.36s/it]100%|██████████| 240/240 [11:41<00:00,  2.92s/it]
+{'loss': 0.9267, 'learning_rate': 3.75e-06, 'epoch': 9.61, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9148, 'learning_rate': 3.3333333333333333e-06, 'epoch': 9.65, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9458, 'learning_rate': 2.916666666666667e-06, 'epoch': 9.69, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9293, 'learning_rate': 2.5e-06, 'epoch': 9.73, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9568, 'learning_rate': 2.0833333333333334e-06, 'epoch': 9.78, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 1.01, 'learning_rate': 1.6666666666666667e-06, 'epoch': 9.82, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.8929, 'learning_rate': 1.25e-06, 'epoch': 9.86, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.963, 'learning_rate': 8.333333333333333e-07, 'epoch': 9.9, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.965, 'learning_rate': 4.1666666666666667e-07, 'epoch': 9.94, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'loss': 0.9424, 'learning_rate': 0.0, 'epoch': 9.98, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}
+{'train_runtime': 701.5053, 'train_samples_per_second': 8.435, 'train_steps_per_second': 0.414, 'train_loss': 1.0669676259160041, 'epoch': 9.98, 'memory_allocated (GB)': 77.63, 'max_memory_allocated (GB)': 90.04, 'total_memory_available (GB)': 93.74}

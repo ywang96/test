@@ -1,0 +1,527 @@
+DistributedRunner run(): command = deepspeed --num_nodes 1 --num_gpus 4 --no_local_rank run_lora_clm_starcoder.py --model_name_or_path bigcode/starcoder --train_file /starcoder/finetune-data/roblox-train.json --validation_file /starcoder/finetune-data/roblox-validation.json --report_to tensorboard --bf16 True --output_dir ./checkpoints/starcoder-lora-deepspeed-4-hpu-8-10-2-concat --num_train_epochs 10 --per_device_train_batch_size 10 --lora_rank 8 --gradient_accumulation_steps 2 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --dataset_concatenation --do_train --use_habana --use_lazy_mode --throughput_warmup_steps 3 --cache_dir /starcoder/cache/ --use_hpu_graphs_for_inference --deepspeed deepspeed_config.json
+[2023-08-18 08:33:52,213] [WARNING] [runner.py:185:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+Namespace(autotuning='', elastic_training=False, exclude='', force_multi=False, hostfile='/job/hostfile', include='', launcher='pdsh', launcher_args='', master_addr='', master_port=29500, max_elastic_nodes=-1, min_elastic_nodes=-1, module=False, no_local_rank=True, no_python=False, no_ssh_check=False, num_gpus=4, num_nodes=1, save_pid=False, use_hpu=True, user_args=['--model_name_or_path', 'bigcode/starcoder', '--train_file', '/starcoder/finetune-data/roblox-train.json', '--validation_file', '/starcoder/finetune-data/roblox-validation.json', '--report_to', 'tensorboard', '--bf16', 'True', '--output_dir', './checkpoints/starcoder-lora-deepspeed-4-hpu-8-10-2-concat', '--num_train_epochs', '10', '--per_device_train_batch_size', '10', '--lora_rank', '8', '--gradient_accumulation_steps', '2', '--evaluation_strategy', 'no', '--save_strategy', 'no', '--learning_rate', '1e-4', '--logging_steps', '1', '--dataset_concatenation', '--do_train', '--use_habana', '--use_lazy_mode', '--throughput_warmup_steps', '3', '--cache_dir', '/starcoder/cache/', '--use_hpu_graphs_for_inference', '--deepspeed', 'deepspeed_config.json'], user_script='run_lora_clm_starcoder.py')
+[2023-08-18 08:33:54,028] [INFO] [runner.py:543:main] cmd = /usr/bin/python3 -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMCwgMSwgMiwgM119 --master_addr=127.0.0.1 --master_port=29500 --no_local_rank run_lora_clm_starcoder.py --model_name_or_path bigcode/starcoder --train_file /starcoder/finetune-data/roblox-train.json --validation_file /starcoder/finetune-data/roblox-validation.json --report_to tensorboard --bf16 True --output_dir ./checkpoints/starcoder-lora-deepspeed-4-hpu-8-10-2-concat --num_train_epochs 10 --per_device_train_batch_size 10 --lora_rank 8 --gradient_accumulation_steps 2 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --dataset_concatenation --do_train --use_habana --use_lazy_mode --throughput_warmup_steps 3 --cache_dir /starcoder/cache/ --use_hpu_graphs_for_inference --deepspeed deepspeed_config.json
+[2023-08-18 08:33:55,931] [INFO] [launch.py:145:main] WORLD INFO DICT: {'localhost': [0, 1, 2, 3]}
+[2023-08-18 08:33:55,932] [INFO] [launch.py:151:main] nnodes=1, num_local_procs=4, node_rank=0
+[2023-08-18 08:33:55,932] [INFO] [launch.py:164:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0, 1, 2, 3]})
+[2023-08-18 08:33:55,932] [INFO] [launch.py:165:main] dist_world_size=4
+[2023-08-18 08:34:01,381] [INFO] [comm.py:762:init_distributed] Initializing TorchBackend in DeepSpeed with backend hccl
+08/18/2023 08:34:02 - WARNING - __main__ -   Process rank: 3, device: hpu
+distributed training: True, 16-bits training: True
+08/18/2023 08:34:02 - WARNING - __main__ -   Process rank: 0, device: hpu
+distributed training: True, 16-bits training: True
+08/18/2023 08:34:02 - WARNING - __main__ -   Process rank: 2, device: hpu
+distributed training: True, 16-bits training: True
+08/18/2023 08:34:02 - INFO - __main__ -   Training/evaluation parameters GaudiTrainingArguments(
+_n_gpu=1,
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-06,
+adjust_throughput=False,
+auto_find_batch_size=False,
+bf16=True,
+data_seed=None,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_pin_memory=True,
+ddp_bucket_cap_mb=230,
+ddp_find_unused_parameters=False,
+ddp_timeout=1800,
+debug=[],
+deepspeed=deepspeed_config.json,
+disable_tqdm=False,
+distribution_strategy=ddp,
+do_eval=False,
+do_predict=False,
+do_train=True,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_steps=None,
+evaluation_strategy=no,
+fsdp_config=None,
+fsdp_min_num_params=0,
+fsdp_transformer_layer_cls_to_wrap=None,
+full_determinism=False,
+gaudi_config_name=None,
+gradient_accumulation_steps=2,
+gradient_checkpointing=False,
+greater_is_better=None,
+group_by_length=False,
+half_precision_backend=hpu_amp,
+hub_model_id=None,
+hub_private_repo=False,
+hub_strategy=every_save,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+include_inputs_for_metrics=False,
+jit_mode_eval=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=0.0001,
+length_column_name=length,
+load_best_model_at_end=False,
+local_rank=0,
+log_level=passive,
+log_level_replica=warning,
+log_on_each_node=True,
+logging_dir=./checkpoints/starcoder-lora-deepspeed-4-hpu-8-10-2-concat/runs/Aug18_08-34-01_sysid674631,
+logging_first_step=False,
+logging_nan_inf_filter=False,
+logging_steps=1,
+logging_strategy=steps,
+lr_scheduler_type=linear,
+max_grad_norm=1.0,
+max_steps=-1,
+metric_for_best_model=None,
+no_cuda=False,
+non_blocking_data_copy=False,
+num_train_epochs=10.0,
+optim=adamw_torch,
+optim_args=None,
+output_dir=./checkpoints/starcoder-lora-deepspeed-4-hpu-8-10-2-concat,
+overwrite_output_dir=False,
+past_index=-1,
+per_device_eval_batch_size=8,
+per_device_train_batch_size=10,
+pipelining_fwd_bwd=False,
+prediction_loss_only=False,
+profiling_steps=0,
+profiling_warmup_steps=0,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+ray_scope=last,
+remove_unused_columns=True,
+report_to=['tensorboard'],
+resume_from_checkpoint=None,
+run_name=./checkpoints/starcoder-lora-deepspeed-4-hpu-8-10-2-concat,
+save_on_each_node=False,
+save_safetensors=False,
+save_steps=500,
+save_strategy=no,
+save_total_limit=None,
+seed=42,
+skip_memory_metrics=True,
+throughput_warmup_steps=3,
+torch_compile=False,
+torch_compile_backend=None,
+torch_compile_mode=None,
+torchdynamo=None,
+use_habana=True,
+use_hpu_graphs=False,
+use_hpu_graphs_for_inference=True,
+use_hpu_graphs_for_training=False,
+use_ipex=False,
+use_lazy_mode=True,
+use_legacy_prediction_loop=False,
+use_mps_device=False,
+warmup_ratio=0.0,
+warmup_steps=0,
+weight_decay=0.0,
+xpu_backend=None,
+)
+08/18/2023 08:34:02 - WARNING - __main__ -   Process rank: 1, device: hpu
+distributed training: True, 16-bits training: True
+[INFO|configuration_utils.py:668] 2023-08-18 08:34:02,405 >> loading configuration file config.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/config.json
+[INFO|configuration_utils.py:720] 2023-08-18 08:34:02,408 >> Model config GPTBigCodeConfig {
+  "_name_or_path": "bigcode/starcoder",
+  "activation_function": "gelu",
+  "architectures": [
+    "GPTBigCodeForCausalLM"
+  ],
+  "attention_softmax_in_fp32": true,
+  "attn_pdrop": 0.1,
+  "bos_token_id": 0,
+  "embd_pdrop": 0.1,
+  "eos_token_id": 0,
+  "inference_runner": 0,
+  "initializer_range": 0.02,
+  "layer_norm_epsilon": 1e-05,
+  "max_batch_size": null,
+  "max_sequence_length": null,
+  "model_type": "gpt_bigcode",
+  "multi_query": true,
+  "n_embd": 6144,
+  "n_head": 48,
+  "n_inner": 24576,
+  "n_layer": 40,
+  "n_positions": 8192,
+  "pad_key_length": true,
+  "pre_allocate_kv_cache": false,
+  "resid_pdrop": 0.1,
+  "scale_attention_softmax_in_fp32": true,
+  "scale_attn_weights": true,
+  "summary_activation": null,
+  "summary_first_dropout": 0.1,
+  "summary_proj_to_labels": true,
+  "summary_type": "cls_index",
+  "summary_use_proj": true,
+  "torch_dtype": "float32",
+  "transformers_version": "4.28.1",
+  "use_cache": true,
+  "validate_runner_input": true,
+  "vocab_size": 49152
+}
+
+[INFO|tokenization_utils_base.py:1809] 2023-08-18 08:34:02,523 >> loading file vocab.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/vocab.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-18 08:34:02,523 >> loading file merges.txt from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/merges.txt
+[INFO|tokenization_utils_base.py:1809] 2023-08-18 08:34:02,523 >> loading file tokenizer.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/tokenizer.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-18 08:34:02,523 >> loading file added_tokens.json from cache at None
+[INFO|tokenization_utils_base.py:1809] 2023-08-18 08:34:02,523 >> loading file special_tokens_map.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/special_tokens_map.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-18 08:34:02,523 >> loading file tokenizer_config.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/tokenizer_config.json
+/usr/local/lib/python3.8/dist-packages/datasets/load.py:2072: FutureWarning: 'use_auth_token' was deprecated in favor of 'token' in version 2.14.0 and will be removed in 3.0.0.
+You can remove this warning by passing 'token=None' instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/datasets/load.py:2072: FutureWarning: 'use_auth_token' was deprecated in favor of 'token' in version 2.14.0 and will be removed in 3.0.0.
+You can remove this warning by passing 'token=None' instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/datasets/load.py:2072: FutureWarning: 'use_auth_token' was deprecated in favor of 'token' in version 2.14.0 and will be removed in 3.0.0.
+You can remove this warning by passing 'token=None' instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/datasets/load.py:2072: FutureWarning: 'use_auth_token' was deprecated in favor of 'token' in version 2.14.0 and will be removed in 3.0.0.
+You can remove this warning by passing 'token=None' instead.
+  warnings.warn(
+[INFO|modeling_utils.py:2534] 2023-08-18 08:34:03,105 >> loading weights file pytorch_model.bin from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/pytorch_model.bin.index.json
+[INFO|modeling_utils.py:1176] 2023-08-18 08:34:03,106 >> Instantiating GaudiGPTBigCodeForCausalLM model under default dtype torch.bfloat16.
+[INFO|configuration_utils.py:575] 2023-08-18 08:34:03,107 >> Generate config GaudiGenerationConfig {
+  "_from_model_config": true,
+  "bos_token_id": 0,
+  "eos_token_id": 0,
+  "ignore_eos": null,
+  "static_shapes": null,
+  "transformers_version": "4.28.1"
+}
+
+Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]Loading checkpoint shards:  14%|█▍        | 1/7 [00:05<00:31,  5.23s/it]Loading checkpoint shards:  14%|█▍        | 1/7 [00:05<00:32,  5.43s/it]Loading checkpoint shards:  14%|█▍        | 1/7 [00:05<00:31,  5.22s/it]Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]Loading checkpoint shards:  29%|██▊       | 2/7 [00:09<00:22,  4.45s/it]Loading checkpoint shards:  29%|██▊       | 2/7 [00:09<00:23,  4.76s/it]Loading checkpoint shards:  29%|██▊       | 2/7 [00:09<00:23,  4.70s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:12<00:15,  3.99s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:12<00:16,  4.01s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:13<00:16,  4.17s/it]Loading checkpoint shards:  14%|█▍        | 1/7 [00:06<00:37,  6.30s/it]Loading checkpoint shards:  57%|█████▋    | 4/7 [00:14<00:10,  3.35s/it]Loading checkpoint shards:  57%|█████▋    | 4/7 [00:15<00:11,  3.70s/it]Loading checkpoint shards:  29%|██▊       | 2/7 [00:10<00:25,  5.16s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [00:17<00:06,  3.03s/it]Loading checkpoint shards:  57%|█████▋    | 4/7 [00:18<00:13,  4.50s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [00:19<00:07,  3.51s/it]Loading checkpoint shards:  86%|████████▌ | 6/7 [00:19<00:02,  2.80s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:13<00:16,  4.24s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:21<00:00,  2.29s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:21<00:00,  3.00s/it]
+Loading checkpoint shards:  86%|████████▌ | 6/7 [00:22<00:03,  3.46s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [00:22<00:09,  4.53s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:23<00:00,  2.70s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:23<00:00,  3.38s/it]
+[INFO|modeling_utils.py:3190] 2023-08-18 08:36:33,543 >> All model checkpoint weights were used when initializing GaudiGPTBigCodeForCausalLM.
+
+[INFO|modeling_utils.py:3198] 2023-08-18 08:36:33,543 >> All the weights of GaudiGPTBigCodeForCausalLM were initialized from the model checkpoint at bigcode/starcoder.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use GaudiGPTBigCodeForCausalLM for predictions without further training.
+[INFO|configuration_utils.py:537] 2023-08-18 08:36:33,659 >> loading configuration file generation_config.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/generation_config.json
+[INFO|configuration_utils.py:575] 2023-08-18 08:36:33,660 >> Generate config GaudiGenerationConfig {
+  "_from_model_config": true,
+  "bos_token_id": 0,
+  "eos_token_id": 0,
+  "ignore_eos": null,
+  "static_shapes": null,
+  "transformers_version": "4.28.1"
+}
+
+Loading checkpoint shards:  57%|█████▋    | 4/7 [00:17<00:11,  3.85s/it]Loading checkpoint shards:  86%|████████▌ | 6/7 [00:26<00:04,  4.16s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [00:20<00:07,  3.60s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:27<00:00,  3.32s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:27<00:00,  3.98s/it]
+Loading checkpoint shards:  86%|████████▌ | 6/7 [00:23<00:03,  3.42s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:24<00:00,  2.70s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:24<00:00,  3.50s/it]
+08/18/2023 08:36:41 - INFO - __main__ -   Using data collator of type DataCollatorForSeq2Seq
+trainable params: 4,014,080 || all params: 15,521,470,464 || trainable%: 0.0258614672450663
+trainable params: 4,014,080 || all params: 15,521,470,464 || trainable%: 0.0258614672450663
+trainable params: 4,014,080 || all params: 15,521,470,464 || trainable%: 0.0258614672450663
+trainable params: 4,014,080 || all params: 15,521,470,464 || trainable%: 0.0258614672450663
+[INFO|trainer.py:621] 2023-08-18 08:37:08,935 >> Using hpu_amp half precision backend
+=============================HABANA PT BRIDGE CONFIGURATION =========================== 
+ PT_HPU_LAZY_MODE = 1
+ PT_HPU_LAZY_EAGER_OPTIM_CACHE = 1
+ PT_HPU_ENABLE_COMPILE_THREAD = 0
+ PT_HPU_ENABLE_EXECUTION_THREAD = 1
+ PT_HPU_ENABLE_LAZY_EAGER_EXECUTION_THREAD = 1
+ PT_ENABLE_INTER_HOST_CACHING = 0
+ PT_ENABLE_INFERENCE_MODE = 1
+ PT_ENABLE_HABANA_CACHING = 1
+ PT_HPU_MAX_RECIPE_SUBMISSION_LIMIT = 0
+ PT_HPU_MAX_COMPOUND_OP_SIZE = 9223372036854775807
+ PT_HPU_MAX_COMPOUND_OP_SIZE_SS = 10
+ PT_HPU_ENABLE_STAGE_SUBMISSION = 1
+ PT_HPU_STAGE_SUBMISSION_MODE = 2
+ PT_HPU_PGM_ENABLE_CACHE = 1
+ PT_HPU_ENABLE_LAZY_COLLECTIVES = 0
+ PT_HCCL_SLICE_SIZE_MB = 16
+ PT_HCCL_MEMORY_ALLOWANCE_MB = 0
+ PT_HPU_INITIAL_WORKSPACE_SIZE = 0
+ PT_HABANA_POOL_SIZE = 24
+ PT_HPU_POOL_STRATEGY = 5
+ PT_HPU_POOL_LOG_FRAGMENTATION_INFO = 0
+ PT_ENABLE_MEMORY_DEFRAGMENTATION = 1
+ PT_ENABLE_DEFRAGMENTATION_INFO = 0
+ PT_HPU_ENABLE_SYNAPSE_OUTPUT_PERMUTE = 1
+ PT_HPU_ENABLE_VALID_DATA_RANGE_CHECK = 1
+ PT_HPU_FORCE_USE_DEFAULT_STREAM = 0
+ PT_RECIPE_CACHE_PATH = 
+ PT_HPU_ENABLE_REFINE_DYNAMIC_SHAPES = 0
+ PT_HPU_DYNAMIC_MIN_POLICY_ORDER = 4,5,3,1
+ PT_HPU_DYNAMIC_MAX_POLICY_ORDER = 2,4,5,3,1
+ PT_HPU_LAZY_ACC_PAR_MODE = 0
+ PT_HPU_CLUSTERED_PROGRAM = 0
+ PT_HPU_CLUSTERED_PROGRAM_ENFORCE = 0
+ PT_HPU_CLUSTERED_PROGRAM_SPLIT_STR = default
+ PT_HPU_CLUSTERED_PROGRAM_SCHED_STR = default
+=============================SYSTEM CONFIGURATION ========================================= 
+Num CPU Cores = 160
+CPU RAM = 1056389528 KB 
+============================================================================================ 
+[2023-08-18 08:37:21,912] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed info: version=0.7.7+hpu.synapse.v1.10.0, git-hash=4bc77a6, git-branch=1.10.0
+[2023-08-18 08:37:22,664] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+[2023-08-18 08:37:22,664] [INFO] [logging.py:68:log_dist] [Rank 0] Removing param_group that has no 'params' in the client Optimizer
+[2023-08-18 08:37:22,665] [INFO] [logging.py:68:log_dist] [Rank 0] Using client Optimizer as basic optimizer
+[2023-08-18 08:37:22,672] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed Basic Optimizer = FusedAdamW
+[2023-08-18 08:37:22,672] [INFO] [utils.py:58:is_zero_supported_optimizer] Checking ZeRO support for optimizer=FusedAdamW type=<class 'habana_frameworks.torch.hpex.optimizers.FusedAdamW.FusedAdamW'>
+[2023-08-18 08:37:22,672] [INFO] [logging.py:68:log_dist] [Rank 0] Creating bf16 ZeRO stage 2 optimizer
+[2023-08-18 08:37:22,672] [INFO] [logging.py:68:log_dist] [Rank 0] Creating bf16 ZeRO stage 2 optimizer
+[2023-08-18 08:37:22,672] [INFO] [stage_1_and_2.py:155:__init__] Reduce bucket size 500,000,000
+[2023-08-18 08:37:22,672] [INFO] [stage_1_and_2.py:156:__init__] Allgather bucket size 500,000,000
+[2023-08-18 08:37:22,672] [INFO] [stage_1_and_2.py:157:__init__] CPU Offload: False
+[2023-08-18 08:37:22,672] [INFO] [stage_1_and_2.py:158:__init__] Round robin gradient partitioning: False
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Emitting ninja build file /root/.cache/torch_extensions/py38_cpu/utils/build.ninja...
+Building extension module utils...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+ninja: no work to do.
+Loading extension module utils...
+Time to load utils op: 1.86472749710083 seconds
+Loading extension module utils...
+Time to load utils op: 1.1064870357513428 seconds
+Rank: 0 partition count [4] and sizes[(1003520, False)] 
+Loading extension module utils...
+Time to load utils op: 1.6070327758789062 seconds
+Loading extension module utils...
+Time to load utils op: 1.4074633121490479 seconds
+Rank: 1 partition count [4] and sizes[(1003520, False)] 
+Rank: 2 partition count [4] and sizes[(1003520, False)] 
+Rank: 3 partition count [4] and sizes[(1003520, False)] 
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+No modifications detected for re-loaded extension module utils, skipping build step...
+Loading extension module utils...
+Time to load utils op: 0.0003771781921386719 seconds
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+No modifications detected for re-loaded extension module utils, skipping build step...
+Loading extension module utils...
+Time to load utils op: 0.0005037784576416016 seconds
+[2023-08-18 08:37:28,745] [INFO] [stage_1_and_2.py:616:__init__] optimizer state initialized
+[2023-08-18 08:37:28,748] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed Final Optimizer = DeepSpeedZeroOptimizer
+[2023-08-18 08:37:28,748] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed using client LR scheduler
+[2023-08-18 08:37:28,749] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed LR Scheduler = <torch.optim.lr_scheduler.LambdaLR object at 0x7f46de571670>
+[2023-08-18 08:37:28,749] [INFO] [logging.py:68:log_dist] [Rank 0] step=0, skipped=0, lr=[0.0001], mom=[(0.9, 0.999)]
+[2023-08-18 08:37:28,752] [INFO] [config.py:1028:print] DeepSpeedEngine configuration:
+[2023-08-18 08:37:28,752] [INFO] [config.py:1032:print]   activation_checkpointing_config  {
+    "partition_activations": false, 
+    "contiguous_memory_optimization": false, 
+    "cpu_checkpointing": false, 
+    "number_checkpoints": null, 
+    "synchronize_checkpoint_boundary": false, 
+    "profile": false
+}
+[2023-08-18 08:37:28,753] [INFO] [config.py:1032:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'thread_count': 1, 'single_submit': False, 'overlap_events': True}
+[2023-08-18 08:37:28,753] [INFO] [config.py:1032:print]   amp_enabled .................. False
+[2023-08-18 08:37:28,753] [INFO] [config.py:1032:print]   amp_params ................... False
+[2023-08-18 08:37:28,753] [INFO] [config.py:1032:print]   autotuning_config ............ {
+    "enabled": false, 
+    "start_step": null, 
+    "end_step": null, 
+    "metric_path": null, 
+    "arg_mappings": null, 
+    "metric": "throughput", 
+    "model_info": null, 
+    "results_dir": "autotuning_results", 
+    "exps_dir": "autotuning_exps", 
+    "overwrite": true, 
+    "fast": true, 
+    "start_profile_step": 3, 
+    "end_profile_step": 5, 
+    "tuner_type": "gridsearch", 
+    "tuner_early_stopping": 5, 
+    "tuner_num_trials": 50, 
+    "model_info_path": null, 
+    "mp_size": 1, 
+    "max_train_batch_size": null, 
+    "min_train_batch_size": 1, 
+    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+    "min_train_micro_batch_size_per_gpu": 1, 
+    "num_tuning_micro_batch_sizes": 3
+}
+[2023-08-18 08:37:28,753] [INFO] [config.py:1032:print]   bfloat16_enabled ............. True
+[2023-08-18 08:37:28,753] [INFO] [config.py:1032:print]   checkpoint_parallel_write_pipeline  False
+[2023-08-18 08:37:28,753] [INFO] [config.py:1032:print]   checkpoint_tag_validation_enabled  True
+[2023-08-18 08:37:28,753] [INFO] [config.py:1032:print]   checkpoint_tag_validation_fail  False
+[2023-08-18 08:37:28,753] [INFO] [config.py:1032:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x7f46de3a36d0>
+[2023-08-18 08:37:28,753] [INFO] [config.py:1032:print]   communication_data_type ...... None
+[2023-08-18 08:37:28,753] [INFO] [config.py:1032:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
+[2023-08-18 08:37:28,753] [INFO] [config.py:1032:print]   curriculum_enabled ........... False
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   curriculum_params ............ False
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   dataloader_drop_last ......... False
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   disable_allgather ............ False
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   dump_state ................... False
+No modifications detected for re-loaded extension module utils, skipping build step...
+Loading extension module utils...
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   dynamic_loss_scale_args ...... None
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   eigenvalue_enabled ........... False
+Time to load utils op: 0.00041222572326660156 seconds[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   eigenvalue_gas_boundary_resolution  1
+
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   eigenvalue_layer_num ......... 0
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   eigenvalue_max_iter .......... 100
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   eigenvalue_stability ......... 1e-06
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   eigenvalue_tol ............... 0.01
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   eigenvalue_verbose ........... False
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   elasticity_enabled ........... False
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   flops_profiler_config ........ {
+    "enabled": false, 
+    "profile_step": 1, 
+    "module_depth": -1, 
+    "top_modules": 1, 
+    "detailed": true, 
+    "output_file": null
+}
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   fp16_auto_cast ............... None
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   fp16_enabled ................. False
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   fp16_master_weights_and_gradients  False
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   global_rank .................. 0
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   grad_accum_dtype ............. None
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   gradient_accumulation_steps .. 2
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   gradient_clipping ............ 1
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   gradient_predivide_factor .... 1.0
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   initial_dynamic_scale ........ 1
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   load_universal_checkpoint .... False
+[2023-08-18 08:37:28,754] [INFO] [config.py:1032:print]   loss_scale ................... 1.0
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   memory_breakdown ............. False
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   monitor_config ............... <deepspeed.monitor.config.DeepSpeedMonitorConfig object at 0x7f46de3a3a30>
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   nebula_config ................ {
+    "enabled": false, 
+    "persistent_storage_path": null, 
+    "persistent_time_interval": 100, 
+    "num_of_version_in_retention": 2, 
+    "enable_nebula_load": true, 
+    "load_path": null
+}
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   optimizer_legacy_fusion ...... False
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   optimizer_name ............... None
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   optimizer_params ............. None
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0}
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   pld_enabled .................. False
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   pld_params ................... False
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   prescale_gradients ........... False
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   scheduler_name ............... None
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   scheduler_params ............. None
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   sparse_attention ............. None
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   sparse_gradients_enabled ..... False
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   steps_per_print .............. 64
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   train_batch_size ............. 80
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   train_micro_batch_size_per_gpu  10
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   use_node_local_storage ....... False
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   wall_clock_breakdown ......... False
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   world_size ................... 4
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   zero_allow_comm_data_type_fp32  False
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   zero_allow_untested_optimizer  True
+[2023-08-18 08:37:28,755] [INFO] [config.py:1032:print]   zero_config .................. stage=2 contiguous_gradients=False reduce_scatter=False reduce_bucket_size=500,000,000 allgather_partitions=True allgather_bucket_size=500,000,000 overlap_comm=False max_group_size=4000000000 load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=None sub_group_size=1,000,000,000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=50,000,000 param_persistence_threshold=100,000 model_persistence_threshold=sys.maxsize max_live_parameters=1,000,000,000 max_reuse_distance=1,000,000,000 gather_16bit_weights_on_model_save=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False
+[2023-08-18 08:37:28,756] [INFO] [config.py:1032:print]   zero_enabled ................. True
+[2023-08-18 08:37:28,756] [INFO] [config.py:1032:print]   zero_optimization_stage ...... 2
+[2023-08-18 08:37:28,756] [INFO] [config.py:1017:print_user_config]   json = {
+    "steps_per_print": 64, 
+    "train_batch_size": 80, 
+    "train_micro_batch_size_per_gpu": 10, 
+    "gradient_accumulation_steps": 2, 
+    "bf16": {
+        "enabled": true
+    }, 
+    "gradient_clipping": 1, 
+    "zero_optimization": {
+        "stage": 2, 
+        "overlap_comm": false, 
+        "reduce_scatter": false, 
+        "contiguous_gradients": false
+    }, 
+    "zero_allow_untested_optimizer": true
+}
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+No modifications detected for re-loaded extension module utils, skipping build step...
+Loading extension module utils...
+Time to load utils op: 0.0005071163177490234 seconds
+[INFO|trainer.py:770] 2023-08-18 08:37:28,757 >> ***** Running training *****
+[INFO|trainer.py:771] 2023-08-18 08:37:28,757 >>   Num examples = 489
+[INFO|trainer.py:772] 2023-08-18 08:37:28,758 >>   Num Epochs = 10
+[INFO|trainer.py:773] 2023-08-18 08:37:28,758 >>   Instantaneous batch size per device = 10
+[INFO|trainer.py:774] 2023-08-18 08:37:28,758 >>   Total train batch size (w. parallel, distributed & accumulation) = 80
+[INFO|trainer.py:775] 2023-08-18 08:37:28,758 >>   Gradient Accumulation steps = 2
+[INFO|trainer.py:776] 2023-08-18 08:37:28,758 >>   Total optimization steps = 60
+You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+[INFO|trainer.py:777] 2023-08-18 08:37:28,765 >>   Number of trainable parameters = 4,014,080
+You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+  0%|          | 0/60 [00:00<?, ?it/s][WARNING|logging.py:280] 2023-08-18 08:37:28,801 >> You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+  2%|▏         | 1/60 [01:18<1:17:05, 78.40s/it]                                                {'loss': 1.4492, 'learning_rate': 9.833333333333333e-05, 'epoch': 0.15, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.7, 'total_memory_available (GB)': 93.74}
+  2%|▏         | 1/60 [01:19<1:17:05, 78.40s/it]  3%|▎         | 2/60 [01:21<33:00, 34.14s/it]                                                {'loss': 1.4277, 'learning_rate': 9.666666666666667e-05, 'epoch': 0.31, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.7, 'total_memory_available (GB)': 93.74}
+  3%|▎         | 2/60 [01:21<33:00, 34.14s/it]  5%|▌         | 3/60 [01:24<18:41, 19.68s/it]                                              {'loss': 1.4785, 'learning_rate': 9.5e-05, 'epoch': 0.46, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.7, 'total_memory_available (GB)': 93.74}
+  5%|▌         | 3/60 [01:24<18:41, 19.68s/it]  7%|▋         | 4/60 [01:26<12:01, 12.88s/it]                                              {'loss': 1.4189, 'learning_rate': 9.333333333333334e-05, 'epoch': 0.62, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.7, 'total_memory_available (GB)': 93.74}
+  7%|▋         | 4/60 [01:26<12:01, 12.88s/it]  8%|▊         | 5/60 [01:28<08:22,  9.13s/it]                                              {'loss': 1.4443, 'learning_rate': 9.166666666666667e-05, 'epoch': 0.77, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.7, 'total_memory_available (GB)': 93.74}
+  8%|▊         | 5/60 [01:28<08:22,  9.13s/it] 10%|█         | 6/60 [01:31<06:10,  6.87s/it]                                              {'loss': 1.4023, 'learning_rate': 9e-05, 'epoch': 0.92, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.7, 'total_memory_available (GB)': 93.74}
+ 10%|█         | 6/60 [01:31<06:10,  6.87s/it] 12%|█▏        | 7/60 [02:31<21:19, 24.13s/it]                                              {'loss': 2.1455, 'learning_rate': 8.833333333333333e-05, 'epoch': 1.15, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 12%|█▏        | 7/60 [02:31<21:19, 24.13s/it] 13%|█▎        | 8/60 [02:33<14:54, 17.20s/it]                                              {'loss': 1.4014, 'learning_rate': 8.666666666666667e-05, 'epoch': 1.31, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 13%|█▎        | 8/60 [02:34<14:54, 17.20s/it] 15%|█▌        | 9/60 [02:36<10:44, 12.63s/it]                                              {'loss': 1.3789, 'learning_rate': 8.5e-05, 'epoch': 1.46, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 15%|█▌        | 9/60 [02:37<10:44, 12.63s/it] 17%|█▋        | 10/60 [02:38<07:56,  9.53s/it]                                               {'loss': 1.3711, 'learning_rate': 8.333333333333334e-05, 'epoch': 1.62, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 17%|█▋        | 10/60 [02:39<07:56,  9.53s/it] 18%|█▊        | 11/60 [02:41<06:03,  7.41s/it]                                               {'loss': 1.376, 'learning_rate': 8.166666666666667e-05, 'epoch': 1.77, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 18%|█▊        | 11/60 [02:42<06:03,  7.41s/it] 20%|██        | 12/60 [02:43<04:45,  5.94s/it]                                               {'loss': 1.377, 'learning_rate': 8e-05, 'epoch': 1.92, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 20%|██        | 12/60 [02:44<04:45,  5.94s/it] 22%|██▏       | 13/60 [02:48<04:24,  5.62s/it]                                               {'loss': 2.0566, 'learning_rate': 7.666666666666667e-05, 'epoch': 2.15, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 22%|██▏       | 13/60 [02:48<04:24,  5.62s/it] 23%|██▎       | 14/60 [02:51<03:34,  4.66s/it]                                               {'loss': 1.3633, 'learning_rate': 7.500000000000001e-05, 'epoch': 2.31, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 23%|██▎       | 14/60 [02:51<03:34,  4.66s/it] 25%|██▌       | 15/60 [02:53<02:59,  4.00s/it]                                               {'loss': 1.3418, 'learning_rate': 7.333333333333333e-05, 'epoch': 2.46, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 25%|██▌       | 15/60 [02:53<02:59,  4.00s/it] 27%|██▋       | 16/60 [02:56<02:35,  3.53s/it]                                               {'loss': 1.3496, 'learning_rate': 7.166666666666667e-05, 'epoch': 2.62, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 27%|██▋       | 16/60 [02:56<02:35,  3.53s/it] 28%|██▊       | 17/60 [02:58<02:17,  3.21s/it]                                               {'loss': 1.2695, 'learning_rate': 7e-05, 'epoch': 2.77, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 28%|██▊       | 17/60 [02:58<02:17,  3.21s/it] 30%|███       | 18/60 [03:00<02:05,  2.98s/it]                                               {'loss': 1.3203, 'learning_rate': 6.833333333333333e-05, 'epoch': 2.92, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 30%|███       | 18/60 [03:00<02:05,  2.98s/it] 32%|███▏      | 19/60 [03:03<01:57,  2.87s/it]                                               {'loss': 1.9873, 'learning_rate': 6.666666666666667e-05, 'epoch': 3.15, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 32%|███▏      | 19/60 [03:04<01:57,  2.87s/it] 33%|███▎      | 20/60 [03:06<01:54,  2.86s/it]                                               {'loss': 1.2842, 'learning_rate': 6.500000000000001e-05, 'epoch': 3.31, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 33%|███▎      | 20/60 [03:07<01:54,  2.86s/it] 35%|███▌      | 21/60 [03:09<01:48,  2.78s/it]                                               {'loss': 1.291, 'learning_rate': 6.333333333333333e-05, 'epoch': 3.46, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 35%|███▌      | 21/60 [03:10<01:48,  2.78s/it] 37%|███▋      | 22/60 [03:11<01:43,  2.73s/it]                                               {'loss': 1.3018, 'learning_rate': 6.166666666666667e-05, 'epoch': 3.62, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 37%|███▋      | 22/60 [03:12<01:43,  2.73s/it] 38%|███▊      | 23/60 [03:14<01:39,  2.69s/it]                                               {'loss': 1.3115, 'learning_rate': 6e-05, 'epoch': 3.77, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 38%|███▊      | 23/60 [03:15<01:39,  2.69s/it] 40%|████      | 24/60 [03:16<01:35,  2.66s/it]                                               {'loss': 1.2559, 'learning_rate': 5.833333333333334e-05, 'epoch': 3.92, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 40%|████      | 24/60 [03:17<01:35,  2.66s/it] 42%|████▏     | 25/60 [03:21<01:56,  3.33s/it]                                               {'loss': 1.9062, 'learning_rate': 5.500000000000001e-05, 'epoch': 4.15, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 42%|████▏     | 25/60 [03:21<01:56,  3.33s/it] 43%|████▎     | 26/60 [03:24<01:44,  3.07s/it]                                               {'loss': 1.3047, 'learning_rate': 5.333333333333333e-05, 'epoch': 4.31, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 43%|████▎     | 26/60 [03:24<01:44,  3.07s/it] 45%|████▌     | 27/60 [03:26<01:35,  2.89s/it]                                               {'loss': 1.2529, 'learning_rate': 5.166666666666667e-05, 'epoch': 4.46, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 45%|████▌     | 27/60 [03:26<01:35,  2.89s/it] 47%|████▋     | 28/60 [03:29<01:28,  2.76s/it]                                               {'loss': 1.293, 'learning_rate': 5e-05, 'epoch': 4.62, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 47%|████▋     | 28/60 [03:29<01:28,  2.76s/it] 48%|████▊     | 29/60 [03:31<01:22,  2.67s/it]                                               {'loss': 1.249, 'learning_rate': 4.8333333333333334e-05, 'epoch': 4.77, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 48%|████▊     | 29/60 [03:31<01:22,  2.67s/it][2023-08-18 08:41:02,801] [INFO] [timer.py:241:stop] 0/64, RunningAvgSamplesPerSec=20.61510225521845, CurrSamplesPerSec=17.674111778547715, MemAllocated=85.77GB, MaxMemAllocated=91.71GB
+ 50%|█████     | 30/60 [03:34<01:18,  2.61s/it]                                               {'loss': 1.2324, 'learning_rate': 4.666666666666667e-05, 'epoch': 4.92, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 50%|█████     | 30/60 [03:34<01:18,  2.61s/it] 52%|█████▏    | 31/60 [03:36<01:15,  2.61s/it]                                               {'loss': 1.9072, 'learning_rate': 4.5e-05, 'epoch': 5.15, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 52%|█████▏    | 31/60 [03:37<01:15,  2.61s/it] 53%|█████▎    | 32/60 [03:39<01:13,  2.61s/it]                                               {'loss': 1.2578, 'learning_rate': 4.3333333333333334e-05, 'epoch': 5.31, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 53%|█████▎    | 32/60 [03:40<01:13,  2.61s/it] 55%|█████▌    | 33/60 [03:41<01:10,  2.61s/it]                                               {'loss': 1.2324, 'learning_rate': 4.166666666666667e-05, 'epoch': 5.46, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 55%|█████▌    | 33/60 [03:42<01:10,  2.61s/it] 57%|█████▋    | 34/60 [03:44<01:07,  2.61s/it]                                               {'loss': 1.2578, 'learning_rate': 4e-05, 'epoch': 5.62, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 57%|█████▋    | 34/60 [03:45<01:07,  2.61s/it] 58%|█████▊    | 35/60 [03:47<01:05,  2.61s/it]                                               {'loss': 1.2559, 'learning_rate': 3.8333333333333334e-05, 'epoch': 5.77, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 58%|█████▊    | 35/60 [03:48<01:05,  2.61s/it] 60%|██████    | 36/60 [03:49<01:02,  2.61s/it]                                               {'loss': 1.208, 'learning_rate': 3.6666666666666666e-05, 'epoch': 5.92, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 60%|██████    | 36/60 [03:50<01:02,  2.61s/it] 62%|██████▏   | 37/60 [03:54<01:15,  3.29s/it]                                               {'loss': 1.8662, 'learning_rate': 3.3333333333333335e-05, 'epoch': 6.15, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 62%|██████▏   | 37/60 [03:54<01:15,  3.29s/it] 63%|██████▎   | 38/60 [03:57<01:06,  3.04s/it]                                               {'loss': 1.1816, 'learning_rate': 3.1666666666666666e-05, 'epoch': 6.31, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 63%|██████▎   | 38/60 [03:57<01:06,  3.04s/it] 65%|██████▌   | 39/60 [03:59<01:00,  2.87s/it]                                               {'loss': 1.2471, 'learning_rate': 3e-05, 'epoch': 6.46, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 65%|██████▌   | 39/60 [03:59<01:00,  2.87s/it] 67%|██████▋   | 40/60 [04:01<00:54,  2.75s/it]                                               {'loss': 1.2227, 'learning_rate': 2.8333333333333335e-05, 'epoch': 6.62, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.71, 'total_memory_available (GB)': 93.74}
+ 67%|██████▋   | 40/60 [04:01<00:54,  2.75s/it] 68%|██████▊   | 41/60 [04:04<00:50,  2.66s/it]                                               {'loss': 1.2217, 'learning_rate': 2.6666666666666667e-05, 'epoch': 6.77, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 68%|██████▊   | 41/60 [04:04<00:50,  2.66s/it] 70%|███████   | 42/60 [04:06<00:46,  2.60s/it]                                               {'loss': 1.2656, 'learning_rate': 2.5e-05, 'epoch': 6.92, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 70%|███████   | 42/60 [04:06<00:46,  2.60s/it] 72%|███████▏  | 43/60 [04:09<00:44,  2.61s/it]                                               {'loss': 1.8281, 'learning_rate': 2.3333333333333336e-05, 'epoch': 7.15, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 72%|███████▏  | 43/60 [04:10<00:44,  2.61s/it] 73%|███████▎  | 44/60 [04:12<00:41,  2.61s/it]                                               {'loss': 1.1777, 'learning_rate': 2.1666666666666667e-05, 'epoch': 7.31, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 73%|███████▎  | 44/60 [04:13<00:41,  2.61s/it] 75%|███████▌  | 45/60 [04:14<00:39,  2.61s/it]                                               {'loss': 1.2432, 'learning_rate': 2e-05, 'epoch': 7.46, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 75%|███████▌  | 45/60 [04:15<00:39,  2.61s/it] 77%|███████▋  | 46/60 [04:17<00:36,  2.61s/it]                                               {'loss': 1.2227, 'learning_rate': 1.8333333333333333e-05, 'epoch': 7.62, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 77%|███████▋  | 46/60 [04:18<00:36,  2.61s/it] 78%|███████▊  | 47/60 [04:19<00:33,  2.61s/it]                                               {'loss': 1.2148, 'learning_rate': 1.6666666666666667e-05, 'epoch': 7.77, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 78%|███████▊  | 47/60 [04:21<00:33,  2.61s/it] 80%|████████  | 48/60 [04:22<00:31,  2.61s/it]                                               {'loss': 1.1934, 'learning_rate': 1.5e-05, 'epoch': 7.92, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 80%|████████  | 48/60 [04:23<00:31,  2.61s/it] 82%|████████▏ | 49/60 [04:27<00:36,  3.29s/it]                                               {'loss': 1.874, 'learning_rate': 1.1666666666666668e-05, 'epoch': 8.15, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 82%|████████▏ | 49/60 [04:27<00:36,  3.29s/it] 83%|████████▎ | 50/60 [04:29<00:30,  3.04s/it]                                               {'loss': 1.1553, 'learning_rate': 1e-05, 'epoch': 8.31, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 83%|████████▎ | 50/60 [04:29<00:30,  3.04s/it] 85%|████████▌ | 51/60 [04:32<00:25,  2.87s/it]                                               {'loss': 1.2188, 'learning_rate': 8.333333333333334e-06, 'epoch': 8.46, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 85%|████████▌ | 51/60 [04:32<00:25,  2.87s/it] 87%|████████▋ | 52/60 [04:34<00:22,  2.75s/it]                                               {'loss': 1.2227, 'learning_rate': 6.666666666666667e-06, 'epoch': 8.62, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 87%|████████▋ | 52/60 [04:34<00:22,  2.75s/it] 88%|████████▊ | 53/60 [04:37<00:18,  2.67s/it]                                               {'loss': 1.2227, 'learning_rate': 5e-06, 'epoch': 8.77, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 88%|████████▊ | 53/60 [04:37<00:18,  2.67s/it] 90%|█████████ | 54/60 [04:39<00:15,  2.60s/it]                                               {'loss': 1.1953, 'learning_rate': 3.3333333333333333e-06, 'epoch': 8.92, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 90%|█████████ | 54/60 [04:39<00:15,  2.60s/it] 92%|█████████▏| 55/60 [04:42<00:13,  2.61s/it]                                               {'loss': 1.8496, 'learning_rate': 1.6666666666666667e-06, 'epoch': 9.15, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 92%|█████████▏| 55/60 [04:43<00:13,  2.61s/it] 93%|█████████▎| 56/60 [04:44<00:10,  2.61s/it]                                               {'loss': 1.1963, 'learning_rate': 0.0, 'epoch': 9.31, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 93%|█████████▎| 56/60 [04:46<00:10,  2.61s/it] 95%|█████████▌| 57/60 [04:47<00:07,  2.61s/it]                                               {'loss': 1.2188, 'learning_rate': 0.0, 'epoch': 9.46, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 95%|█████████▌| 57/60 [04:48<00:07,  2.61s/it] 97%|█████████▋| 58/60 [04:50<00:05,  2.61s/it]                                               {'loss': 1.2158, 'learning_rate': 0.0, 'epoch': 9.62, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 97%|█████████▋| 58/60 [04:51<00:05,  2.61s/it] 98%|█████████▊| 59/60 [04:52<00:02,  2.61s/it]                                               {'loss': 1.1924, 'learning_rate': 0.0, 'epoch': 9.77, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+ 98%|█████████▊| 59/60 [04:53<00:02,  2.61s/it][2023-08-18 08:42:24,077] [INFO] [logging.py:68:log_dist] [Rank 0] step=64, skipped=0, lr=[0.0], mom=[(0.9, 0.999)]
+[2023-08-18 08:42:24,083] [INFO] [timer.py:241:stop] 0/128, RunningAvgSamplesPerSec=27.84959523519786, CurrSamplesPerSec=31.026113972389943, MemAllocated=85.77GB, MaxMemAllocated=91.72GB
+100%|██████████| 60/60 [04:55<00:00,  2.61s/it]                                               {'loss': 1.2197, 'learning_rate': 0.0, 'epoch': 9.92, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+100%|██████████| 60/60 [04:56<00:00,  2.61s/it][INFO|trainer.py:1041] 2023-08-18 08:42:25,383 >> 
+
+Training completed. Do not forget to share your model on huggingface.co/models =)
+
+
+                                               {'train_runtime': 296.6192, 'train_samples_per_second': 21.878, 'train_steps_per_second': 0.268, 'train_loss': 1.3804524739583333, 'epoch': 9.92, 'memory_allocated (GB)': 85.77, 'max_memory_allocated (GB)': 91.72, 'total_memory_available (GB)': 93.74}
+100%|██████████| 60/60 [04:56<00:00,  2.61s/it]100%|██████████| 60/60 [04:56<00:00,  4.94s/it]
+[2023-08-18 08:42:33,566] [INFO] [launch.py:354:main] Process 1777169 exits successfully.
+[2023-08-18 08:42:33,566] [INFO] [launch.py:354:main] Process 1777171 exits successfully.
+[2023-08-18 08:42:33,567] [INFO] [launch.py:354:main] Process 1777172 exits successfully.
+[2023-08-18 08:42:33,567] [INFO] [launch.py:354:main] Process 1777170 exits successfully.

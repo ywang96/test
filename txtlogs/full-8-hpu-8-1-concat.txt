@@ -1,0 +1,1385 @@
+DistributedRunner run(): command = deepspeed --num_nodes 1 --num_gpus 8 --no_local_rank run_clm_starcoder.py --model_name_or_path bigcode/starcoder --train_file /starcoder/finetune-data/roblox-train.json --validation_file /starcoder/finetune-data/roblox-validation.json --report_to tensorboard --bf16 True --output_dir ./checkpoints/starcoder-full-deepspeed-8-hpu-8-1-concat --num_train_epochs 10 --per_device_train_batch_size 8 --gradient_accumulation_steps 1 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --dataset_concatenation --do_train --use_habana --use_lazy_mode --throughput_warmup_steps 3 --cache_dir /starcoder/cache/ --use_hpu_graphs_for_inference --deepspeed deepspeed_config.json
+[2023-08-18 18:24:59,708] [WARNING] [runner.py:185:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+Namespace(autotuning='', elastic_training=False, exclude='', force_multi=False, hostfile='/job/hostfile', include='', launcher='pdsh', launcher_args='', master_addr='', master_port=29500, max_elastic_nodes=-1, min_elastic_nodes=-1, module=False, no_local_rank=True, no_python=False, no_ssh_check=False, num_gpus=8, num_nodes=1, save_pid=False, use_hpu=True, user_args=['--model_name_or_path', 'bigcode/starcoder', '--train_file', '/starcoder/finetune-data/roblox-train.json', '--validation_file', '/starcoder/finetune-data/roblox-validation.json', '--report_to', 'tensorboard', '--bf16', 'True', '--output_dir', './checkpoints/starcoder-full-deepspeed-8-hpu-8-1-concat', '--num_train_epochs', '10', '--per_device_train_batch_size', '8', '--gradient_accumulation_steps', '1', '--evaluation_strategy', 'no', '--save_strategy', 'no', '--learning_rate', '1e-4', '--logging_steps', '1', '--dataset_concatenation', '--do_train', '--use_habana', '--use_lazy_mode', '--throughput_warmup_steps', '3', '--cache_dir', '/starcoder/cache/', '--use_hpu_graphs_for_inference', '--deepspeed', 'deepspeed_config.json'], user_script='run_clm_starcoder.py')
+[2023-08-18 18:25:01,456] [INFO] [runner.py:543:main] cmd = /usr/bin/python3 -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMCwgMSwgMiwgMywgNCwgNSwgNiwgN119 --master_addr=127.0.0.1 --master_port=29500 --no_local_rank run_clm_starcoder.py --model_name_or_path bigcode/starcoder --train_file /starcoder/finetune-data/roblox-train.json --validation_file /starcoder/finetune-data/roblox-validation.json --report_to tensorboard --bf16 True --output_dir ./checkpoints/starcoder-full-deepspeed-8-hpu-8-1-concat --num_train_epochs 10 --per_device_train_batch_size 8 --gradient_accumulation_steps 1 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --dataset_concatenation --do_train --use_habana --use_lazy_mode --throughput_warmup_steps 3 --cache_dir /starcoder/cache/ --use_hpu_graphs_for_inference --deepspeed deepspeed_config.json
+[2023-08-18 18:25:03,421] [INFO] [launch.py:145:main] WORLD INFO DICT: {'localhost': [0, 1, 2, 3, 4, 5, 6, 7]}
+[2023-08-18 18:25:03,421] [INFO] [launch.py:151:main] nnodes=1, num_local_procs=8, node_rank=0
+[2023-08-18 18:25:03,421] [INFO] [launch.py:164:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0, 1, 2, 3, 4, 5, 6, 7]})
+[2023-08-18 18:25:03,421] [INFO] [launch.py:165:main] dist_world_size=8
+[2023-08-18 18:25:10,476] [INFO] [comm.py:762:init_distributed] Initializing TorchBackend in DeepSpeed with backend hccl
+08/18/2023 18:25:11 - WARNING - __main__ -   Process rank: 0, device: hpu
+distributed training: True, 16-bits training: True
+08/18/2023 18:25:11 - INFO - __main__ -   Training/evaluation parameters GaudiTrainingArguments(
+_n_gpu=1,
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-06,
+adjust_throughput=False,
+auto_find_batch_size=False,
+bf16=True,
+data_seed=None,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_pin_memory=True,
+ddp_bucket_cap_mb=230,
+ddp_find_unused_parameters=False,
+ddp_timeout=1800,
+debug=[],
+deepspeed=deepspeed_config.json,
+disable_tqdm=False,
+distribution_strategy=ddp,
+do_eval=False,
+do_predict=False,
+do_train=True,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_steps=None,
+evaluation_strategy=no,
+fsdp_config=None,
+fsdp_min_num_params=0,
+fsdp_transformer_layer_cls_to_wrap=None,
+full_determinism=False,
+gaudi_config_name=None,
+gradient_accumulation_steps=1,
+gradient_checkpointing=False,
+greater_is_better=None,
+group_by_length=False,
+half_precision_backend=hpu_amp,
+hub_model_id=None,
+hub_private_repo=False,
+hub_strategy=every_save,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+include_inputs_for_metrics=False,
+jit_mode_eval=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=0.0001,
+length_column_name=length,
+load_best_model_at_end=False,
+local_rank=0,
+log_level=passive,
+log_level_replica=warning,
+log_on_each_node=True,
+logging_dir=./checkpoints/starcoder-full-deepspeed-8-hpu-8-1-concat/runs/Aug18_18-25-10_sysid674631,
+logging_first_step=False,
+logging_nan_inf_filter=False,
+logging_steps=1,
+logging_strategy=steps,
+lr_scheduler_type=linear,
+max_grad_norm=1.0,
+max_steps=-1,
+metric_for_best_model=None,
+no_cuda=False,
+non_blocking_data_copy=False,
+num_train_epochs=10.0,
+optim=adamw_torch,
+optim_args=None,
+output_dir=./checkpoints/starcoder-full-deepspeed-8-hpu-8-1-concat,
+overwrite_output_dir=False,
+past_index=-1,
+per_device_eval_batch_size=8,
+per_device_train_batch_size=8,
+pipelining_fwd_bwd=False,
+prediction_loss_only=False,
+profiling_steps=0,
+profiling_warmup_steps=0,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+ray_scope=last,
+remove_unused_columns=True,
+report_to=['tensorboard'],
+resume_from_checkpoint=None,
+run_name=./checkpoints/starcoder-full-deepspeed-8-hpu-8-1-concat,
+save_on_each_node=False,
+save_safetensors=False,
+save_steps=500,
+save_strategy=no,
+save_total_limit=None,
+seed=42,
+skip_memory_metrics=True,
+throughput_warmup_steps=3,
+torch_compile=False,
+torch_compile_backend=None,
+torch_compile_mode=None,
+torchdynamo=None,
+use_habana=True,
+use_hpu_graphs=False,
+use_hpu_graphs_for_inference=True,
+use_hpu_graphs_for_training=False,
+use_ipex=False,
+use_lazy_mode=True,
+use_legacy_prediction_loop=False,
+use_mps_device=False,
+warmup_ratio=0.0,
+warmup_steps=0,
+weight_decay=0.0,
+xpu_backend=None,
+)
+08/18/2023 18:25:11 - WARNING - __main__ -   Process rank: 7, device: hpu
+distributed training: True, 16-bits training: True
+08/18/2023 18:25:11 - WARNING - __main__ -   Process rank: 5, device: hpu
+distributed training: True, 16-bits training: True
+08/18/2023 18:25:11 - WARNING - __main__ -   Process rank: 1, device: hpu
+distributed training: True, 16-bits training: True
+08/18/2023 18:25:11 - WARNING - __main__ -   Process rank: 2, device: hpu
+distributed training: True, 16-bits training: True
+08/18/2023 18:25:11 - WARNING - __main__ -   Process rank: 3, device: hpu
+distributed training: True, 16-bits training: True
+08/18/2023 18:25:11 - WARNING - __main__ -   Process rank: 4, device: hpu
+distributed training: True, 16-bits training: True
+08/18/2023 18:25:11 - WARNING - __main__ -   Process rank: 6, device: hpu
+distributed training: True, 16-bits training: True
+[INFO|configuration_utils.py:668] 2023-08-18 18:25:11,248 >> loading configuration file config.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/config.json
+[INFO|configuration_utils.py:720] 2023-08-18 18:25:11,251 >> Model config GPTBigCodeConfig {
+  "_name_or_path": "bigcode/starcoder",
+  "activation_function": "gelu",
+  "architectures": [
+    "GPTBigCodeForCausalLM"
+  ],
+  "attention_softmax_in_fp32": true,
+  "attn_pdrop": 0.1,
+  "bos_token_id": 0,
+  "embd_pdrop": 0.1,
+  "eos_token_id": 0,
+  "inference_runner": 0,
+  "initializer_range": 0.02,
+  "layer_norm_epsilon": 1e-05,
+  "max_batch_size": null,
+  "max_sequence_length": null,
+  "model_type": "gpt_bigcode",
+  "multi_query": true,
+  "n_embd": 6144,
+  "n_head": 48,
+  "n_inner": 24576,
+  "n_layer": 40,
+  "n_positions": 8192,
+  "pad_key_length": true,
+  "pre_allocate_kv_cache": false,
+  "resid_pdrop": 0.1,
+  "scale_attention_softmax_in_fp32": true,
+  "scale_attn_weights": true,
+  "summary_activation": null,
+  "summary_first_dropout": 0.1,
+  "summary_proj_to_labels": true,
+  "summary_type": "cls_index",
+  "summary_use_proj": true,
+  "torch_dtype": "float32",
+  "transformers_version": "4.28.1",
+  "use_cache": true,
+  "validate_runner_input": true,
+  "vocab_size": 49152
+}
+
+[INFO|tokenization_utils_base.py:1809] 2023-08-18 18:25:11,370 >> loading file vocab.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/vocab.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-18 18:25:11,370 >> loading file merges.txt from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/merges.txt
+[INFO|tokenization_utils_base.py:1809] 2023-08-18 18:25:11,370 >> loading file tokenizer.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/tokenizer.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-18 18:25:11,370 >> loading file added_tokens.json from cache at None
+[INFO|tokenization_utils_base.py:1809] 2023-08-18 18:25:11,371 >> loading file special_tokens_map.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/special_tokens_map.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-18 18:25:11,371 >> loading file tokenizer_config.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/tokenizer_config.json
+/usr/local/lib/python3.8/dist-packages/datasets/load.py:2072: FutureWarning: 'use_auth_token' was deprecated in favor of 'token' in version 2.14.0 and will be removed in 3.0.0.
+You can remove this warning by passing 'token=None' instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/datasets/load.py:2072: FutureWarning: 'use_auth_token' was deprecated in favor of 'token' in version 2.14.0 and will be removed in 3.0.0.
+You can remove this warning by passing 'token=None' instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/datasets/load.py:2072: FutureWarning: 'use_auth_token' was deprecated in favor of 'token' in version 2.14.0 and will be removed in 3.0.0.
+You can remove this warning by passing 'token=None' instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/datasets/load.py:2072: FutureWarning: 'use_auth_token' was deprecated in favor of 'token' in version 2.14.0 and will be removed in 3.0.0.
+You can remove this warning by passing 'token=None' instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/datasets/load.py:2072: FutureWarning: 'use_auth_token' was deprecated in favor of 'token' in version 2.14.0 and will be removed in 3.0.0.
+You can remove this warning by passing 'token=None' instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/datasets/load.py:2072: FutureWarning: 'use_auth_token' was deprecated in favor of 'token' in version 2.14.0 and will be removed in 3.0.0.
+You can remove this warning by passing 'token=None' instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/datasets/load.py:2072: FutureWarning: 'use_auth_token' was deprecated in favor of 'token' in version 2.14.0 and will be removed in 3.0.0.
+You can remove this warning by passing 'token=None' instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/datasets/load.py:2072: FutureWarning: 'use_auth_token' was deprecated in favor of 'token' in version 2.14.0 and will be removed in 3.0.0.
+You can remove this warning by passing 'token=None' instead.
+  warnings.warn(
+[INFO|modeling_utils.py:2534] 2023-08-18 18:25:12,024 >> loading weights file pytorch_model.bin from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/pytorch_model.bin.index.json
+[INFO|modeling_utils.py:1176] 2023-08-18 18:25:12,029 >> Instantiating GaudiGPTBigCodeForCausalLM model under default dtype torch.bfloat16.
+[INFO|modeling_utils.py:2623] 2023-08-18 18:25:12,029 >> Detected DeepSpeed ZeRO-3: activating zero.init() for this model
+[INFO|configuration_utils.py:575] 2023-08-18 18:25:12,044 >> Generate config GaudiGenerationConfig {
+  "_from_model_config": true,
+  "bos_token_id": 0,
+  "eos_token_id": 0,
+  "ignore_eos": null,
+  "static_shapes": null,
+  "transformers_version": "4.28.1"
+}
+
+=============================HABANA PT BRIDGE CONFIGURATION =========================== 
+ PT_HPU_LAZY_MODE = 1
+ PT_HPU_LAZY_EAGER_OPTIM_CACHE = 1
+ PT_HPU_ENABLE_COMPILE_THREAD = 0
+ PT_HPU_ENABLE_EXECUTION_THREAD = 1
+ PT_HPU_ENABLE_LAZY_EAGER_EXECUTION_THREAD = 1
+ PT_ENABLE_INTER_HOST_CACHING = 0
+ PT_ENABLE_INFERENCE_MODE = 1
+ PT_ENABLE_HABANA_CACHING = 1
+ PT_HPU_MAX_RECIPE_SUBMISSION_LIMIT = 0
+ PT_HPU_MAX_COMPOUND_OP_SIZE = 9223372036854775807
+ PT_HPU_MAX_COMPOUND_OP_SIZE_SS = 10
+ PT_HPU_ENABLE_STAGE_SUBMISSION = 1
+ PT_HPU_STAGE_SUBMISSION_MODE = 2
+ PT_HPU_PGM_ENABLE_CACHE = 1
+ PT_HPU_ENABLE_LAZY_COLLECTIVES = 0
+ PT_HCCL_SLICE_SIZE_MB = 16
+ PT_HCCL_MEMORY_ALLOWANCE_MB = 0
+ PT_HPU_INITIAL_WORKSPACE_SIZE = 0
+ PT_HABANA_POOL_SIZE = 24
+ PT_HPU_POOL_STRATEGY = 5
+ PT_HPU_POOL_LOG_FRAGMENTATION_INFO = 0
+ PT_ENABLE_MEMORY_DEFRAGMENTATION = 1
+ PT_ENABLE_DEFRAGMENTATION_INFO = 0
+ PT_HPU_ENABLE_SYNAPSE_OUTPUT_PERMUTE = 1
+ PT_HPU_ENABLE_VALID_DATA_RANGE_CHECK = 1
+ PT_HPU_FORCE_USE_DEFAULT_STREAM = 0
+ PT_RECIPE_CACHE_PATH = 
+ PT_HPU_ENABLE_REFINE_DYNAMIC_SHAPES = 0
+ PT_HPU_DYNAMIC_MIN_POLICY_ORDER = 4,5,3,1
+ PT_HPU_DYNAMIC_MAX_POLICY_ORDER = 2,4,5,3,1
+ PT_HPU_LAZY_ACC_PAR_MODE = 0
+ PT_HPU_CLUSTERED_PROGRAM = 0
+ PT_HPU_CLUSTERED_PROGRAM_ENFORCE = 0
+ PT_HPU_CLUSTERED_PROGRAM_SPLIT_STR = default
+ PT_HPU_CLUSTERED_PROGRAM_SCHED_STR = default
+=============================SYSTEM CONFIGURATION ========================================= 
+Num CPU Cores = 160
+CPU RAM = 1056389528 KB 
+============================================================================================ 
+[2023-08-18 18:25:18,930] [INFO] [partition_parameters.py:481:__exit__] finished initializing model with 15.82B parameters
+Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+Loading checkpoint shards:  14%|█▍        | 1/7 [00:07<00:42,  7.17s/it]Loading checkpoint shards:  14%|█▍        | 1/7 [00:06<00:41,  6.99s/it]Loading checkpoint shards:  14%|█▍        | 1/7 [00:07<00:42,  7.03s/it]Loading checkpoint shards:  14%|█▍        | 1/7 [00:07<00:42,  7.08s/it]Loading checkpoint shards:  14%|█▍        | 1/7 [00:06<00:41,  6.98s/it]Loading checkpoint shards:  14%|█▍        | 1/7 [00:07<00:42,  7.01s/it]Loading checkpoint shards:  14%|█▍        | 1/7 [00:07<00:42,  7.03s/it]Loading checkpoint shards:  14%|█▍        | 1/7 [00:07<00:42,  7.05s/it]Loading checkpoint shards:  29%|██▊       | 2/7 [00:10<00:25,  5.13s/it]Loading checkpoint shards:  29%|██▊       | 2/7 [00:10<00:25,  5.13s/it]Loading checkpoint shards:  29%|██▊       | 2/7 [00:10<00:25,  5.14s/it]Loading checkpoint shards:  29%|██▊       | 2/7 [00:10<00:25,  5.13s/it]Loading checkpoint shards:  29%|██▊       | 2/7 [00:10<00:25,  5.15s/it]Loading checkpoint shards:  29%|██▊       | 2/7 [00:10<00:25,  5.17s/it]Loading checkpoint shards:  29%|██▊       | 2/7 [00:11<00:26,  5.23s/it]Loading checkpoint shards:  29%|██▊       | 2/7 [00:10<00:25,  5.19s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:14<00:18,  4.62s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:14<00:18,  4.62s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:14<00:18,  4.63s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:15<00:18,  4.65s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:14<00:18,  4.62s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:14<00:18,  4.62s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:14<00:18,  4.62s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:14<00:18,  4.64s/it]Loading checkpoint shards:  57%|█████▋    | 4/7 [00:21<00:15,  5.28s/it]Loading checkpoint shards:  57%|█████▋    | 4/7 [00:21<00:15,  5.28s/it]Loading checkpoint shards:  57%|█████▋    | 4/7 [00:21<00:15,  5.28s/it]Loading checkpoint shards:  57%|█████▋    | 4/7 [00:21<00:15,  5.28s/it]Loading checkpoint shards:  57%|█████▋    | 4/7 [00:21<00:15,  5.28s/it]Loading checkpoint shards:  57%|█████▋    | 4/7 [00:21<00:15,  5.30s/it]Loading checkpoint shards:  57%|█████▋    | 4/7 [00:21<00:15,  5.33s/it]Loading checkpoint shards:  57%|█████▋    | 4/7 [00:21<00:15,  5.32s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [00:27<00:11,  5.53s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [00:27<00:11,  5.54s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [00:27<00:11,  5.53s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [00:27<00:11,  5.53s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [00:27<00:11,  5.53s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [00:27<00:11,  5.54s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [00:27<00:11,  5.55s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [00:27<00:11,  5.55s/it]Loading checkpoint shards:  86%|████████▌ | 6/7 [00:32<00:05,  5.57s/it]Loading checkpoint shards:  86%|████████▌ | 6/7 [00:32<00:05,  5.57s/it]Loading checkpoint shards:  86%|████████▌ | 6/7 [00:32<00:05,  5.57s/it]Loading checkpoint shards:  86%|████████▌ | 6/7 [00:32<00:05,  5.57s/it]Loading checkpoint shards:  86%|████████▌ | 6/7 [00:32<00:05,  5.57s/it]Loading checkpoint shards:  86%|████████▌ | 6/7 [00:32<00:05,  5.57s/it]Loading checkpoint shards:  86%|████████▌ | 6/7 [00:32<00:05,  5.58s/it]Loading checkpoint shards:  86%|████████▌ | 6/7 [00:33<00:05,  5.60s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  4.60s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  5.08s/it]
+[INFO|modeling_utils.py:3190] 2023-08-18 18:25:54,596 >> All model checkpoint weights were used when initializing GaudiGPTBigCodeForCausalLM.
+
+[INFO|modeling_utils.py:3198] 2023-08-18 18:25:54,596 >> All the weights of GaudiGPTBigCodeForCausalLM were initialized from the model checkpoint at bigcode/starcoder.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use GaudiGPTBigCodeForCausalLM for predictions without further training.
+Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  4.61s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  5.05s/it]
+Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  4.60s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  5.07s/it]
+Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  4.61s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  5.06s/it]
+Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  4.61s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  5.06s/it]
+Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  4.61s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  5.06s/it]
+Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  4.61s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  5.06s/it]
+Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  4.62s/it]Loading checkpoint shards: 100%|██████████| 7/7 [00:35<00:00,  5.06s/it]
+[INFO|configuration_utils.py:537] 2023-08-18 18:25:54,696 >> loading configuration file generation_config.json from cache at /starcoder/cache/models--bigcode--starcoder/snapshots/7c6927d25ac2ec0b9e81d98bd54926e36f5c9de1/generation_config.json
+[INFO|configuration_utils.py:575] 2023-08-18 18:25:54,697 >> Generate config GaudiGenerationConfig {
+  "_from_model_config": true,
+  "bos_token_id": 0,
+  "eos_token_id": 0,
+  "ignore_eos": null,
+  "static_shapes": null,
+  "transformers_version": "4.28.1"
+}
+
+Number of trainable paraemters: 0
+08/18/2023 18:25:55 - INFO - __main__ -   Using data collator of type DataCollatorForSeq2Seq
+Number of trainable paraemters: 0
+[INFO|trainer.py:621] 2023-08-18 18:25:55,329 >> Using hpu_amp half precision backend
+[2023-08-18 18:25:55,395] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed info: version=0.7.7+hpu.synapse.v1.10.0, git-hash=4bc77a6, git-branch=1.10.0
+Number of trainable paraemters: 0
+Number of trainable paraemters: 0
+Number of trainable paraemters: 0
+Number of trainable paraemters: 0
+Number of trainable paraemters: 0
+Number of trainable paraemters: 0
+[2023-08-18 18:25:55,618] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+[2023-08-18 18:25:55,619] [INFO] [logging.py:68:log_dist] [Rank 0] Removing param_group that has no 'params' in the client Optimizer
+[2023-08-18 18:25:55,619] [INFO] [logging.py:68:log_dist] [Rank 0] Using client Optimizer as basic optimizer
+[2023-08-18 18:25:55,674] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed Basic Optimizer = FusedAdamW
+[2023-08-18 18:25:55,674] [INFO] [utils.py:58:is_zero_supported_optimizer] Checking ZeRO support for optimizer=FusedAdamW type=<class 'habana_frameworks.torch.hpex.optimizers.FusedAdamW.FusedAdamW'>
+[2023-08-18 18:25:55,674] [INFO] [logging.py:68:log_dist] [Rank 0] Creating bf16 ZeRO stage 3 optimizer
+[2023-08-18 18:25:55,674] [INFO] [logging.py:68:log_dist] [Rank 0] Creating bf16 ZeRO stage 3 optimizer
+[2023-08-18 18:25:55,760] [INFO] [utils.py:930:see_memory_usage] Stage 3 initialize beginning
+[2023-08-18 18:25:55,770] [WARNING] [utils.py:49:not_implemented] max_memory_reserved is not implemented on HPU
+[2023-08-18 18:25:55,771] [INFO] [utils.py:931:see_memory_usage] MA 31.57 GB         Max_MA 34.9 GB         CA 31.57 GB         Max_CA 0 GB 
+[2023-08-18 18:25:55,771] [INFO] [utils.py:939:see_memory_usage] CPU Virtual Memory:  used = 130.94 GB, percent = 13.0%
+[2023-08-18 18:25:55,775] [INFO] [stage3.py:116:__init__] Reduce bucket size 500,000,000
+[2023-08-18 18:25:55,775] [INFO] [stage3.py:117:__init__] Prefetch bucket size 50,000,000
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Emitting ninja build file /root/.cache/torch_extensions/py38_cpu/utils/build.ninja...
+Building extension module utils...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+ninja: no work to do.
+Loading extension module utils...
+Loading extension module utils...
+Time to load utils op: 0.7329668998718262 seconds
+Time to load utils op: 0.7058994770050049 seconds
+Loading extension module utils...
+Time to load utils op: 0.7057497501373291 seconds
+Loading extension module utils...
+Time to load utils op: 0.7058417797088623 seconds
+Loading extension module utils...
+Time to load utils op: 0.6059749126434326 seconds
+Loading extension module utils...
+Loading extension module utils...
+Time to load utils op: 0.8056783676147461 seconds
+Time to load utils op: 0.8057451248168945 seconds
+Loading extension module utils...
+Time to load utils op: 0.8057537078857422 seconds
+[2023-08-18 18:25:58,089] [INFO] [utils.py:930:see_memory_usage] DeepSpeedZeRoOffload initialize [begin]
+[2023-08-18 18:25:58,100] [WARNING] [utils.py:49:not_implemented] max_memory_reserved is not implemented on HPU
+[2023-08-18 18:25:58,100] [INFO] [utils.py:931:see_memory_usage] MA 31.57 GB         Max_MA 0.0 GB         CA 31.57 GB         Max_CA 0 GB 
+[2023-08-18 18:25:58,100] [INFO] [utils.py:939:see_memory_usage] CPU Virtual Memory:  used = 130.99 GB, percent = 13.0%
+Parameter Offload: Total persistent parameters: 2725888 in 322 params
+[2023-08-18 18:25:58,206] [INFO] [utils.py:930:see_memory_usage] DeepSpeedZeRoOffload initialize [end]
+[2023-08-18 18:25:58,216] [WARNING] [utils.py:49:not_implemented] max_memory_reserved is not implemented on HPU
+[2023-08-18 18:25:58,217] [INFO] [utils.py:931:see_memory_usage] MA 31.57 GB         Max_MA 0.0 GB         CA 31.57 GB         Max_CA 0 GB 
+[2023-08-18 18:25:58,217] [INFO] [utils.py:939:see_memory_usage] CPU Virtual Memory:  used = 130.99 GB, percent = 13.0%
+[2023-08-18 18:26:14,721] [INFO] [stage3.py:378:_setup_for_real_optimizer] optimizer state initialized
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+No modifications detected for re-loaded extension module utils, skipping build step...
+Loading extension module utils...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Time to load utils op: 0.0006158351898193359 secondsNo modifications detected for re-loaded extension module utils, skipping build step...
+
+Loading extension module utils...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+No modifications detected for re-loaded extension module utils, skipping build step...
+Loading extension module utils...
+No modifications detected for re-loaded extension module utils, skipping build step...
+Loading extension module utils...
+Time to load utils op: 0.0005888938903808594 seconds
+No modifications detected for re-loaded extension module utils, skipping build step...
+Loading extension module utils...
+Time to load utils op: 0.0006225109100341797 seconds
+Time to load utils op: 0.0006468296051025391 seconds
+Time to load utils op: 0.0006647109985351562 seconds
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+No modifications detected for re-loaded extension module utils, skipping build step...No modifications detected for re-loaded extension module utils, skipping build step...
+
+Loading extension module utils...Loading extension module utils...
+
+Time to load utils op: 0.0007305145263671875 seconds
+Time to load utils op: 0.0008194446563720703 seconds
+You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+[2023-08-18 18:26:22,460] [INFO] [utils.py:930:see_memory_usage] After initializing ZeRO optimizer
+[2023-08-18 18:26:22,467] [WARNING] [utils.py:49:not_implemented] max_memory_reserved is not implemented on HPU
+[2023-08-18 18:26:22,467] [INFO] [utils.py:931:see_memory_usage] MA 37.18 GB         Max_MA 65.0 GB         CA 37.18 GB         Max_CA 0 GB 
+[2023-08-18 18:26:22,467] [INFO] [utils.py:939:see_memory_usage] CPU Virtual Memory:  used = 165.13 GB, percent = 16.4%
+[2023-08-18 18:26:22,469] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed Final Optimizer = DeepSpeedZeroOptimizer_Stage3
+[2023-08-18 18:26:22,469] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed using client LR scheduler
+[2023-08-18 18:26:22,469] [INFO] [logging.py:68:log_dist] [Rank 0] DeepSpeed LR Scheduler = <torch.optim.lr_scheduler.LambdaLR object at 0x7f6b4c2fbd30>
+[2023-08-18 18:26:22,469] [INFO] [logging.py:68:log_dist] [Rank 0] step=0, skipped=0, lr=[0.0001, 0.0001], mom=[(0.9, 0.999), (0.9, 0.999)]
+[2023-08-18 18:26:22,470] [INFO] [config.py:1028:print] DeepSpeedEngine configuration:
+[2023-08-18 18:26:22,470] [INFO] [config.py:1032:print]   activation_checkpointing_config  {
+    "partition_activations": false, 
+    "contiguous_memory_optimization": false, 
+    "cpu_checkpointing": false, 
+    "number_checkpoints": null, 
+    "synchronize_checkpoint_boundary": false, 
+    "profile": false
+}
+[2023-08-18 18:26:22,470] [INFO] [config.py:1032:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'thread_count': 1, 'single_submit': False, 'overlap_events': True}
+[2023-08-18 18:26:22,470] [INFO] [config.py:1032:print]   amp_enabled .................. False
+[2023-08-18 18:26:22,470] [INFO] [config.py:1032:print]   amp_params ................... False
+[2023-08-18 18:26:22,470] [INFO] [config.py:1032:print]   autotuning_config ............ {
+    "enabled": false, 
+    "start_step": null, 
+    "end_step": null, 
+    "metric_path": null, 
+    "arg_mappings": null, 
+    "metric": "throughput", 
+    "model_info": null, 
+    "results_dir": "autotuning_results", 
+    "exps_dir": "autotuning_exps", 
+    "overwrite": true, 
+    "fast": true, 
+    "start_profile_step": 3, 
+    "end_profile_step": 5, 
+    "tuner_type": "gridsearch", 
+    "tuner_early_stopping": 5, 
+    "tuner_num_trials": 50, 
+    "model_info_path": null, 
+    "mp_size": 1, 
+    "max_train_batch_size": null, 
+    "min_train_batch_size": 1, 
+    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+    "min_train_micro_batch_size_per_gpu": 1, 
+    "num_tuning_micro_batch_sizes": 3
+}
+[2023-08-18 18:26:22,470] [INFO] [config.py:1032:print]   bfloat16_enabled ............. True
+[2023-08-18 18:26:22,470] [INFO] [config.py:1032:print]   checkpoint_parallel_write_pipeline  False
+[2023-08-18 18:26:22,470] [INFO] [config.py:1032:print]   checkpoint_tag_validation_enabled  True
+[2023-08-18 18:26:22,470] [INFO] [config.py:1032:print]   checkpoint_tag_validation_fail  False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x7f69fe4b61f0>
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   communication_data_type ...... None
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   curriculum_enabled ........... False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   curriculum_params ............ False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   dataloader_drop_last ......... False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   disable_allgather ............ False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   dump_state ................... False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   dynamic_loss_scale_args ...... None
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   eigenvalue_enabled ........... False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   eigenvalue_gas_boundary_resolution  1
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   eigenvalue_layer_num ......... 0
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   eigenvalue_max_iter .......... 100
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   eigenvalue_stability ......... 1e-06
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   eigenvalue_tol ............... 0.01
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   eigenvalue_verbose ........... False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   elasticity_enabled ........... False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   flops_profiler_config ........ {
+    "enabled": false, 
+    "profile_step": 1, 
+    "module_depth": -1, 
+    "top_modules": 1, 
+    "detailed": true, 
+    "output_file": null
+}
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   fp16_auto_cast ............... None
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   fp16_enabled ................. False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   fp16_master_weights_and_gradients  False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   global_rank .................. 0
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   grad_accum_dtype ............. None
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   gradient_accumulation_steps .. 1
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   gradient_clipping ............ 1
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   gradient_predivide_factor .... 1.0
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   initial_dynamic_scale ........ 1
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   load_universal_checkpoint .... False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   loss_scale ................... 1.0
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   memory_breakdown ............. False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   monitor_config ............... <deepspeed.monitor.config.DeepSpeedMonitorConfig object at 0x7f69fe4b6520>
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   nebula_config ................ {
+    "enabled": false, 
+    "persistent_storage_path": null, 
+    "persistent_time_interval": 100, 
+    "num_of_version_in_retention": 2, 
+    "enable_nebula_load": true, 
+    "load_path": null
+}
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   optimizer_legacy_fusion ...... False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   optimizer_name ............... None
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   optimizer_params ............. None
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0}
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   pld_enabled .................. False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   pld_params ................... False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   prescale_gradients ........... False
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   scheduler_name ............... None
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   scheduler_params ............. None
+[2023-08-18 18:26:22,471] [INFO] [config.py:1032:print]   sparse_attention ............. None
+[2023-08-18 18:26:22,472] [INFO] [config.py:1032:print]   sparse_gradients_enabled ..... False
+[2023-08-18 18:26:22,472] [INFO] [config.py:1032:print]   steps_per_print .............. 64
+[2023-08-18 18:26:22,472] [INFO] [config.py:1032:print]   train_batch_size ............. 64
+[2023-08-18 18:26:22,472] [INFO] [config.py:1032:print]   train_micro_batch_size_per_gpu  8
+[2023-08-18 18:26:22,472] [INFO] [config.py:1032:print]   use_node_local_storage ....... False
+[2023-08-18 18:26:22,472] [INFO] [config.py:1032:print]   wall_clock_breakdown ......... False
+[2023-08-18 18:26:22,472] [INFO] [config.py:1032:print]   world_size ................... 8
+[2023-08-18 18:26:22,472] [INFO] [config.py:1032:print]   zero_allow_comm_data_type_fp32  False
+[2023-08-18 18:26:22,472] [INFO] [config.py:1032:print]   zero_allow_untested_optimizer  True
+[2023-08-18 18:26:22,472] [INFO] [config.py:1032:print]   zero_config .................. stage=3 contiguous_gradients=False reduce_scatter=False reduce_bucket_size=500,000,000 allgather_partitions=True allgather_bucket_size=500,000,000 overlap_comm=False max_group_size=4000000000 load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=None sub_group_size=1,000,000,000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=50,000,000 param_persistence_threshold=100,000 model_persistence_threshold=sys.maxsize max_live_parameters=1,000,000,000 max_reuse_distance=1,000,000,000 gather_16bit_weights_on_model_save=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False
+[2023-08-18 18:26:22,472] [INFO] [config.py:1032:print]   zero_enabled ................. True
+[2023-08-18 18:26:22,472] [INFO] [config.py:1032:print]   zero_optimization_stage ...... 3
+[2023-08-18 18:26:22,472] [INFO] [config.py:1017:print_user_config]   json = {
+    "steps_per_print": 64, 
+    "train_batch_size": 64, 
+    "train_micro_batch_size_per_gpu": 8, 
+    "gradient_accumulation_steps": 1, 
+    "bf16": {
+        "enabled": true
+    }, 
+    "gradient_clipping": 1, 
+    "zero_optimization": {
+        "stage": 3, 
+        "overlap_comm": false, 
+        "reduce_scatter": false, 
+        "contiguous_gradients": false
+    }, 
+    "zero_allow_untested_optimizer": true
+}
+Using /root/.cache/torch_extensions/py38_cpu as PyTorch extensions root...
+No modifications detected for re-loaded extension module utils, skipping build step...
+Loading extension module utils...
+Time to load utils op: 0.0003173351287841797 seconds
+[INFO|trainer.py:770] 2023-08-18 18:26:22,473 >> ***** Running training *****
+[INFO|trainer.py:771] 2023-08-18 18:26:22,473 >>   Num examples = 489
+[INFO|trainer.py:772] 2023-08-18 18:26:22,473 >>   Num Epochs = 10
+[INFO|trainer.py:773] 2023-08-18 18:26:22,473 >>   Instantaneous batch size per device = 8
+[INFO|trainer.py:774] 2023-08-18 18:26:22,473 >>   Total train batch size (w. parallel, distributed & accumulation) = 64
+[INFO|trainer.py:775] 2023-08-18 18:26:22,473 >>   Gradient Accumulation steps = 1
+[INFO|trainer.py:776] 2023-08-18 18:26:22,473 >>   Total optimization steps = 80
+[INFO|trainer.py:777] 2023-08-18 18:26:22,477 >>   Number of trainable parameters = 15,517,456,384
+  0%|          | 0/80 [00:00<?, ?it/s][WARNING|logging.py:280] 2023-08-18 18:26:22,506 >> You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py:2562: UserWarning: torch.distributed._all_gather_base is a private function and will be deprecated. Please use torch.distributed.all_gather_into_tensor instead.
+  warnings.warn(
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2532, in all_gather_into_tensor
+    work = group._allgather_base(output_tensor, input_tensor)
+RuntimeError: [Rank:7] FATAL ERROR :: MODULE:PT_DEVMEM Allocation failed for size::201326592 (192)MB
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2567, in _all_gather_base
+    return all_gather_into_tensor(output_tensor, input_tensor, group, async_op)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    "args": f"{args}, {kwargs}",
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_starcoder.py", line 568, in <module>
+    main()
+  File "run_clm_starcoder.py", line 561, in main
+    trainer.train(resume_from_checkpoint=training_args.resume_from_checkpoint)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 572, in train
+    return inner_training_loop(
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 933, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 623, in training_step
+    loss = self.compute_loss(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/trainer.py", line 2731, in compute_loss
+    outputs = model(**inputs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1504, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/engine.py", line 1826, in forward
+    loss = self.module(*inputs, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 423, in forward
+    transformer_outputs = self.transformer(
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 295, in gaudi_gpt_bigcode_model_forward
+    outputs = block(
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 142, in gaudi_gpt_bigcode_block_forward
+    feed_forward_hidden_states = self.mlp(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 278, in forward
+    hidden_states = self.c_proj(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1530, in _call_impl
+    result = hook(self, args)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 350, in _pre_forward_module_hook
+    self.pre_sub_module_forward_function(module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 473, in pre_sub_module_forward_function
+    param_coordinator.fetch_sub_module(sub_module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 262, in fetch_sub_module
+    self.__all_gather_params(params_to_fetch)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 405, in __all_gather_params
+    handle = partitioned_params[0].all_gather_coalesced(partitioned_params)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 962, in all_gather_coalesced
+    handle = _dist_allgather_fn(partitions[self.rank],
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 106, in _dist_allgather_fn
+    return instrument_w_nvtx(dist.allgather_fn)(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 356, in allgather_fn
+    return all_gather_base(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 131, in log_wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 332, in all_gather_base
+    return cdb.all_gather_base(output_tensor=output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/torch.py", line 84, in all_gather_base
+    return torch.distributed.distributed_c10d._all_gather_base(
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    "args": f"{args}, {kwargs}",
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2532, in all_gather_into_tensor
+    work = group._allgather_base(output_tensor, input_tensor)
+RuntimeError: [Rank:4] FATAL ERROR :: MODULE:PT_DEVMEM Allocation failed for size::302002176 (288.012)MB
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2567, in _all_gather_base
+    return all_gather_into_tensor(output_tensor, input_tensor, group, async_op)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    "args": f"{args}, {kwargs}",
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_starcoder.py", line 568, in <module>
+    main()
+  File "run_clm_starcoder.py", line 561, in main
+    trainer.train(resume_from_checkpoint=training_args.resume_from_checkpoint)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 572, in train
+    return inner_training_loop(
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 933, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 623, in training_step
+    loss = self.compute_loss(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/trainer.py", line 2731, in compute_loss
+    outputs = model(**inputs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1504, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/engine.py", line 1826, in forward
+    loss = self.module(*inputs, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 423, in forward
+    transformer_outputs = self.transformer(
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 295, in gaudi_gpt_bigcode_model_forward
+    outputs = block(
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 142, in gaudi_gpt_bigcode_block_forward
+    feed_forward_hidden_states = self.mlp(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 278, in forward
+    hidden_states = self.c_proj(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1530, in _call_impl
+    result = hook(self, args)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 350, in _pre_forward_module_hook
+    self.pre_sub_module_forward_function(module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 473, in pre_sub_module_forward_function
+    param_coordinator.fetch_sub_module(sub_module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 262, in fetch_sub_module
+    self.__all_gather_params(params_to_fetch)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 405, in __all_gather_params
+    handle = partitioned_params[0].all_gather_coalesced(partitioned_params)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 962, in all_gather_coalesced
+    handle = _dist_allgather_fn(partitions[self.rank],
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 106, in _dist_allgather_fn
+    return instrument_w_nvtx(dist.allgather_fn)(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 356, in allgather_fn
+    return all_gather_base(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 131, in log_wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 332, in all_gather_base
+    return cdb.all_gather_base(output_tensor=output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/torch.py", line 84, in all_gather_base
+    return torch.distributed.distributed_c10d._all_gather_base(
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    "args": f"{args}, {kwargs}",
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2532, in all_gather_into_tensor
+    work = group._allgather_base(output_tensor, input_tensor)
+RuntimeError: [Rank:6] FATAL ERROR :: MODULE:PT_DEVMEM Allocation failed for size::201326592 (192)MB
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2567, in _all_gather_base
+    return all_gather_into_tensor(output_tensor, input_tensor, group, async_op)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    "args": f"{args}, {kwargs}",
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_starcoder.py", line 568, in <module>
+    main()
+  File "run_clm_starcoder.py", line 561, in main
+    trainer.train(resume_from_checkpoint=training_args.resume_from_checkpoint)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 572, in train
+    return inner_training_loop(
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 933, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 623, in training_step
+    loss = self.compute_loss(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/trainer.py", line 2731, in compute_loss
+    outputs = model(**inputs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1504, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/engine.py", line 1826, in forward
+    loss = self.module(*inputs, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 423, in forward
+    transformer_outputs = self.transformer(
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2532, in all_gather_into_tensor
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 295, in gaudi_gpt_bigcode_model_forward
+    outputs = block(
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    work = group._allgather_base(output_tensor, input_tensor)
+RuntimeError: [Rank:2] FATAL ERROR :: MODULE:PT_DEVMEM Allocation failed for size::201326592 (192)MB
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 142, in gaudi_gpt_bigcode_block_forward
+    feed_forward_hidden_states = self.mlp(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2567, in _all_gather_base
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 278, in forward
+    hidden_states = self.c_proj(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1530, in _call_impl
+    result = hook(self, args)
+      File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 350, in _pre_forward_module_hook
+return all_gather_into_tensor(output_tensor, input_tensor, group, async_op)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    self.pre_sub_module_forward_function(module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 473, in pre_sub_module_forward_function
+    "args": f"{args}, {kwargs}",    
+param_coordinator.fetch_sub_module(sub_module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 262, in fetch_sub_module
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    self.__all_gather_params(params_to_fetch)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 405, in __all_gather_params
+    handle = partitioned_params[0].all_gather_coalesced(partitioned_params)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 962, in all_gather_coalesced
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    handle = _dist_allgather_fn(partitions[self.rank],
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 106, in _dist_allgather_fn
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    return instrument_w_nvtx(dist.allgather_fn)(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 356, in allgather_fn
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_starcoder.py", line 568, in <module>
+    return all_gather_base(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 131, in log_wrapper
+        return func(*args, **kwargs)main()
+
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 332, in all_gather_base
+  File "run_clm_starcoder.py", line 561, in main
+    return cdb.all_gather_base(output_tensor=output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/torch.py", line 84, in all_gather_base
+    trainer.train(resume_from_checkpoint=training_args.resume_from_checkpoint)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 572, in train
+    return torch.distributed.distributed_c10d._all_gather_base(
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    return inner_training_loop(
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 933, in _inner_training_loop
+    "args": f"{args}, {kwargs}",
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+    tr_loss_step = self.training_step(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 623, in training_step
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    loss = self.compute_loss(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/trainer.py", line 2731, in compute_loss
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+    outputs = model(**inputs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1504, in _call_impl
+    Traceback (most recent call last):
+return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/engine.py", line 1826, in forward
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    loss = self.module(*inputs, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2532, in all_gather_into_tensor
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 423, in forward
+    transformer_outputs = self.transformer(
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 295, in gaudi_gpt_bigcode_model_forward
+        outputs = block(work = group._allgather_base(output_tensor, input_tensor)
+
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+RuntimeError: [Rank:3] FATAL ERROR :: MODULE:PT_DEVMEM Allocation failed for size::201326592 (192)MB
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 142, in gaudi_gpt_bigcode_block_forward
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2567, in _all_gather_base
+    feed_forward_hidden_states = self.mlp(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 278, in forward
+    hidden_states = self.c_proj(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1530, in _call_impl
+    return all_gather_into_tensor(output_tensor, input_tensor, group, async_op)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    result = hook(self, args)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 350, in _pre_forward_module_hook
+    "args": f"{args}, {kwargs}",
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+    self.pre_sub_module_forward_function(module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 473, in pre_sub_module_forward_function
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    param_coordinator.fetch_sub_module(sub_module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 262, in fetch_sub_module
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    self.__all_gather_params(params_to_fetch)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 405, in __all_gather_params
+    handle = partitioned_params[0].all_gather_coalesced(partitioned_params)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 962, in all_gather_coalesced
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_starcoder.py", line 568, in <module>
+    handle = _dist_allgather_fn(partitions[self.rank],
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 106, in _dist_allgather_fn
+    return instrument_w_nvtx(dist.allgather_fn)(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 356, in allgather_fn
+    main()
+  File "run_clm_starcoder.py", line 561, in main
+    return all_gather_base(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 131, in log_wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 332, in all_gather_base
+    trainer.train(resume_from_checkpoint=training_args.resume_from_checkpoint)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 572, in train
+    return cdb.all_gather_base(output_tensor=output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/torch.py", line 84, in all_gather_base
+    return torch.distributed.distributed_c10d._all_gather_base(
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    return inner_training_loop(
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 933, in _inner_training_loop
+    "args": f"{args}, {kwargs}",
+      File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+tr_loss_step = self.training_step(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 623, in training_step
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    loss = self.compute_loss(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/trainer.py", line 2731, in compute_loss
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+    outputs = model(**inputs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1504, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/engine.py", line 1826, in forward
+    loss = self.module(*inputs, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 423, in forward
+    transformer_outputs = self.transformer(
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 295, in gaudi_gpt_bigcode_model_forward
+    outputs = block(
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 142, in gaudi_gpt_bigcode_block_forward
+    feed_forward_hidden_states = self.mlp(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 278, in forward
+    hidden_states = self.c_proj(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1530, in _call_impl
+    result = hook(self, args)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 350, in _pre_forward_module_hook
+    self.pre_sub_module_forward_function(module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 473, in pre_sub_module_forward_function
+    param_coordinator.fetch_sub_module(sub_module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 262, in fetch_sub_module
+    self.__all_gather_params(params_to_fetch)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 405, in __all_gather_params
+    handle = partitioned_params[0].all_gather_coalesced(partitioned_params)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 962, in all_gather_coalesced
+    handle = _dist_allgather_fn(partitions[self.rank],
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 106, in _dist_allgather_fn
+    return instrument_w_nvtx(dist.allgather_fn)(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 356, in allgather_fn
+    return all_gather_base(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 131, in log_wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 332, in all_gather_base
+    return cdb.all_gather_base(output_tensor=output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/torch.py", line 84, in all_gather_base
+    return torch.distributed.distributed_c10d._all_gather_base(
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    "args": f"{args}, {kwargs}",
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2532, in all_gather_into_tensor
+    work = group._allgather_base(output_tensor, input_tensor)
+RuntimeError: [Rank:0] FATAL ERROR :: MODULE:PT_DEVMEM Allocation failed for size::201326592 (192)MB
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2567, in _all_gather_base
+    return all_gather_into_tensor(output_tensor, input_tensor, group, async_op)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    "args": f"{args}, {kwargs}",
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_starcoder.py", line 568, in <module>
+    main()
+  File "run_clm_starcoder.py", line 561, in main
+    trainer.train(resume_from_checkpoint=training_args.resume_from_checkpoint)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 572, in train
+    return inner_training_loop(
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 933, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 623, in training_step
+    loss = self.compute_loss(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/trainer.py", line 2731, in compute_loss
+    outputs = model(**inputs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1504, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/engine.py", line 1826, in forward
+    loss = self.module(*inputs, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 423, in forward
+    transformer_outputs = self.transformer(
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 295, in gaudi_gpt_bigcode_model_forward
+    outputs = block(
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 142, in gaudi_gpt_bigcode_block_forward
+    feed_forward_hidden_states = self.mlp(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 278, in forward
+    hidden_states = self.c_proj(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1530, in _call_impl
+    result = hook(self, args)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 350, in _pre_forward_module_hook
+    self.pre_sub_module_forward_function(module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 473, in pre_sub_module_forward_function
+    param_coordinator.fetch_sub_module(sub_module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 262, in fetch_sub_module
+    self.__all_gather_params(params_to_fetch)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 405, in __all_gather_params
+    handle = partitioned_params[0].all_gather_coalesced(partitioned_params)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 962, in all_gather_coalesced
+    handle = _dist_allgather_fn(partitions[self.rank],
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 106, in _dist_allgather_fn
+    return instrument_w_nvtx(dist.allgather_fn)(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 356, in allgather_fn
+    return all_gather_base(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 131, in log_wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 332, in all_gather_base
+    return cdb.all_gather_base(output_tensor=output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/torch.py", line 84, in all_gather_base
+    return torch.distributed.distributed_c10d._all_gather_base(
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    "args": f"{args}, {kwargs}",
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+  0%|          | 0/80 [00:22<?, ?it/s]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2532, in all_gather_into_tensor
+    work = group._allgather_base(output_tensor, input_tensor)
+RuntimeError: [Rank:1] FATAL ERROR :: MODULE:PT_DEVMEM Allocation failed for size::201326592 (192)MB
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2567, in _all_gather_base
+    return all_gather_into_tensor(output_tensor, input_tensor, group, async_op)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    "args": f"{args}, {kwargs}",
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_starcoder.py", line 568, in <module>
+    main()
+  File "run_clm_starcoder.py", line 561, in main
+    trainer.train(resume_from_checkpoint=training_args.resume_from_checkpoint)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 572, in train
+    return inner_training_loop(
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 933, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 623, in training_step
+    loss = self.compute_loss(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/trainer.py", line 2731, in compute_loss
+    outputs = model(**inputs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1504, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/engine.py", line 1826, in forward
+    loss = self.module(*inputs, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 423, in forward
+    transformer_outputs = self.transformer(
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 295, in gaudi_gpt_bigcode_model_forward
+    outputs = block(
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 142, in gaudi_gpt_bigcode_block_forward
+    feed_forward_hidden_states = self.mlp(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 278, in forward
+    hidden_states = self.c_proj(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1530, in _call_impl
+    result = hook(self, args)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 350, in _pre_forward_module_hook
+    self.pre_sub_module_forward_function(module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 473, in pre_sub_module_forward_function
+    param_coordinator.fetch_sub_module(sub_module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 262, in fetch_sub_module
+    self.__all_gather_params(params_to_fetch)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 405, in __all_gather_params
+    handle = partitioned_params[0].all_gather_coalesced(partitioned_params)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 962, in all_gather_coalesced
+    handle = _dist_allgather_fn(partitions[self.rank],
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 106, in _dist_allgather_fn
+    return instrument_w_nvtx(dist.allgather_fn)(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 356, in allgather_fn
+    return all_gather_base(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 131, in log_wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 332, in all_gather_base
+    return cdb.all_gather_base(output_tensor=output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/torch.py", line 84, in all_gather_base
+    return torch.distributed.distributed_c10d._all_gather_base(
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    "args": f"{args}, {kwargs}",
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2532, in all_gather_into_tensor
+    work = group._allgather_base(output_tensor, input_tensor)
+RuntimeError: [Rank:5] FATAL ERROR :: MODULE:PT_DEVMEM Allocation failed for size::201326592 (192)MB
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 2567, in _all_gather_base
+    return all_gather_into_tensor(output_tensor, input_tensor, group, async_op)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    "args": f"{args}, {kwargs}",
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_clm_starcoder.py", line 568, in <module>
+    main()
+  File "run_clm_starcoder.py", line 561, in main
+    trainer.train(resume_from_checkpoint=training_args.resume_from_checkpoint)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 572, in train
+    return inner_training_loop(
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 933, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/trainer.py", line 623, in training_step
+    loss = self.compute_loss(model, inputs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/trainer.py", line 2731, in compute_loss
+    outputs = model(**inputs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1504, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/engine.py", line 1826, in forward
+    loss = self.module(*inputs, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 423, in forward
+    transformer_outputs = self.transformer(
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 295, in gaudi_gpt_bigcode_model_forward
+    outputs = block(
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/optimum/habana/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 142, in gaudi_gpt_bigcode_block_forward
+    feed_forward_hidden_states = self.mlp(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/gpt_bigcode/modeling_gpt_bigcode.py", line 278, in forward
+    hidden_states = self.c_proj(hidden_states)
+  File "/usr/local/lib/python3.8/dist-packages/torch/nn/modules/module.py", line 1530, in _call_impl
+    result = hook(self, args)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 350, in _pre_forward_module_hook
+    self.pre_sub_module_forward_function(module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/parameter_offload.py", line 473, in pre_sub_module_forward_function
+    param_coordinator.fetch_sub_module(sub_module)
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 262, in fetch_sub_module
+    self.__all_gather_params(params_to_fetch)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partitioned_param_coordinator.py", line 405, in __all_gather_params
+    handle = partitioned_params[0].all_gather_coalesced(partitioned_params)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 962, in all_gather_coalesced
+    handle = _dist_allgather_fn(partitions[self.rank],
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/runtime/zero/partition_parameters.py", line 106, in _dist_allgather_fn
+    return instrument_w_nvtx(dist.allgather_fn)(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 356, in allgather_fn
+    return all_gather_base(output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 131, in log_wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/comm.py", line 332, in all_gather_base
+    return cdb.all_gather_base(output_tensor=output_tensor,
+  File "/usr/local/lib/python3.8/dist-packages/deepspeed/comm/torch.py", line 84, in all_gather_base
+    return torch.distributed.distributed_c10d._all_gather_base(
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 1456, in wrapper
+    "args": f"{args}, {kwargs}",
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor.py", line 437, in __repr__
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 636, in _str
+    return _str_intern(self, tensor_contents=tensor_contents)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 567, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 327, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+  File "/usr/local/lib/python3.8/dist-packages/torch/_tensor_str.py", line 115, in __init__
+    nonzero_finite_vals = torch.masked_select(
+RuntimeError: Empty tensor optional
+[2023-08-18 18:26:47,683] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 1990312
+[2023-08-18 18:26:50,735] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 1990313
+[2023-08-18 18:26:50,739] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 1990314
+[2023-08-18 18:26:50,742] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 1990315
+[2023-08-18 18:26:50,745] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 1990316
+[2023-08-18 18:26:50,748] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 1990317
+[2023-08-18 18:26:50,750] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 1990318
+[2023-08-18 18:26:50,752] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 1990319
+[2023-08-18 18:26:50,753] [ERROR] [launch.py:328:sigkill_handler] ['/usr/bin/python3', '-u', 'run_clm_starcoder.py', '--model_name_or_path', 'bigcode/starcoder', '--train_file', '/starcoder/finetune-data/roblox-train.json', '--validation_file', '/starcoder/finetune-data/roblox-validation.json', '--report_to', 'tensorboard', '--bf16', 'True', '--output_dir', './checkpoints/starcoder-full-deepspeed-8-hpu-8-1-concat', '--num_train_epochs', '10', '--per_device_train_batch_size', '8', '--gradient_accumulation_steps', '1', '--evaluation_strategy', 'no', '--save_strategy', 'no', '--learning_rate', '1e-4', '--logging_steps', '1', '--dataset_concatenation', '--do_train', '--use_habana', '--use_lazy_mode', '--throughput_warmup_steps', '3', '--cache_dir', '/starcoder/cache/', '--use_hpu_graphs_for_inference', '--deepspeed', 'deepspeed_config.json'] exits with return code = 1
+[ERROR|distributed_runner.py:218] 2023-08-18 18:26:51,347 >> deepspeed --num_nodes 1 --num_gpus 8 --no_local_rank run_clm_starcoder.py --model_name_or_path bigcode/starcoder --train_file /starcoder/finetune-data/roblox-train.json --validation_file /starcoder/finetune-data/roblox-validation.json --report_to tensorboard --bf16 True --output_dir ./checkpoints/starcoder-full-deepspeed-8-hpu-8-1-concat --num_train_epochs 10 --per_device_train_batch_size 8 --gradient_accumulation_steps 1 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --dataset_concatenation --do_train --use_habana --use_lazy_mode --throughput_warmup_steps 3 --cache_dir /starcoder/cache/ --use_hpu_graphs_for_inference --deepspeed deepspeed_config.json  exited with status = 1

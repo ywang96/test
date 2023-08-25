@@ -1,0 +1,277 @@
+DistributedRunner run(): command = deepspeed --num_nodes 1 --num_gpus 8 --no_local_rank run_clm_llama.py --model_name_or_path EleutherAI/gpt-j-6b --dataset_name wikitext --dataset_config_name wikitext-2-raw-v1 --report_to tensorboard --bf16 True --output_dir ./checkpoints/gpt-8-hpu-2-1 --num_train_epochs 10 --per_device_train_batch_size 2 --gradient_accumulation_steps 1 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --do_train --use_habana --use_lazy_mode --gaudi_config_name Habana/gpt2 --throughput_warmup_steps 3 --use_hpu_graphs_for_inference --deepspeed deepspeed_config_s2.json --push_to_hub False
+[2023-08-20 08:14:24,532] [WARNING] [runner.py:185:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+Namespace(autotuning='', elastic_training=False, exclude='', force_multi=False, hostfile='/job/hostfile', include='', launcher='pdsh', launcher_args='', master_addr='', master_port=29500, max_elastic_nodes=-1, min_elastic_nodes=-1, module=False, no_local_rank=True, no_python=False, no_ssh_check=False, num_gpus=8, num_nodes=1, save_pid=False, use_hpu=True, user_args=['--model_name_or_path', 'EleutherAI/gpt-j-6b', '--dataset_name', 'wikitext', '--dataset_config_name', 'wikitext-2-raw-v1', '--report_to', 'tensorboard', '--bf16', 'True', '--output_dir', './checkpoints/gpt-8-hpu-2-1', '--num_train_epochs', '10', '--per_device_train_batch_size', '2', '--gradient_accumulation_steps', '1', '--evaluation_strategy', 'no', '--save_strategy', 'no', '--learning_rate', '1e-4', '--logging_steps', '1', '--do_train', '--use_habana', '--use_lazy_mode', '--gaudi_config_name', 'Habana/gpt2', '--throughput_warmup_steps', '3', '--use_hpu_graphs_for_inference', '--deepspeed', 'deepspeed_config_s2.json', '--push_to_hub', 'False'], user_script='run_clm_llama.py')
+[2023-08-20 08:14:26,220] [INFO] [runner.py:543:main] cmd = /usr/bin/python3 -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMCwgMSwgMiwgMywgNCwgNSwgNiwgN119 --master_addr=127.0.0.1 --master_port=29500 --no_local_rank run_clm_llama.py --model_name_or_path EleutherAI/gpt-j-6b --dataset_name wikitext --dataset_config_name wikitext-2-raw-v1 --report_to tensorboard --bf16 True --output_dir ./checkpoints/gpt-8-hpu-2-1 --num_train_epochs 10 --per_device_train_batch_size 2 --gradient_accumulation_steps 1 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --do_train --use_habana --use_lazy_mode --gaudi_config_name Habana/gpt2 --throughput_warmup_steps 3 --use_hpu_graphs_for_inference --deepspeed deepspeed_config_s2.json --push_to_hub False
+[2023-08-20 08:14:28,087] [INFO] [launch.py:145:main] WORLD INFO DICT: {'localhost': [0, 1, 2, 3, 4, 5, 6, 7]}
+[2023-08-20 08:14:28,088] [INFO] [launch.py:151:main] nnodes=1, num_local_procs=8, node_rank=0
+[2023-08-20 08:14:28,088] [INFO] [launch.py:164:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0, 1, 2, 3, 4, 5, 6, 7]})
+[2023-08-20 08:14:28,088] [INFO] [launch.py:165:main] dist_world_size=8
+[2023-08-20 08:14:34,298] [INFO] [comm.py:762:init_distributed] Initializing TorchBackend in DeepSpeed with backend hccl
+08/20/2023 08:14:35 - WARNING - __main__ - Process rank: 0, device: hpu, distributed training: True, mixed-precision training: True
+08/20/2023 08:14:35 - INFO - __main__ - Training/evaluation parameters GaudiTrainingArguments(
+_n_gpu=1,
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-06,
+adjust_throughput=False,
+auto_find_batch_size=False,
+bf16=True,
+data_seed=None,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_pin_memory=True,
+ddp_bucket_cap_mb=230,
+ddp_find_unused_parameters=False,
+ddp_timeout=1800,
+debug=[],
+deepspeed=deepspeed_config_s2.json,
+disable_tqdm=False,
+distribution_strategy=ddp,
+do_eval=False,
+do_predict=False,
+do_train=True,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_steps=None,
+evaluation_strategy=no,
+fsdp_config=None,
+fsdp_min_num_params=0,
+fsdp_transformer_layer_cls_to_wrap=None,
+full_determinism=False,
+gaudi_config_name=Habana/gpt2,
+gradient_accumulation_steps=1,
+gradient_checkpointing=False,
+greater_is_better=None,
+group_by_length=False,
+half_precision_backend=hpu_amp,
+hub_model_id=None,
+hub_private_repo=False,
+hub_strategy=every_save,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+include_inputs_for_metrics=False,
+jit_mode_eval=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=0.0001,
+length_column_name=length,
+load_best_model_at_end=False,
+local_rank=0,
+log_level=passive,
+log_level_replica=warning,
+log_on_each_node=True,
+logging_dir=./checkpoints/gpt-8-hpu-2-1/runs/Aug20_08-14-34_sysid674631,
+logging_first_step=False,
+logging_nan_inf_filter=False,
+logging_steps=1,
+logging_strategy=steps,
+lr_scheduler_type=linear,
+max_grad_norm=1.0,
+max_steps=-1,
+metric_for_best_model=None,
+no_cuda=False,
+non_blocking_data_copy=False,
+num_train_epochs=10.0,
+optim=adamw_torch,
+optim_args=None,
+output_dir=./checkpoints/gpt-8-hpu-2-1,
+overwrite_output_dir=False,
+past_index=-1,
+per_device_eval_batch_size=8,
+per_device_train_batch_size=2,
+pipelining_fwd_bwd=False,
+prediction_loss_only=False,
+profiling_steps=0,
+profiling_warmup_steps=0,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+ray_scope=last,
+remove_unused_columns=True,
+report_to=['tensorboard'],
+resume_from_checkpoint=None,
+run_name=./checkpoints/gpt-8-hpu-2-1,
+save_on_each_node=False,
+save_safetensors=False,
+save_steps=500,
+save_strategy=no,
+save_total_limit=None,
+seed=42,
+skip_memory_metrics=True,
+throughput_warmup_steps=3,
+torch_compile=False,
+torch_compile_backend=None,
+torch_compile_mode=None,
+torchdynamo=None,
+use_habana=True,
+use_hpu_graphs=False,
+use_hpu_graphs_for_inference=True,
+use_hpu_graphs_for_training=False,
+use_ipex=False,
+use_lazy_mode=True,
+use_legacy_prediction_loop=False,
+use_mps_device=False,
+warmup_ratio=0.0,
+warmup_steps=0,
+weight_decay=0.0,
+xpu_backend=None,
+)
+08/20/2023 08:14:35 - WARNING - __main__ - Process rank: 6, device: hpu, distributed training: True, mixed-precision training: True
+08/20/2023 08:14:35 - WARNING - __main__ - Process rank: 1, device: hpu, distributed training: True, mixed-precision training: True
+08/20/2023 08:14:35 - WARNING - __main__ - Process rank: 7, device: hpu, distributed training: True, mixed-precision training: True
+08/20/2023 08:14:35 - WARNING - __main__ - Process rank: 4, device: hpu, distributed training: True, mixed-precision training: True
+08/20/2023 08:14:35 - WARNING - __main__ - Process rank: 3, device: hpu, distributed training: True, mixed-precision training: True
+08/20/2023 08:14:35 - WARNING - __main__ - Process rank: 5, device: hpu, distributed training: True, mixed-precision training: True
+08/20/2023 08:14:35 - WARNING - __main__ - Process rank: 2, device: hpu, distributed training: True, mixed-precision training: True
+Loading Dataset Infos from /root/.cache/huggingface/modules/datasets_modules/datasets/wikitext/a241db52902eaf2c6aa732210bead40c090019a499ceb13bcbfa3f8ab646a126
+08/20/2023 08:14:36 - INFO - datasets.info - Loading Dataset Infos from /root/.cache/huggingface/modules/datasets_modules/datasets/wikitext/a241db52902eaf2c6aa732210bead40c090019a499ceb13bcbfa3f8ab646a126
+Overwrite dataset info from restored data version if exists.
+08/20/2023 08:14:36 - INFO - datasets.builder - Overwrite dataset info from restored data version if exists.
+Loading Dataset info from /root/.cache/huggingface/datasets/wikitext/wikitext-2-raw-v1/1.0.0/a241db52902eaf2c6aa732210bead40c090019a499ceb13bcbfa3f8ab646a126
+08/20/2023 08:14:36 - INFO - datasets.info - Loading Dataset info from /root/.cache/huggingface/datasets/wikitext/wikitext-2-raw-v1/1.0.0/a241db52902eaf2c6aa732210bead40c090019a499ceb13bcbfa3f8ab646a126
+Found cached dataset wikitext (/root/.cache/huggingface/datasets/wikitext/wikitext-2-raw-v1/1.0.0/a241db52902eaf2c6aa732210bead40c090019a499ceb13bcbfa3f8ab646a126)
+08/20/2023 08:14:36 - INFO - datasets.builder - Found cached dataset wikitext (/root/.cache/huggingface/datasets/wikitext/wikitext-2-raw-v1/1.0.0/a241db52902eaf2c6aa732210bead40c090019a499ceb13bcbfa3f8ab646a126)
+Loading Dataset info from /root/.cache/huggingface/datasets/wikitext/wikitext-2-raw-v1/1.0.0/a241db52902eaf2c6aa732210bead40c090019a499ceb13bcbfa3f8ab646a126
+08/20/2023 08:14:36 - INFO - datasets.info - Loading Dataset info from /root/.cache/huggingface/datasets/wikitext/wikitext-2-raw-v1/1.0.0/a241db52902eaf2c6aa732210bead40c090019a499ceb13bcbfa3f8ab646a126
+[INFO|configuration_utils.py:668] 2023-08-20 08:14:36,408 >> loading configuration file config.json from cache at /root/.cache/huggingface/hub/models--EleutherAI--gpt-j-6b/snapshots/47e169305d2e8376be1d31e765533382721b2cc1/config.json
+[INFO|configuration_utils.py:720] 2023-08-20 08:14:36,411 >> Model config GPTJConfig {
+  "_name_or_path": "EleutherAI/gpt-j-6b",
+  "activation_function": "gelu_new",
+  "architectures": [
+    "GPTJForCausalLM"
+  ],
+  "attn_pdrop": 0.0,
+  "bos_token_id": 50256,
+  "embd_pdrop": 0.0,
+  "eos_token_id": 50256,
+  "gradient_checkpointing": false,
+  "initializer_range": 0.02,
+  "layer_norm_epsilon": 1e-05,
+  "model_type": "gptj",
+  "n_embd": 4096,
+  "n_head": 16,
+  "n_inner": null,
+  "n_layer": 28,
+  "n_positions": 2048,
+  "resid_pdrop": 0.0,
+  "rotary": true,
+  "rotary_dim": 64,
+  "scale_attn_weights": true,
+  "summary_activation": null,
+  "summary_first_dropout": 0.1,
+  "summary_proj_to_labels": true,
+  "summary_type": "cls_index",
+  "summary_use_proj": true,
+  "task_specific_params": {
+    "text-generation": {
+      "do_sample": true,
+      "max_length": 50,
+      "temperature": 1.0
+    }
+  },
+  "tie_word_embeddings": false,
+  "tokenizer_class": "GPT2Tokenizer",
+  "transformers_version": "4.28.1",
+  "use_cache": true,
+  "vocab_size": 50400
+}
+
+[INFO|tokenization_utils_base.py:1809] 2023-08-20 08:14:36,524 >> loading file vocab.json from cache at /root/.cache/huggingface/hub/models--EleutherAI--gpt-j-6b/snapshots/47e169305d2e8376be1d31e765533382721b2cc1/vocab.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-20 08:14:36,524 >> loading file merges.txt from cache at /root/.cache/huggingface/hub/models--EleutherAI--gpt-j-6b/snapshots/47e169305d2e8376be1d31e765533382721b2cc1/merges.txt
+[INFO|tokenization_utils_base.py:1809] 2023-08-20 08:14:36,524 >> loading file tokenizer.json from cache at /root/.cache/huggingface/hub/models--EleutherAI--gpt-j-6b/snapshots/47e169305d2e8376be1d31e765533382721b2cc1/tokenizer.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-20 08:14:36,524 >> loading file added_tokens.json from cache at /root/.cache/huggingface/hub/models--EleutherAI--gpt-j-6b/snapshots/47e169305d2e8376be1d31e765533382721b2cc1/added_tokens.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-20 08:14:36,524 >> loading file special_tokens_map.json from cache at /root/.cache/huggingface/hub/models--EleutherAI--gpt-j-6b/snapshots/47e169305d2e8376be1d31e765533382721b2cc1/special_tokens_map.json
+[INFO|tokenization_utils_base.py:1809] 2023-08-20 08:14:36,524 >> loading file tokenizer_config.json from cache at /root/.cache/huggingface/hub/models--EleutherAI--gpt-j-6b/snapshots/47e169305d2e8376be1d31e765533382721b2cc1/tokenizer_config.json
+[INFO|modeling_utils.py:2534] 2023-08-20 08:14:36,713 >> loading weights file pytorch_model.bin from cache at /root/.cache/huggingface/hub/models--EleutherAI--gpt-j-6b/snapshots/47e169305d2e8376be1d31e765533382721b2cc1/pytorch_model.bin
+Traceback (most recent call last):
+  File "run_clm_llama.py", line 674, in <module>
+Traceback (most recent call last):
+  File "run_clm_llama.py", line 674, in <module>
+Traceback (most recent call last):
+  File "run_clm_llama.py", line 674, in <module>
+    main()
+  File "run_clm_llama.py", line 457, in main
+        main()model = AutoModelForCausalLM.from_pretrained(
+
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/auto/auto_factory.py", line 471, in from_pretrained
+  File "run_clm_llama.py", line 457, in main
+    model = AutoModelForCausalLM.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/auto/auto_factory.py", line 471, in from_pretrained
+    return model_class.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/modeling_utils.py", line 2629, in from_pretrained
+    main()
+  File "run_clm_llama.py", line 457, in main
+    return model_class.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/modeling_utils.py", line 2629, in from_pretrained
+    model = AutoModelForCausalLM.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/auto/auto_factory.py", line 471, in from_pretrained
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "run_clm_llama.py", line 674, in <module>
+  File "run_clm_llama.py", line 674, in <module>
+    return model_class.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/modeling_utils.py", line 2629, in from_pretrained
+Traceback (most recent call last):
+  File "run_clm_llama.py", line 674, in <module>
+    model = cls(config, *model_args, **model_kwargs)
+TypeError: __init__() got an unexpected keyword argument 'token'
+    model = cls(config, *model_args, **model_kwargs)
+TypeError: __init__() got an unexpected keyword argument 'token'
+            model = cls(config, *model_args, **model_kwargs)main()main()
+
+
+  File "run_clm_llama.py", line 457, in main
+  File "run_clm_llama.py", line 457, in main
+TypeError: __init__() got an unexpected keyword argument 'token'
+        model = AutoModelForCausalLM.from_pretrained(model = AutoModelForCausalLM.from_pretrained(
+
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/auto/auto_factory.py", line 471, in from_pretrained
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/auto/auto_factory.py", line 471, in from_pretrained
+    main()
+  File "run_clm_llama.py", line 457, in main
+    return model_class.from_pretrained(
+    return model_class.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/modeling_utils.py", line 2629, in from_pretrained
+  File "/usr/local/lib/python3.8/dist-packages/transformers/modeling_utils.py", line 2629, in from_pretrained
+    model = AutoModelForCausalLM.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/auto/auto_factory.py", line 471, in from_pretrained
+    return model_class.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/modeling_utils.py", line 2629, in from_pretrained
+    model = cls(config, *model_args, **model_kwargs)
+    model = cls(config, *model_args, **model_kwargs)
+TypeError: __init__() got an unexpected keyword argument 'token'
+TypeError: __init__() got an unexpected keyword argument 'token'
+    model = cls(config, *model_args, **model_kwargs)
+TypeError: __init__() got an unexpected keyword argument 'token'
+Traceback (most recent call last):
+  File "run_clm_llama.py", line 674, in <module>
+    main()
+  File "run_clm_llama.py", line 457, in main
+    model = AutoModelForCausalLM.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/auto/auto_factory.py", line 471, in from_pretrained
+    return model_class.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/modeling_utils.py", line 2629, in from_pretrained
+    model = cls(config, *model_args, **model_kwargs)
+TypeError: __init__() got an unexpected keyword argument 'token'
+Traceback (most recent call last):
+  File "run_clm_llama.py", line 674, in <module>
+    main()
+  File "run_clm_llama.py", line 457, in main
+    model = AutoModelForCausalLM.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/models/auto/auto_factory.py", line 471, in from_pretrained
+    return model_class.from_pretrained(
+  File "/usr/local/lib/python3.8/dist-packages/transformers/modeling_utils.py", line 2629, in from_pretrained
+    model = cls(config, *model_args, **model_kwargs)
+TypeError: __init__() got an unexpected keyword argument 'token'
+[2023-08-20 08:14:52,236] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2229848
+[2023-08-20 08:14:52,237] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2229849
+[2023-08-20 08:14:52,242] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2229850
+[2023-08-20 08:14:52,252] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2229851
+[2023-08-20 08:14:52,255] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2229852
+[2023-08-20 08:14:52,258] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2229853
+[2023-08-20 08:14:52,261] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2229854
+[2023-08-20 08:14:52,264] [INFO] [launch.py:322:sigkill_handler] Killing subprocess 2229855
+[2023-08-20 08:14:52,266] [ERROR] [launch.py:328:sigkill_handler] ['/usr/bin/python3', '-u', 'run_clm_llama.py', '--model_name_or_path', 'EleutherAI/gpt-j-6b', '--dataset_name', 'wikitext', '--dataset_config_name', 'wikitext-2-raw-v1', '--report_to', 'tensorboard', '--bf16', 'True', '--output_dir', './checkpoints/gpt-8-hpu-2-1', '--num_train_epochs', '10', '--per_device_train_batch_size', '2', '--gradient_accumulation_steps', '1', '--evaluation_strategy', 'no', '--save_strategy', 'no', '--learning_rate', '1e-4', '--logging_steps', '1', '--do_train', '--use_habana', '--use_lazy_mode', '--gaudi_config_name', 'Habana/gpt2', '--throughput_warmup_steps', '3', '--use_hpu_graphs_for_inference', '--deepspeed', 'deepspeed_config_s2.json', '--push_to_hub', 'False'] exits with return code = 1
+[ERROR|distributed_runner.py:218] 2023-08-20 08:14:52,817 >> deepspeed --num_nodes 1 --num_gpus 8 --no_local_rank run_clm_llama.py --model_name_or_path EleutherAI/gpt-j-6b --dataset_name wikitext --dataset_config_name wikitext-2-raw-v1 --report_to tensorboard --bf16 True --output_dir ./checkpoints/gpt-8-hpu-2-1 --num_train_epochs 10 --per_device_train_batch_size 2 --gradient_accumulation_steps 1 --evaluation_strategy no --save_strategy no --learning_rate 1e-4 --logging_steps 1 --do_train --use_habana --use_lazy_mode --gaudi_config_name Habana/gpt2 --throughput_warmup_steps 3 --use_hpu_graphs_for_inference --deepspeed deepspeed_config_s2.json --push_to_hub False  exited with status = 1
